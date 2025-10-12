@@ -244,7 +244,7 @@ func end_battle() -> void:
 		await battle_win_movie.action()
 	s_battle_ending.emit()
 	s_focus_char.emit(player)
-	player.set_animation('victory_dance')
+	player.set_animation('victory-dance')
 	player.game_timer_tick = false
 	await player.animator.animation_finished
 	player.game_timer_tick = true

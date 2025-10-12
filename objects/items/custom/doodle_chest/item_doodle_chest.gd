@@ -40,7 +40,7 @@ func use() -> void:
 		await Task.delay(0.1)
 		AudioManager.play_sound(SFX)
 	
-	if Util.get_player().character.character_name == "Meowmers":
+	if Util.get_player().stats.lostmode == true:
 		for i in extralife_count:
 			var item = WORLD_ITEM.instantiate()
 			item.override_replacement_rolls = true

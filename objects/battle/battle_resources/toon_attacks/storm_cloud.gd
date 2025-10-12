@@ -64,7 +64,8 @@ func action():
 				manager.battle_text(target, "Drenched!", BattleText.colors.orange[0], BattleText.colors.orange[1])
 		else:
 			manager.battle_text(target, "IMMUNE")
-		await manager.barrier(target.animator.animation_finished, 5.0)
+		if do_damage != false:
+			await manager.barrier(target.animator.animation_finished, 5.0)
 		await manager.check_pulses(targets)
 	else:
 		AudioManager.play_sound(load("res://audio/sfx/battle/gags/squirt/AA_throw_stormcloud_miss.ogg"))
