@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GagLoadout" load_steps=9 format=3 uid="uid://t6cllnqywums"]
+
+[ext_resource type="Script" uid="uid://b6b6pfoqyolr" path="res://objects/battle/battle_resources/gag_loadouts/track.gd" id="1_fipy2"]
+[ext_resource type="Resource" uid="uid://5dld88ul3rb5" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/trap.tres" id="2_6jodh"]
+[ext_resource type="Resource" uid="uid://ql80fm00mhdd" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/lure_meowmers.tres" id="3_hnyv7"]
+[ext_resource type="Resource" uid="uid://btiq58snet4xi" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/sound_meowmers.tres" id="4_yk47u"]
+[ext_resource type="Resource" uid="uid://0528viy6hdsv" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/throw.tres" id="5_et2pt"]
+[ext_resource type="Resource" uid="uid://dvxiqtapdvmj4" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/squirt.tres" id="6_6jodh"]
+[ext_resource type="Resource" uid="uid://lf7h5xkbt2op" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/drop.tres" id="6_wrj5p"]
+[ext_resource type="Script" uid="uid://ckypnf7t805p3" path="res://objects/battle/battle_resources/gag_loadouts/gag_loadout.gd" id="7_vtoio"]
+
+[resource]
+script = ExtResource("7_vtoio")
+loadout = Array[ExtResource("1_fipy2")]([ExtResource("2_6jodh"), ExtResource("3_hnyv7"), ExtResource("4_yk47u"), ExtResource("5_et2pt"), ExtResource("6_6jodh"), ExtResource("6_wrj5p")])
+metadata/_custom_type_script = "uid://ckypnf7t805p3"

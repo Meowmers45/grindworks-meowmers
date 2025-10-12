@@ -244,7 +244,12 @@ func end_battle() -> void:
 		await battle_win_movie.action()
 	s_battle_ending.emit()
 	s_focus_char.emit(player)
-	player.set_animation('victory-dance')
+	if player.stats.funny_dance:
+		player.set_animation('happy_dance')
+		await (0.1)
+		AudioManager.play_sound(load('res://audio/sfx/battle/gags/toonup/AA_heal_happydance.ogg'))
+	else:
+		player.set_animation('victory_dance')
 	player.game_timer_tick = false
 	await player.animator.animation_finished
 	player.game_timer_tick = true

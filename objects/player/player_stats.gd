@@ -56,6 +56,12 @@ var debug_gag_points := false
 @export var trap_knockback_percent := 0.0
 @export var lure_fish_round_boost := 0
 
+
+@export var funny_dance := false
+@export var doodlechest := false
+@export var meowmersdragonwings := false
+@export var abbie := false
+@export var lostmode := false
 @export var anomaly_boost := 0
 # Extra value on laff boosts
 @export var laff_boost_boost := 0

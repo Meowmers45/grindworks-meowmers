@@ -121,6 +121,8 @@ const TOON_UNLOCK_ORDER_PATHS := [
 var ADDITIONAL_TOON_PATHS := [
 	'res://objects/player/characters/professor_pete.tres',
 	'res://objects/player/characters/lil_oldman.tres',
+	'res://objects/player/characters/meowmers.tres',
+	'res://objects/player/characters/aaron.tres',
 ]
 
 func fetch_toon_unlock_order() -> Array[PlayerCharacter]:
@@ -288,7 +290,20 @@ var dna_colors := {
 	lavender = Color('#B978DB'),
 	pink = Color('#E59DE7'),
 	plum = Color('#B2B2CC'),
-	black = Color('#4C4C59')
+	black = Color('#4C4C59'),
+	heroic_amber = Color('#FFCB30'),
+	heroic_aqua = Color('#009FFF'),
+	rose_pink = Color('#E370B2'),
+	ice_blue = Color('#BDDFF4'),
+	mint_green = Color('#A3DBAC'),
+	emerald = Color('#0ADCA7'),
+	teal = Color('#32B9B6'),
+	apricot = Color('#FB8965'),
+	amber = Color('#F7BF59'),
+	crimson = Color('#A82D42'),
+	dark_green = Color('#69A448'),
+	steel_blue = Color('#536899'),
+	cartoonival_blue = Color('#3A94FA')
 }
 var random_dna_color: Color:
 	get:

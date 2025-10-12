@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="ItemActive" load_steps=6 format=3 uid="uid://78v08g3pwxxg"]
+
+[ext_resource type="Texture2D" uid="uid://bubun4dua8es6" path="res://models/props/toon_props/resistance_fist/badge-pix-1.png" id="1_ayubg"]
+[ext_resource type="Script" uid="uid://ccwm6vh7kfebu" path="res://objects/items/custom/meowmers_extralife/item_meowmers_extralife.gd" id="2_ayubg"]
+[ext_resource type="PackedScene" uid="uid://bge4d1wrscftk" path="res://models/props/toon_props/resistance_fist/badge.tscn" id="3_ayubg"]
+[ext_resource type="Script" uid="uid://5uwfsntxdag6" path="res://objects/items/classes/item_active.gd" id="5_5ghvb"]
+[ext_resource type="AudioStream" uid="uid://chdxx52vtccmb" path="res://audio/sfx/misc/Holy_Mackerel.ogg" id="6_0mfaa"]
+
+[resource]
+script = ExtResource("5_5ghvb")
+sfx = Array[AudioStream]([ExtResource("6_0mfaa")])
+active_type = 3
+charge_count = 5
+current_charge = 5
+custom_discharge_time = 1.0
+item_tags = null
+qualitoon = 4
+rarity = 0
+evergreen = false
+realtime = false
+slot = 0
+world_scale = 0.5
+world_y_offset = 0.0
+want_ui_spin = true
+ui_cam_offset = 0.0
+item_name = "Extra Life Summoner"
+item_description = "Free extra life!"
+big_description = "Summons an Extra Life Item"
+model = ExtResource("3_ayubg")
+pickup_sfx = ExtResource("6_0mfaa")
+stats_add = {}
+stats_multiply = {}
+player_values = {}
+arbitrary_data = {}
+item_script = ExtResource("2_ayubg")
+remember_item = true
+icon = ExtResource("1_ayubg")
+shop_category_title = "Pocket Prank"
+shop_category_color = Color(1, 0.796078, 0.188235, 1)
+force_show_shop_category = false
+custom_shop_price = 0
+metadata/_custom_type_script = "uid://5uwfsntxdag6"

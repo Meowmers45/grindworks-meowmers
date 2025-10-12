@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://cbgvn8ki00lu5"]
+
+[ext_resource type="Script" uid="uid://rnnov6fpxupt" path="res://objects/items/custom/item_meowmers_monetary_retribution.gd" id="1_odyv3"]
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="2_h0pcf"]
+
+[resource]
+script = ExtResource("2_h0pcf")
+item_tags = null
+qualitoon = 4
+rarity = 0
+evergreen = false
+realtime = false
+slot = 0
+world_scale = 1.0
+world_y_offset = 0.0
+want_ui_spin = true
+ui_cam_offset = 0.0
+item_name = "Meowmers Nerf"
+item_description = ""
+big_description = "Unique to Meowmers."
+stats_add = {}
+stats_multiply = {}
+player_values = {}
+arbitrary_data = {}
+item_script = ExtResource("1_odyv3")
+remember_item = true
+shop_category_title = "Nerf Item"
+shop_category_color = Color(0.843977, 0.396389, 0.506197, 1)
+force_show_shop_category = false
+custom_shop_price = 0

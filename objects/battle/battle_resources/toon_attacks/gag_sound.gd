@@ -5,6 +5,7 @@ class_name GagSound
 @export var position: Vector3
 @export var rotation: Vector3
 @export var scale := Vector3(1,1,1)
+@export var do_full_damage := false
 
 @export var anim_delay := 1.9
 
@@ -60,8 +61,10 @@ func action():
 				continue
 			animator_target = target
 			var real_damage = damage
-			if (not target == main_target and not user.inverted_sound_damage) or (user.inverted_sound_damage and target == main_target):
+			if (do_full_damage == false and not target == main_target and not user.inverted_sound_damage) or (user.inverted_sound_damage and target == main_target):
 				real_damage *= 0.5
+			if (do_full_damage != false and not target == main_target and not user.inverted_sound_damage) or (user.inverted_sound_damage and target == main_target):
+				real_damage *= 1.0
 			if get_immunity(target):
 				manager.battle_text(target, 'IMMUNE')
 			else:
