@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="ItemActive" load_steps=6 format=3 uid="uid://djupib52f33su"]
+
+[ext_resource type="Texture2D" uid="uid://blovm50sbubqo" path="res://ui_assets/player_ui/pocket_prank_icons/doodle_chest.png" id="1_2j1qq"]
+[ext_resource type="Script" uid="uid://dai2vjjugtccr" path="res://objects/items/custom/doodle_chest/item_doodle_chest.gd" id="2_f17qr"]
+[ext_resource type="PackedScene" uid="uid://dxyq5lb5oineo" path="res://objects/interactables/treasure_chest/treasure_chest.tscn" id="3_2j1qq"]
+[ext_resource type="AudioStream" uid="uid://dxek5pyx8j27b" path="res://audio/sfx/doodle/speak_v1.ogg" id="4_2j1qq"]
+[ext_resource type="Script" uid="uid://5uwfsntxdag6" path="res://objects/items/classes/item_active.gd" id="5_1tcsj"]
+
+[resource]
+script = ExtResource("5_1tcsj")
+sfx = Array[AudioStream]([ExtResource("4_2j1qq")])
+active_type = 2
+charge_count = 1
+current_charge = 1
+custom_discharge_time = 1.0
+item_tags = null
+qualitoon = 4
+rarity = 0
+evergreen = false
+realtime = false
+slot = 0
+world_scale = 0.5
+world_y_offset = 0.0
+want_ui_spin = true
+ui_cam_offset = 0.0
+item_name = "Doodle Chest"
+item_description = "Free Doodles!"
+big_description = "Rolls a number from 1 to 4 and spawns that many Doodles
+"
+model = ExtResource("3_2j1qq")
+pickup_sfx = ExtResource("4_2j1qq")
+stats_add = {}
+stats_multiply = {}
+player_values = {}
+arbitrary_data = {}
+item_script = ExtResource("2_f17qr")
+remember_item = true
+icon = ExtResource("1_2j1qq")
+shop_category_title = "Pocket Prank"
+shop_category_color = Color(1, 0.796078, 0.188235, 1)
+force_show_shop_category = false
+custom_shop_price = 0
+metadata/_custom_type_script = "uid://5uwfsntxdag6"
