@@ -126,7 +126,7 @@ func get_stats() -> String:
 		ActionTarget.ENEMY_SPLASH:
 			string += "Three Cogs"
 
-	if do_full_damage == false:
+	if do_full_damage != false:
 		string += "\nSplash: %s" % get_splash_damage_str()
 
 	return string

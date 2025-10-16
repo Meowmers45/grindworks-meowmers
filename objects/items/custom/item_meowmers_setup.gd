@@ -18,6 +18,3 @@ func first_time_setup(player : Player) -> void:
 	player.stats.luck = 0.25
 	for track in Util.get_player().stats.gag_balance.keys():
 		Util.get_player().stats.gag_regeneration[track] += 3
-	if player.stats.current_active_item:
-		player.stats.current_active_item = null
-	player.stats.current_active_item = GameLoader.load(MEOWMERS_PRANK_PATH).duplicate()

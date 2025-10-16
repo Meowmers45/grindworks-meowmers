@@ -10,7 +10,7 @@ func action():
 	var target = targets[0]
 	var button = load('res://models/props/gags/button/toon_button.tscn').instantiate()
 	if skip_button_movie != true:
-		user.set_animation('button-press')
+		user.set_animation('press-button')
 		user.face_position(target.global_position)
 		
 		# Place button in hand
