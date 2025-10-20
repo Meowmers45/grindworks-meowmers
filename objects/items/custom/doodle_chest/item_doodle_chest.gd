@@ -7,8 +7,6 @@ const CHEST = "res://objects/interactables/treasure_chest/treasure_chest.tscn"
 const DOODLE := preload("res://objects/items/resources/passive/doodle.tres")
 const WORLD_ITEM = preload("res://objects/items/world_item/world_item.tscn")
 const ACC_POOL = preload("res://objects/items/pools/accessories.tres")
-const MEOWMERS_EXTRALIFE_PATH := preload("res://objects/items/resources/active/meowmers_extralife.tres")
-
 func use() -> void:
 	# Makes this work in debug rooms
 	var zone
@@ -25,7 +23,6 @@ func use() -> void:
 		rel_pos = raycast_check.position - (rel_basis * Vector3(0,0,.5))
 	
 	var item_count = RandomService.randi_range_channel('pocket_prank_summon_doodles', 1, 4)
-	var extralife_count = 1
 	
 	for i in item_count:
 		var item = WORLD_ITEM.instantiate()
@@ -39,20 +36,6 @@ func use() -> void:
 		dust_cloud.global_position = item.global_position
 		await Task.delay(0.1)
 		AudioManager.play_sound(SFX)
-	
-	if Util.get_player().stats.lostmode == true:
-		for i in extralife_count:
-			var item = WORLD_ITEM.instantiate()
-			item.override_replacement_rolls = true
-			item.item = MEOWMERS_EXTRALIFE_PATH
-			zone.add_child(item)
-			item.global_position = Vector3(0, 0, 2) + rel_pos + (rel_basis * Vector3(-1 * i, 0.25, 0))
-			var dust_cloud = Globals.DUST_CLOUD.instantiate()
-			zone.add_child(dust_cloud)
-			dust_cloud.scale *= item.scale
-			dust_cloud.global_position = item.global_position
-			await Task.delay(0.1)
-			
 		
 	attempt_disconnect()
 	Util.get_player().stats.current_active_item = null

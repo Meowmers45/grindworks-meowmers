@@ -47,9 +47,9 @@ bottoms = SubResource("Resource_ugrs1")
 [resource]
 script = ExtResource("9_e7ooy")
 character_name = "Aaron"
-character_summary = "- Starts with 2 turns (Max of 4)
-- The Starting Prank will give up to 4 Doodles
-- Lure and Sound will hit all Cogs"
+character_summary = "Starts with 2 turns (Max of 4)
+The Starting Prank will give up to 4 Doodles
+Lure and Sound will hit all Cogs"
 character_blurb = "Meowmers' Best friend, Not much else that sticks out."
 dna = SubResource("Resource_ax4gq")
 gag_loadout = ExtResource("8_w66ob")
