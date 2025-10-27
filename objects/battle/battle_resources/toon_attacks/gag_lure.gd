@@ -2,6 +2,7 @@ extends ToonAttack
 class_name GagLure
 
 const LURED_EFFECT := preload("res://objects/battle/battle_resources/status_effects/resources/status_effect_lured.tres")
+var do_stun = false
 
 @export var lure_effect: StatusLured
 var trap_gags: Array[GagTrap] = []

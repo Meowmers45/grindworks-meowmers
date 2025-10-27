@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemShoe" load_steps=6 format=3 uid="uid://be378ge1j8ibs"]
+
+[ext_resource type="Texture2D" uid="uid://4jegh5a1sikh" path="res://objects/items/resources/accessories/shoes/icons/black_athletic_shoes.png" id="1_6qthj"]
+[ext_resource type="Script" uid="uid://ctnplcvegkkyu" path="res://objects/items/custom/item_black_athletic_shoes.gd" id="2_6qthj"]
+[ext_resource type="AudioStream" uid="uid://cpa1abbv3x8b" path="res://audio/sfx/ui/ring_miss.ogg" id="3_6qthj"]
+[ext_resource type="Texture2D" uid="uid://0wrvyemuucqp" path="res://models/accessories/shoe_textures/shoes/tt_t_chr_avt_acc_sho_athleticBlack.jpg" id="5_6qthj"]
+[ext_resource type="Script" uid="uid://bb02y647us2n3" path="res://objects/items/classes/item_shoe.gd" id="5_tuekb"]
+
+[resource]
+script = ExtResource("5_tuekb")
+shoe_tex = ExtResource("5_6qthj")
+qualitoon = 4
+rarity = 7
+world_y_offset = -0.2
+item_name = "Black Athletic Shoes"
+item_description = "Iconic to a certain toon, Maybe two?"
+big_description = "Makes Meowmers and Aaron use accuracy, Does nothing for everyone else."
+pickup_sfx = ExtResource("3_6qthj")
+item_script = ExtResource("2_6qthj")
+icon = ExtResource("1_6qthj")
+custom_shop_price = 67
+metadata/_custom_type_script = "uid://bb02y647us2n3"

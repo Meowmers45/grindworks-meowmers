@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_qmwl1"]
 script = ExtResource("3_qhoab")
 icon = ExtResource("2_qmwl1")
-damage = 20
+damage = 15
 metadata/_custom_type_script = "uid://dobaevw1g5kro"
 
 [resource]

@@ -18,7 +18,11 @@ func round_started(gags: Array[BattleAction]) -> void:
 	for gag in gags:
 		if gag is GagSound:
 			gag.do_full_damage = true
+		if gag is GagLure:
+			gag.do_stun = true
 
 func action_injected(action : BattleAction) -> void:
 	if action is GagSound:
 		action.do_full_damage = true
+	if action is GagLure:
+		action.do_stun = true

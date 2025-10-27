@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=31 format=3 uid="uid://cbnccetrrxylx"]
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=32 format=3 uid="uid://cbnccetrrxylx"]
 
 [ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="1_oku4l"]
 [ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="2_u5qwy"]
@@ -23,8 +23,9 @@
 [ext_resource type="Resource" uid="uid://c6a6ukw6eusm3" path="res://objects/items/resources/accessories/glasses/groucho_glasses.tres" id="20_pgm2o"]
 [ext_resource type="Resource" uid="uid://dv5u2vhslq87m" path="res://objects/items/resources/accessories/backpacks/cog_pack.tres" id="21_t11tf"]
 [ext_resource type="Resource" uid="uid://b5ncaw2q6vlk8" path="res://objects/items/resources/accessories/hats/baseball_cap.tres" id="24_b1l7q"]
-[ext_resource type="Resource" uid="uid://djupib52f33su" path="res://objects/items/resources/active/doodle_chest.tres" id="24_oeqna"]
+[ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="24_s8570"]
 [ext_resource type="Resource" uid="uid://d4nsekncalswu" path="res://objects/items/resources/active/sandwich.tres" id="25_77m2d"]
+[ext_resource type="Resource" uid="uid://c8wjy8fdkxarx" path="res://objects/items/resources/active/gag_button.tres" id="25_s8570"]
 [ext_resource type="Resource" uid="uid://dh87q08enl0bg" path="res://objects/items/resources/active/glowering_dagger.tres" id="26_qmcxa"]
 
 [sub_resource type="Resource" id="Resource_q3qk8"]
@@ -72,7 +73,7 @@ character_blurb = "Cogs and Toons alike wonder where she gets her extreme speed 
 dna = SubResource("Resource_gqohd")
 gag_loadout = ExtResource("8_6y58e")
 starting_laff = 45
-starting_items = Array[ExtResource("8_3vnwk")]([ExtResource("11_pgai2"), ExtResource("20_6y58e"), ExtResource("13_pgai2"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("11_0y5pg"), ExtResource("16_s8570"), ExtResource("17_i5c2s"), ExtResource("20_anfid"), ExtResource("20_anfid"), ExtResource("19_07e54"), ExtResource("20_pgm2o"), ExtResource("21_t11tf"), ExtResource("17_i30qe"), ExtResource("24_b1l7q"), ExtResource("24_oeqna"), ExtResource("25_77m2d"), ExtResource("26_qmcxa")])
+starting_items = Array[ExtResource("8_3vnwk")]([ExtResource("11_pgai2"), ExtResource("20_6y58e"), ExtResource("13_pgai2"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("11_0y5pg"), ExtResource("16_s8570"), ExtResource("17_i5c2s"), ExtResource("20_anfid"), ExtResource("20_anfid"), ExtResource("19_07e54"), ExtResource("20_pgm2o"), ExtResource("21_t11tf"), ExtResource("17_i30qe"), ExtResource("24_b1l7q"), ExtResource("24_s8570"), ExtResource("25_77m2d"), ExtResource("25_s8570"), ExtResource("26_qmcxa")])
 base_stats = SubResource("Resource_q3qk8")
 starting_gags = Dictionary[String, int]({
 "Sound": 2,

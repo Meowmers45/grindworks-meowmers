@@ -77,7 +77,10 @@ func action():
 			elif get_immunity(target):
 				manager.battle_text(target, "IMMUNE")
 				continue
-			manager.battle_text(target, "Damage Down!", BattleText.colors.orange[0], BattleText.colors.orange[1])
+			if do_stun == false:
+				manager.battle_text(target, "Damage Down!", BattleText.colors.orange[0], BattleText.colors.orange[1])
+			else:
+				manager.battle_text(target, "Stunned!", BattleText.colors.orange[0], BattleText.colors.orange[1])
 			if cog_anim == 'landing':
 				animate_magnet_pull(target)
 			else:

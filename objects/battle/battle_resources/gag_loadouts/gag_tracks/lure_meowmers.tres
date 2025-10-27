@@ -32,7 +32,6 @@ action_name = "1 Dollar Bill"
 
 [sub_resource type="Resource" id="Resource_orvgm"]
 script = ExtResource("3_gul1v")
-lure_type = 1
 quality = 1
 id = 2
 
@@ -62,7 +61,6 @@ action_name = "5 Dollar Bill"
 
 [sub_resource type="Resource" id="Resource_e3sel"]
 script = ExtResource("3_gul1v")
-lure_type = 1
 knockback_effect = 30
 quality = 1
 id = 2
@@ -93,7 +91,6 @@ action_name = "10 Dollar Bill"
 
 [sub_resource type="Resource" id="Resource_41ybs"]
 script = ExtResource("3_gul1v")
-lure_type = 1
 knockback_effect = 60
 quality = 1
 id = 2
@@ -111,7 +108,6 @@ crit_chance_mod = null
 
 [sub_resource type="Resource" id="Resource_y4t06"]
 script = ExtResource("3_gul1v")
-lure_type = 1
 knockback_effect = 80
 quality = 1
 id = 2
