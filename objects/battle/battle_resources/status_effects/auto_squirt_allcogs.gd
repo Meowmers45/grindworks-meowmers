@@ -7,7 +7,12 @@ func apply() -> void:
 	manager.s_participant_joined.connect(participant_joined)
 	
 	for cog in manager.cogs:
-		apply_to_cog(cog)
+		var drenched = false
+		for effect in manager.status_effects.duplicate(true):
+			if effect.get_status_name == "Drenched" and effect.target == cog:
+				drenched = true
+		if not drenched:
+			apply_to_cog(cog)
 
 func cleanup() -> void:
 	if manager.s_participant_joined.is_connected(participant_joined):
