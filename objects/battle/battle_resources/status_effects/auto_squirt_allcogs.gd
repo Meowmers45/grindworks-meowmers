@@ -19,7 +19,14 @@ func participant_joined(who: Node3D) -> void:
 
 func apply_to_cog(cog: Cog) -> void:
 	var new_boost := create_boost(cog)
-	manager.add_status_effect(new_boost)
+	var drenched = false
+	var effect_name = "Drenched"
+	for effect in manager.status_effects.duplicate(true):
+		if effect.get_status_name() == effect_name and effect.target == cog:
+			drenched = true
+
+	if not drenched:
+		manager.add_status_effect(new_boost)
 
 func create_boost(who: Cog) -> StatusAutoStorm:
 	var status_effect := SQUIRT_RESOURCE.duplicate()

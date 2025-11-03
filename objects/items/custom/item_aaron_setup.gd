@@ -1,6 +1,6 @@
 extends ItemCharSetup
 
-const AARON_PRANK_PATH := "res://objects/items/resources/active/doodle_chest.tres"
+const AARON_PRANK_PATH := "res://objects/items/resources/active/gag_button.tres"
 
 func first_time_setup(player : Player) -> void:
 	var stats := player.stats
