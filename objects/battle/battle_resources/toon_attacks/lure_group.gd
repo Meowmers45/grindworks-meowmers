@@ -79,6 +79,7 @@ func action():
 				continue
 			if do_stun == false:
 				manager.battle_text(target, "Damage Down!", BattleText.colors.orange[0], BattleText.colors.orange[1])
+				Task.delay(1.0).connect(manager.battle_text.bind(target, "Accuracy Down!", BattleText.colors.orange[0], BattleText.colors.orange[1]))
 			else:
 				manager.battle_text(target, "Stunned!", BattleText.colors.orange[0], BattleText.colors.orange[1])
 			if cog_anim == 'landing':
