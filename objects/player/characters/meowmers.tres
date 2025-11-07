@@ -69,8 +69,7 @@ character_name = "Meowmers"
 character_summary = "Starts with 5 turns (Max of 7)
 Squirtless
 Lure and Sound will hit all Cogs
-A 0 damage Storm Cloud will hit all 
-Cogs every round"
+A 0 damage Storm Cloud will hit all Cogs every round"
 character_blurb = "Cogs and Toons alike wonder where she gets her extreme speed from, Truth is, Not even she knows."
 dna = SubResource("Resource_gqohd")
 gag_loadout = ExtResource("8_6y58e")

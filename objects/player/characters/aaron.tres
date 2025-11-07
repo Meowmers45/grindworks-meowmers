@@ -52,8 +52,7 @@ script = ExtResource("9_e7ooy")
 character_name = "Aaron"
 character_summary = "Starts with 2 turns (Max of 4)
 Lure and Sound will hit all Cogs
-A 0 damage Storm Cloud will hit all 
-Cogs every round"
+A 0 damage Storm Cloud will hit all Cogs every round"
 character_blurb = "Meowmers' Best friend, Not much else that sticks out."
 dna = SubResource("Resource_ax4gq")
 gag_loadout = ExtResource("8_w66ob")
