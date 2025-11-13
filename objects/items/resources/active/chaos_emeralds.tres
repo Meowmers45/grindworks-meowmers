@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ItemActive" load_steps=5 format=3 uid="uid://me4ctrsfpo78"]
+
+[ext_resource type="Texture2D" uid="uid://bkr0nkqqhylnf" path="res://ui_assets/player_ui/pocket_prank_icons/chaos emeralds.png" id="1_isy7i"]
+[ext_resource type="Script" uid="uid://c0fxuas853rra" path="res://objects/items/custom/chaos_emeralds/chaos_emeralds.gd" id="2_isy7i"]
+[ext_resource type="PackedScene" uid="uid://ckjh35qfm4bp3" path="res://objects/items/custom/chaos_emeralds/chaos_emeralds.tscn" id="3_isy7i"]
+[ext_resource type="Script" uid="uid://5uwfsntxdag6" path="res://objects/items/classes/item_active.gd" id="4_3asib"]
+
+[resource]
+script = ExtResource("4_3asib")
+active_type = 2
+custom_charge_color = Color(1, 0.79607844, 0.1882353, 1)
+charge_count = 12
+current_charge = 12
+custom_discharge_time = 75.0
+qualitoon = 4
+rarity = 7
+world_scale = 0.15
+item_name = "Chaos Emeralds"
+item_description = "Save the world!"
+big_description = "- Makes you a Super Toon!
+- Prevents you from taking damage for 75 seconds
+- Prevents Cogs from missing"
+model = ExtResource("3_isy7i")
+player_values = {
+"cogs_always_hit": true
+}
+item_script = ExtResource("2_isy7i")
+icon = ExtResource("1_isy7i")
+shop_category_title = "Pocket Prank"
+shop_category_color = Color(0.92941177, 0.2627451, 0.2784314, 1)
+metadata/_custom_type_script = "uid://5uwfsntxdag6"

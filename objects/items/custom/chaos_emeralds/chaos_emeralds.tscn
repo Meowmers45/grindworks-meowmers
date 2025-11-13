@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckjh35qfm4bp3"]
+
+[ext_resource type="PackedScene" uid="uid://baydxcq6gkkhm" path="res://objects/items/custom/chaos_emeralds/Chaos Emeralds.blend" id="1_snsjw"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Chaos Emeralds" parent="." instance=ExtResource("1_snsjw")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, -0.1949228, 0)

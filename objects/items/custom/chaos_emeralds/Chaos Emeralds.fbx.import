@@ -1,0 +1,82 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://crufgpnnwwaex"
+path="res://.godot/imported/Chaos Emeralds.fbx-94b4ed7f647170ee470e8230b1b04a19.scn"
+
+[deps]
+
+source_file="res://objects/items/custom/chaos_emeralds/Chaos Emeralds.fbx"
+dest_files=["res://.godot/imported/Chaos Emeralds.fbx-94b4ed7f647170ee470e8230b1b04a19.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=20.0
+animation/trimming=true
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"M_ChaosEmerald01": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald01.tres",
+"use_external/path": "uid://ccnivuuu7x8oa"
+},
+"M_ChaosEmerald02": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald02.tres",
+"use_external/path": "uid://eth50jeyllt3"
+},
+"M_ChaosEmerald03": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald03.tres",
+"use_external/path": "uid://dmtjp043w7avw"
+},
+"M_ChaosEmerald04": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald04.tres",
+"use_external/path": "uid://cshtme57yft4f"
+},
+"M_ChaosEmerald05": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald05.tres",
+"use_external/path": "uid://cehhr5hb5usdf"
+},
+"M_ChaosEmerald06": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald06.tres",
+"use_external/path": "uid://vl6i0mlxjw7o"
+},
+"M_ChaosEmerald07": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://objects/items/custom/chaos_emeralds/M_ChaosEmerald07.tres",
+"use_external/path": "uid://dqctm2klxcel2"
+}
+}
+}
+fbx/importer=0
+fbx/allow_geometry_helper_nodes=true
+fbx/embedded_image_handling=1
+fbx/naming_version=2

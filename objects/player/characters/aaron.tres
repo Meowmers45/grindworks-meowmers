@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=24 format=3 uid="uid://fwh0gk0uub2g"]
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=25 format=3 uid="uid://fwh0gk0uub2g"]
 
 [ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="1_70vup"]
 [ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="2_dj0eb"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="10_e74dl"]
 [ext_resource type="Resource" uid="uid://t87i11mxrocf" path="res://objects/items/resources/accessories/hats/fedora.tres" id="13_he2ya"]
 [ext_resource type="Resource" uid="uid://cjn8tya2r3xfn" path="res://objects/items/resources/passive/red_tape.tres" id="14_e7ooy"]
+[ext_resource type="Resource" uid="uid://dd2sc8vd5o40q" path="res://objects/items/resources/passive/meowmers_nerf_accuracy.tres" id="14_e74dl"]
 [ext_resource type="Resource" uid="uid://t466jr8j087t" path="res://objects/items/resources/accessories/glasses/dorky_glasses.tres" id="14_hqvip"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="17_he2ya"]
 [ext_resource type="Resource" uid="uid://bywh4tc8sqocf" path="res://objects/items/resources/accessories/backpacks/bird_wings.tres" id="17_hqvip"]
@@ -57,7 +58,7 @@ character_blurb = "Meowmers' Best friend, Not much else that sticks out."
 dna = SubResource("Resource_ax4gq")
 gag_loadout = ExtResource("8_w66ob")
 starting_laff = 30
-starting_items = Array[ExtResource("10_e74dl")]([ExtResource("18_e74dl"), ExtResource("19_d4u5m"), ExtResource("20_3l4wf"), ExtResource("14_e7ooy"), ExtResource("23_qeupi"), ExtResource("13_he2ya"), ExtResource("14_hqvip"), ExtResource("17_hqvip"), ExtResource("17_he2ya")])
+starting_items = Array[ExtResource("10_e74dl")]([ExtResource("18_e74dl"), ExtResource("19_d4u5m"), ExtResource("20_3l4wf"), ExtResource("14_e74dl"), ExtResource("14_e7ooy"), ExtResource("23_qeupi"), ExtResource("13_he2ya"), ExtResource("14_hqvip"), ExtResource("17_hqvip"), ExtResource("17_he2ya")])
 base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 1,
