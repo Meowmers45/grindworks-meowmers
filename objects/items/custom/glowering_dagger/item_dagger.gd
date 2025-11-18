@@ -3,6 +3,8 @@ extends ItemScriptActive
 const DEFLECT_TIME_MIN := 0.3
 const DEFLECT_COLOR := Color(0.466, 0.663, 0.935)
 
+@export var heal_perc := 0.15
+
 var potential_deflected_attack: CogAttack
 var attack_was_deflected := false
 var attack_accounted_for := false
@@ -113,13 +115,23 @@ func hurt_cog() -> void:
 	var battle_node := manager.battle_node
 	var targets := manager.current_action.targets
 	var damage: int = manager.current_action.damage
+	var leeched = false
+	var effect_name = "Laff Leech"
 	
 	manager.show_action_name("Parried Damage!")
 	var cog: Cog = targets[0]
 	BattleService.ongoing_battle.battle_node.focus_character(cog)
 	cog.set_animation('pie-small')
 	manager.affect_target(cog, damage)
+	for effect in manager.status_effects.duplicate(true):
+		if effect.get_status_name() == effect_name and effect.target == cog:
+			leeched = true
+	if leeched:
+		manager.affect_target(Util.get_player(), -damage)
 	AudioManager.play_sound(load("res://audio/sfx/battle/cogs/attacks/special/tt_s_ara_cfg_toonHit.ogg"))
 	await Task.delay(3.0)
 	
 	await manager.check_pulses(targets)
+
+func get_heal(dmg: int) -> int:
+	return ceili(dmg * heal_perc)
