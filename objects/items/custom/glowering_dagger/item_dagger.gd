@@ -117,7 +117,6 @@ func hurt_cog() -> void:
 	var damage: int = manager.current_action.damage
 	var leeched = false
 	var effect_name = "Laff Leech"
-	
 	manager.show_action_name("Parried Damage!")
 	var cog: Cog = targets[0]
 	BattleService.ongoing_battle.battle_node.focus_character(cog)
