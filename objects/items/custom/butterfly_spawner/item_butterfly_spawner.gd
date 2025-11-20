@@ -26,22 +26,23 @@ func use() -> void:
 	var item_count = 1
 	
 	for i in item_count:
-		var dir = DirAccess.open("res://mods-unpacked/")
-		if dir:
-			# Check if the directory or a specific file within exists
-			if dir.dir_exists("/alder-GreenFolio"):
-				var item = WORLD_ITEM.instantiate()
-				item.override_replacement_rolls = true
-				item.item = MONARCH_BUTTERFLY
-				zone.add_child(item)
-				item.global_position = rel_pos + (rel_basis * Vector3(-1 * i, 0.25, 0))
-				var dust_cloud = Globals.DUST_CLOUD.instantiate()
-				zone.add_child(dust_cloud)
-				dust_cloud.scale *= item.scale
-				dust_cloud.global_position = item.global_position
-				await Task.delay(0.1)
-			else:
-				return
+		if ResourceLoader.has_cached("res://mods-unpacked/alder-GreenFolio/GFglobal.gd"):
+		# The mod is installed and its script is available
+			print("Green Folio enabled!")
+			var item = WORLD_ITEM.instantiate()
+			item.override_replacement_rolls = true
+			item.item = MONARCH_BUTTERFLY
+			zone.add_child(item)
+			item.global_position = rel_pos + (rel_basis * Vector3(-1 * i, 0.25, 0))
+			var dust_cloud = Globals.DUST_CLOUD.instantiate()
+			zone.add_child(dust_cloud)
+			dust_cloud.scale *= item.scale
+			dust_cloud.global_position = item.global_position
+			await Task.delay(0.1)
+			# Proceed to use the mod's functionality (e.g., instance a scene, call a function)
+		else:
+			print("Mod not found, feature disabled.")
+			return
 		
 	attempt_disconnect()
 	Util.get_player().stats.current_active_item = null
