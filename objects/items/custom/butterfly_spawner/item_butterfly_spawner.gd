@@ -7,7 +7,6 @@ const CHEST = "res://objects/interactables/treasure_chest/treasure_chest.tscn"
 const DOODLE := preload("res://objects/items/resources/passive/doodle.tres")
 const WORLD_ITEM = preload("res://objects/items/world_item/world_item.tscn")
 const ACC_POOL = preload("res://objects/items/pools/accessories.tres")
-const MONARCH_BUTTERFLY := "res://mods-unpacked/alder-GreenFolio/extensions/objects/items/resources/active/monarch_butterfly.tres"
 func use() -> void:
 	# Makes this work in debug rooms
 	var zone
@@ -31,7 +30,7 @@ func use() -> void:
 			print("Green Folio enabled!")
 			var item = WORLD_ITEM.instantiate()
 			item.override_replacement_rolls = true
-			item.item = MONARCH_BUTTERFLY
+			item.item = preload("res://mods-unpacked/alder-GreenFolio/extensions/objects/items/resources/active/monarch_butterfly.tres")
 			zone.add_child(item)
 			item.global_position = rel_pos + (rel_basis * Vector3(-1 * i, 0.25, 0))
 			var dust_cloud = Globals.DUST_CLOUD.instantiate()
