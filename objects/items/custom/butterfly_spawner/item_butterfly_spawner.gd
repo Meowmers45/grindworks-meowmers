@@ -42,7 +42,6 @@ func use() -> void:
 			# Proceed to use the mod's functionality (e.g., instance a scene, call a function)
 		else:
 			print("Mod not found, feature disabled.")
-			return
 		
 	attempt_disconnect()
 	Util.get_player().stats.current_active_item = null
