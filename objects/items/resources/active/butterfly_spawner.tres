@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemActive" load_steps=6 format=3 uid="uid://c83uyagxkxjp5"]
+
+[ext_resource type="Texture2D" uid="uid://compug11vys02" path="res://models/accessories/backpacks/butterfly_wings/butterfly_wings-pix-1.png" id="1_tmbtr"]
+[ext_resource type="Script" uid="uid://b5yulx21oehqf" path="res://objects/items/custom/butterfly_spawner/item_butterfly_spawner.gd" id="2_tmbtr"]
+[ext_resource type="PackedScene" uid="uid://dxyq5lb5oineo" path="res://objects/interactables/treasure_chest/treasure_chest.tscn" id="3_rlsrl"]
+[ext_resource type="AudioStream" uid="uid://dxek5pyx8j27b" path="res://audio/sfx/doodle/speak_v1.ogg" id="4_l6byn"]
+[ext_resource type="Script" uid="uid://5uwfsntxdag6" path="res://objects/items/classes/item_active.gd" id="5_t2w0s"]
+
+[resource]
+script = ExtResource("5_t2w0s")
+sfx = Array[AudioStream]([ExtResource("4_l6byn")])
+active_type = 2
+custom_charge_color = Color(1, 0.79607844, 0.1882353, 1)
+needs_full_charge = false
+qualitoon = 4
+world_scale = 0.5
+item_name = "Butterfly Spawner"
+item_description = "Save the Butterflies!"
+big_description = "Spawns a Monarch Butterfly
+(Requires the Green Folio mod to be installed)
+"
+model = ExtResource("3_rlsrl")
+pickup_sfx = ExtResource("4_l6byn")
+item_script = ExtResource("2_tmbtr")
+icon = ExtResource("1_tmbtr")
+shop_category_title = "Pocket Prank"
+shop_category_color = Color(1, 0.796078, 0.188235, 1)
+metadata/_custom_type_script = "uid://5uwfsntxdag6"
