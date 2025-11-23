@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=25 format=3 uid="uid://fwh0gk0uub2g"]
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=28 format=3 uid="uid://fwh0gk0uub2g"]
 
 [ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="1_70vup"]
 [ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="2_dj0eb"]
@@ -14,11 +14,14 @@
 [ext_resource type="Resource" uid="uid://cjn8tya2r3xfn" path="res://objects/items/resources/passive/red_tape.tres" id="14_e7ooy"]
 [ext_resource type="Resource" uid="uid://dd2sc8vd5o40q" path="res://objects/items/resources/passive/meowmers_nerf_accuracy.tres" id="14_e74dl"]
 [ext_resource type="Resource" uid="uid://t466jr8j087t" path="res://objects/items/resources/accessories/glasses/dorky_glasses.tres" id="14_hqvip"]
+[ext_resource type="Resource" uid="uid://tnnppqjvfyvh" path="res://objects/items/resources/accessories/backpacks/spider_legs.tres" id="16_yres6"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="17_he2ya"]
 [ext_resource type="Resource" uid="uid://bywh4tc8sqocf" path="res://objects/items/resources/accessories/backpacks/bird_wings.tres" id="17_hqvip"]
 [ext_resource type="Resource" path="res://objects/items/resources/passive/aaron_setup.tres" id="18_e74dl"]
 [ext_resource type="Resource" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="19_d4u5m"]
 [ext_resource type="Resource" path="res://objects/items/resources/passive/meowmers_boost.tres" id="20_3l4wf"]
+[ext_resource type="Resource" uid="uid://c83uyagxkxjp5" path="res://objects/items/resources/active/butterfly_spawner.tres" id="22_3l4wf"]
+[ext_resource type="Resource" uid="uid://c8wjy8fdkxarx" path="res://objects/items/resources/active/gag_button.tres" id="22_qeupi"]
 [ext_resource type="Resource" uid="uid://dv5u2vhslq87m" path="res://objects/items/resources/accessories/backpacks/cog_pack.tres" id="23_qeupi"]
 
 [sub_resource type="Resource" id="Resource_jj61k"]
@@ -58,7 +61,7 @@ character_blurb = "Meowmers' Best friend, Not much else that sticks out."
 dna = SubResource("Resource_ax4gq")
 gag_loadout = ExtResource("8_w66ob")
 starting_laff = 30
-starting_items = Array[ExtResource("10_e74dl")]([ExtResource("18_e74dl"), ExtResource("19_d4u5m"), ExtResource("20_3l4wf"), ExtResource("14_e74dl"), ExtResource("14_e7ooy"), ExtResource("23_qeupi"), ExtResource("13_he2ya"), ExtResource("14_hqvip"), ExtResource("17_hqvip"), ExtResource("17_he2ya")])
+starting_items = Array[ExtResource("10_e74dl")]([ExtResource("18_e74dl"), ExtResource("19_d4u5m"), ExtResource("20_3l4wf"), ExtResource("14_e74dl"), ExtResource("14_e7ooy"), ExtResource("16_yres6"), ExtResource("23_qeupi"), ExtResource("13_he2ya"), ExtResource("14_hqvip"), ExtResource("17_hqvip"), ExtResource("17_he2ya"), ExtResource("22_qeupi"), ExtResource("22_3l4wf")])
 base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 1,
