@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bqhq2sqtl5gxy"]
+
+[ext_resource type="Script" uid="uid://wcbh8hb624h3" path="res://objects/battle/battle_resources/status_effects/status_effect_boiling.gd" id="1_rggxh"]
+
+[resource]
+script = ExtResource("1_rggxh")
+quality = 1
+rounds = 2
+id = 53

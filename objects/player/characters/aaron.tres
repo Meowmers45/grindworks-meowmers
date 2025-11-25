@@ -26,6 +26,7 @@
 
 [sub_resource type="Resource" id="Resource_jj61k"]
 script = ExtResource("1_70vup")
+accuracy = 1.75
 speed = 1.25
 max_turns = 4
 turns = 2
@@ -66,4 +67,7 @@ base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 1,
 "Sound": 2
+})
+additional_stats = Dictionary[String, Variant]({
+"luck": 0.15
 })

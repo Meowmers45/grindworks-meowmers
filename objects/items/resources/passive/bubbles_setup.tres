@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dtv0v1prk5ssc"]
+
+[ext_resource type="Script" uid="uid://b5hihe6jwy8l0" path="res://objects/items/custom/item_bubbles_setup.gd" id="1_vqsro"]
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="2_2sv8y"]
+
+[resource]
+script = ExtResource("2_2sv8y")
+item_name = "Bubbles Setup"
+item_script = ExtResource("1_vqsro")
+shop_category_color = Color(0.196078, 0.580392, 0.917647, 1)
+metadata/_custom_type_script = "uid://combwqypom1ru"

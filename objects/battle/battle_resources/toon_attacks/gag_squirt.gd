@@ -3,6 +3,7 @@ class_name GagSquirt
 
 const DEBUFF := preload("res://objects/battle/battle_resources/status_effects/resources/status_effect_drenched.tres")
 const POISON_COLOR := Color(0, 0.43, 0.151)
+const BOILING_COLOR := Color(0.431, 0.906, 0.835)
 
 
 func soak_opponent(who: Node3D, from: Node3D, time: float) -> void:
@@ -10,6 +11,8 @@ func soak_opponent(who: Node3D, from: Node3D, time: float) -> void:
 	user.add_child(splash)
 	if Util.get_player().stats.has_item('Witch Hat'):
 		splash.set_color(POISON_COLOR)
+	if Util.get_player().stats.has_item('Bubbles Squirt Boost'):
+		splash.set_color(BOILING_COLOR)
 	splash.global_position = from.global_position
 	await splash.spray(who.global_position,time)
 	splash.queue_free()
@@ -43,5 +46,7 @@ func get_stats() -> String:
 	
 	if Util.get_player().stats.has_item('Witch Hat'):
 		string += "\nApplies: Poison"
+	if Util.get_player().stats.has_item('Bubbles Squirt Boost'):
+		string += "\nApplies: Boiling"
 	
 	return string

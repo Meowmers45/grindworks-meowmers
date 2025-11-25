@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=28 format=3 uid="uid://cg5tf8pt1wt8r"]
+
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_tjnsi"]
+[ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="2_nsl05"]
+[ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="3_dsth0"]
+[ext_resource type="Texture2D" uid="uid://5tfs5ixlxxto" path="res://models/toon/textures/clothes/skirts/4thJulySkirt1.jpg" id="4_tjnsi"]
+[ext_resource type="Script" uid="uid://yg7gxug4rab" path="res://objects/toon/toon_dna.gd" id="5_k61wg"]
+[ext_resource type="Script" uid="uid://dfqwh4jmdy0iw" path="res://objects/toon/clothing/toon_shirt.gd" id="6_2erhc"]
+[ext_resource type="Texture2D" uid="uid://dhllol7bxd8qt" path="res://models/toon/textures/clothes/shirts/4thJulyShirt2.jpg" id="7_nsl05"]
+[ext_resource type="Texture2D" uid="uid://g7b1m4seqh7b" path="res://models/toon/textures/clothes/shirts/4thJulySleeve2.jpg" id="8_dsth0"]
+[ext_resource type="Resource" uid="uid://bmcon3qwk21kv" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/bubbles_loadout.tres" id="9_tjnsi"]
+[ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="10_yj7wl"]
+[ext_resource type="Resource" uid="uid://dtv0v1prk5ssc" path="res://objects/items/resources/passive/bubbles_setup.tres" id="11_tjnsi"]
+[ext_resource type="Resource" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="12_03pg8"]
+[ext_resource type="Resource" uid="uid://c5ei2gaae6n5p" path="res://objects/items/resources/passive/bubbles_squirt_boost.tres" id="12_tjnsi"]
+[ext_resource type="Resource" uid="uid://dd2sc8vd5o40q" path="res://objects/items/resources/passive/meowmers_nerf_accuracy.tres" id="14_m7xp7"]
+[ext_resource type="Resource" uid="uid://cjn8tya2r3xfn" path="res://objects/items/resources/passive/red_tape.tres" id="15_d8vio"]
+[ext_resource type="Resource" uid="uid://tnnppqjvfyvh" path="res://objects/items/resources/accessories/backpacks/spider_legs.tres" id="16_n58ag"]
+[ext_resource type="Resource" uid="uid://bh5mubvof8wpe" path="res://objects/items/resources/accessories/hats/tiara.tres" id="17_8k275"]
+[ext_resource type="Resource" uid="uid://1mu6kq6h0d8j" path="res://objects/items/resources/accessories/hats/heart_headband.tres" id="18_tjnsi"]
+[ext_resource type="Resource" uid="uid://digbtm3frw0sr" path="res://objects/items/resources/accessories/glasses/heart_glasses.tres" id="19_nsl05"]
+[ext_resource type="Resource" uid="uid://djij80h8jh7yd" path="res://objects/items/resources/accessories/glasses/star_glasses.tres" id="19_vy1xy"]
+[ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="20_tjnsi"]
+[ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="21_6w60k"]
+[ext_resource type="Resource" uid="uid://c83uyagxkxjp5" path="res://objects/items/resources/active/butterfly_spawner.tres" id="23_1e7xa"]
+
+[sub_resource type="Resource" id="Resource_jj61k"]
+script = ExtResource("2_nsl05")
+accuracy = 1.5
+speed = 1.15
+max_turns = 5
+turns = 3
+
+[sub_resource type="Resource" id="Resource_ugrs1"]
+script = ExtResource("3_dsth0")
+texture = ExtResource("4_tjnsi")
+
+[sub_resource type="Resource" id="Resource_2lryd"]
+script = ExtResource("6_2erhc")
+shirt_texture = ExtResource("7_nsl05")
+sleeve_texture = ExtResource("8_dsth0")
+
+[sub_resource type="Resource" id="Resource_ax4gq"]
+script = ExtResource("5_k61wg")
+body_type = 1
+leg_type = 1
+species = 0
+head_index = 2
+skirt = true
+head_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
+torso_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
+leg_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
+shirt = SubResource("Resource_2lryd")
+bottoms = SubResource("Resource_ugrs1")
+
+[resource]
+script = ExtResource("10_yj7wl")
+character_name = "Bubbles"
+character_summary = "Starts with 3 turns (Max of 5)
+Lure and Sound will hit all Cogs
+Squirt now burns cogs"
+character_blurb = "Aaron's reliable sister, She REALLY knows her way around- YEOWCH!!! Be careful with that boiling pot of water!"
+dna = SubResource("Resource_ax4gq")
+gag_loadout = ExtResource("9_tjnsi")
+starting_laff = 30
+starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtResource("12_tjnsi"), ExtResource("12_03pg8"), ExtResource("14_m7xp7"), ExtResource("15_d8vio"), ExtResource("16_n58ag"), ExtResource("21_6w60k"), ExtResource("18_tjnsi"), ExtResource("19_nsl05"), ExtResource("17_8k275"), ExtResource("19_vy1xy"), ExtResource("20_tjnsi"), ExtResource("23_1e7xa")])
+base_stats = SubResource("Resource_jj61k")
+starting_gags = Dictionary[String, int]({
+"Drop": 1,
+"Squirt": 2
+})
+additional_stats = Dictionary[String, Variant]({
+"luck": 0.85
+})
