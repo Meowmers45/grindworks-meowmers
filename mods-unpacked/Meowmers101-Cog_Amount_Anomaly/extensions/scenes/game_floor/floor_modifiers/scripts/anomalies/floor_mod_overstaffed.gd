@@ -24,4 +24,4 @@ func get_description() -> String:
 	return "Battles may have more than 4 cogs."
 
 func get_mod_quality() -> ModType:
-	return ModType.NEUTRAL
+	return ModType.NEGATIVE
