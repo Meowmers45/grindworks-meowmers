@@ -25,7 +25,7 @@ func use() -> void:
 	var item_count = 1
 	
 	for i in item_count:
-		if ResourceLoader.has_cached("res://mods-unpacked/alder-GreenFolio/GFglobal.gd"):
+		if ModLoaderMod.is_mod_loaded("alder-GreenFolio"):
 		# The mod is installed and its script is available
 			print("Green Folio enabled!")
 			var item = WORLD_ITEM.instantiate()
