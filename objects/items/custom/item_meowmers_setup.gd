@@ -9,7 +9,7 @@ func first_time_setup(player : Player) -> void:
 	player.stats.gag_effectiveness['Squirt'] = 1.0
 	player.stats.funny_dance = true
 	player.stats.pink_slips = 5
-	player.stats.healing_effectiveness = 1.0
+	player.stats.healing_effectiveness = 2.4
 	player.stats.gag_cap = 20
 	player.stats.debug_gag_points = false
 	player.stats.meowmersdragonwings = true
