@@ -16,6 +16,6 @@ func first_time_setup(player : Player) -> void:
 	player.stats.shop_discount = 15
 	player.stats.luck = 0.25
 	player.use_accuracy = 1
-	player.stats.extra_jumps = 5
+	player.stats.extra_jumps = INF
 	for track in Util.get_player().stats.gag_balance.keys():
 		Util.get_player().stats.gag_regeneration[track] += 3
