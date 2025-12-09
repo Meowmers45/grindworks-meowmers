@@ -32,7 +32,6 @@ func do_schmooves() -> void:
 	scare_tween.tween_interval(0.5)
 	
 	# Hide meowmers and show static
-	scare_tween.tween_callback(meowmers_tex.hide)
 
 	scare_tween.finished.connect(
 		func():
