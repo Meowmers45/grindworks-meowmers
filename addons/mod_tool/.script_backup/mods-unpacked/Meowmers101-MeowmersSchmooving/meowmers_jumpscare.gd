@@ -5,20 +5,18 @@ const STATIC_TIME := 3.0
 const STATIC_FADE_TIME := 2.0
 const ROLL_CHANCE := 10000
 
-var meowmers_dancing_tween: Tween
-
-@export_tool_button("Get to Schmooving") var dance_button = do_schmooves
-
 @onready var meowmers_ref := %MeowmersReference
 @onready var meowmers_tex := %MeowmersTex
-@onready var meowmers_mus := %MeowmersMusic
 @onready var timer := %DanceTimer
 
-func _ready() -> void:
-	BattleService.s_battle_ending.connect(load_dance)
+var meowmers_dancing_tween: Tween
 
 func _process(_delta: float) -> void:
 	meowmers_tex.set_texture(get_texture(meowmers_ref))
+	if BattleManager:
+		BattleService.s_battle_ending.connect(on_battle_ending)
+	else:
+		return
 
 func get_texture(sprite: AnimatedSprite2D) -> Texture2D:
 	return sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
@@ -32,23 +30,15 @@ func do_schmooves() -> void:
 	# Play the anim and sound
 	meowmers_dancing_tween.tween_callback(meowmers_tex.show)
 	meowmers_dancing_tween.tween_callback(meowmers_ref.play)
-	meowmers_dancing_tween.tween_callback(meowmers_mus.play)
-	meowmers_dancing_tween.tween_interval(8.0)
-	# Fade Meowmers and the song out
-	meowmers_dancing_tween.tween_property(meowmers_mus, 'volume_db', -INF, STATIC_FADE_TIME)
-	meowmers_dancing_tween.parallel().tween_property(meowmers_tex, 'modulate:a', 0.0, STATIC_FADE_TIME)
+	meowmers_dancing_tween.tween_interval(0.5)
 
 	meowmers_dancing_tween.finished.connect(
 		func():
 			meowmers_dancing_tween.kill()
-			meowmers_tex.hide()
-			meowmers_tex.modulate.a = 1.0
-			meowmers_mus.stop()
-			meowmers_mus.volume_db = 0.0
 			meowmers_ref.frame = 0
 	)
 
-func load_dance() -> void:
+func on_battle_ending() -> void:
 	if meowmers_dancing_tween and meowmers_dancing_tween.is_running():
 		return
 	do_schmooves()

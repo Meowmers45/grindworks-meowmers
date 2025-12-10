@@ -130,7 +130,6 @@ sprite_frames = SubResource("SpriteFrames_4dxau")
 
 [node name="FoxyTex" type="TextureRect" parent="Foxy"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
