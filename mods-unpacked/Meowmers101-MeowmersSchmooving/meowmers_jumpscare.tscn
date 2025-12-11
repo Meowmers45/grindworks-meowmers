@@ -1,470 +1,511 @@
-[gd_scene load_steps=118 format=3 uid="uid://mvb34i0bofji"]
+[gd_scene load_steps=128 format=3 uid="uid://dk4pwcb1fwoso"]
 
 [ext_resource type="Script" uid="uid://ba0sgxq1ws3du" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/meowmers_jumpscare.gd" id="1_2tdu0"]
-[ext_resource type="Texture2D" uid="uid://bmpae0mr87myn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/387.png" id="3_o2ktj"]
-[ext_resource type="Texture2D" uid="uid://csjrlqrhetb15" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/388.png" id="4_lon5n"]
-[ext_resource type="Texture2D" uid="uid://d24uddq3pyamh" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/389.png" id="5_vp2gx"]
-[ext_resource type="Texture2D" uid="uid://dtutv83rxejs1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/390.png" id="6_adxec"]
-[ext_resource type="Texture2D" uid="uid://5rrrd6qvykw3" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/391.png" id="7_fi6r4"]
-[ext_resource type="Texture2D" uid="uid://cprdnsl7gfd3v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/392.png" id="8_yk572"]
-[ext_resource type="Texture2D" uid="uid://cb6hgut5qy3co" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/393.png" id="9_rvla8"]
-[ext_resource type="Texture2D" uid="uid://h2y3gg5kd02c" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/394.png" id="10_seco7"]
-[ext_resource type="Texture2D" uid="uid://dik3tajjoxkun" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/395.png" id="11_ci8ha"]
-[ext_resource type="Texture2D" uid="uid://kcnf8ldcx78v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/396.png" id="12_tvna0"]
-[ext_resource type="Texture2D" uid="uid://rch8dcb7njln" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/397.png" id="13_djt0u"]
-[ext_resource type="Texture2D" uid="uid://bxbtwl8wrvqf0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/398.png" id="14_lwgf5"]
-[ext_resource type="Texture2D" uid="uid://cpjcap5ikf11y" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/399.png" id="15_e5qfb"]
-[ext_resource type="Texture2D" uid="uid://bleqm4wmiko1m" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/400.png" id="16_n0pf0"]
-[ext_resource type="Texture2D" uid="uid://dt7jq1xvsbg0x" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/401.png" id="17_ju0fp"]
-[ext_resource type="Texture2D" uid="uid://c6bqwprunhdij" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/402.png" id="18_wicwl"]
-[ext_resource type="Texture2D" uid="uid://bejp63xt66l3y" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/403.png" id="19_ury0c"]
-[ext_resource type="Texture2D" uid="uid://cwmq1e3y5c15q" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/404.png" id="20_hfxv4"]
-[ext_resource type="Texture2D" uid="uid://mul5ig5wphoc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/405.png" id="21_83d5n"]
-[ext_resource type="Texture2D" uid="uid://cb6v2iulywn0c" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/406.png" id="22_djrv2"]
-[ext_resource type="Texture2D" uid="uid://ciexdmwt16k60" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/407.png" id="23_hh44g"]
-[ext_resource type="Texture2D" uid="uid://dyh5qocnvlp42" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/408.png" id="24_72ebq"]
-[ext_resource type="Texture2D" uid="uid://bxa7leghloy5v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/409.png" id="25_4y13p"]
-[ext_resource type="Texture2D" uid="uid://bwfskc8eh8eq6" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/410.png" id="26_6svio"]
-[ext_resource type="Texture2D" uid="uid://dkc14brbwaoyt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/411.png" id="27_5f0qt"]
-[ext_resource type="Texture2D" uid="uid://dietlohr07pwn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/412.png" id="28_ld0vn"]
-[ext_resource type="Texture2D" uid="uid://cfsccyap121xv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/413.png" id="29_seyql"]
-[ext_resource type="Texture2D" uid="uid://cekj7p4u6qr1k" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/414.png" id="30_o17ht"]
-[ext_resource type="Texture2D" uid="uid://b5qwrgtgodod1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/415.png" id="31_2av1v"]
-[ext_resource type="Texture2D" uid="uid://e2o7nuxryu0g" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/416.png" id="32_ne6qr"]
-[ext_resource type="Texture2D" uid="uid://o7hm3vcdc3ln" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/417.png" id="33_0x3pd"]
-[ext_resource type="Texture2D" uid="uid://fowgc77idvar" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/418.png" id="34_sc8be"]
-[ext_resource type="Texture2D" uid="uid://cnlx4q5f2tnqt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/419.png" id="35_yjnb4"]
-[ext_resource type="Texture2D" uid="uid://dpnnycdm4m5pr" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/420.png" id="36_5lqde"]
-[ext_resource type="Texture2D" uid="uid://bevo8bagk4qhb" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/421.png" id="37_g8pnm"]
-[ext_resource type="Texture2D" uid="uid://bxdhxpbbrotd4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/422.png" id="38_ffeip"]
-[ext_resource type="Texture2D" uid="uid://dbagrwx3bapkd" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/423.png" id="39_2j5ep"]
-[ext_resource type="Texture2D" uid="uid://cy5x7762rlseo" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/424.png" id="40_20u3r"]
-[ext_resource type="Texture2D" uid="uid://k30u72x4vnqf" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/425.png" id="41_vyb2s"]
-[ext_resource type="Texture2D" uid="uid://dnu4csfksk6mu" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/426.png" id="42_t1ij5"]
-[ext_resource type="Texture2D" uid="uid://cajpceh0cvodq" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/427.png" id="43_jdmw1"]
-[ext_resource type="Texture2D" uid="uid://bhd6bq8tsajne" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/428.png" id="44_37gk4"]
-[ext_resource type="Texture2D" uid="uid://dnt84f1t0ab5o" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/429.png" id="45_h8tu0"]
-[ext_resource type="Texture2D" uid="uid://c38knfct5gfuv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/430.png" id="46_ophan"]
-[ext_resource type="Texture2D" uid="uid://3lcqd5wg5yb7" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/431.png" id="47_gsnj0"]
-[ext_resource type="Texture2D" uid="uid://ct1hahfu7y2ho" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/432.png" id="48_7wq8i"]
-[ext_resource type="Texture2D" uid="uid://c2as48xqm5ry1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/433.png" id="49_p2vrw"]
-[ext_resource type="Texture2D" uid="uid://vr6dr0jvt8kn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/434.png" id="50_6xts2"]
-[ext_resource type="Texture2D" uid="uid://dj4hqe24iftlu" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/435.png" id="51_u8g64"]
-[ext_resource type="Texture2D" uid="uid://xlmfu810ghts" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/436.png" id="52_810yg"]
-[ext_resource type="Texture2D" uid="uid://b75mfwfjkljkh" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/437.png" id="53_gxdng"]
-[ext_resource type="Texture2D" uid="uid://brktsmtkfi6qc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/438.png" id="54_odo72"]
-[ext_resource type="Texture2D" uid="uid://bxmuyu7oh7x5i" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/439.png" id="55_roerl"]
-[ext_resource type="Texture2D" uid="uid://bs88dtbvrvxa4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/440.png" id="56_gjvr0"]
-[ext_resource type="Texture2D" uid="uid://ncvs1iutr5qg" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/441.png" id="57_wdtk0"]
-[ext_resource type="Texture2D" uid="uid://dhmdr8hxf7age" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/442.png" id="58_dhq28"]
-[ext_resource type="Texture2D" uid="uid://cufgegmexyrfn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/443.png" id="59_hy3px"]
-[ext_resource type="Texture2D" uid="uid://cxtyaxv7waub0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/444.png" id="60_81fvx"]
-[ext_resource type="Texture2D" uid="uid://dgyjjk2q4b1vt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/445.png" id="61_ceypl"]
-[ext_resource type="Texture2D" uid="uid://nr64vqm270pv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/446.png" id="62_wfs5q"]
-[ext_resource type="Texture2D" uid="uid://hu0hqkmjq6q6" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/447.png" id="63_5soml"]
-[ext_resource type="Texture2D" uid="uid://bxe1n33ufuyll" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/448.png" id="64_d4s4j"]
-[ext_resource type="Texture2D" uid="uid://dj1otmwxxwtot" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/449.png" id="65_cmhbo"]
-[ext_resource type="Texture2D" uid="uid://3mbdy760jdeh" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/450.png" id="66_gn14n"]
-[ext_resource type="Texture2D" uid="uid://bh7m4nodq1iqe" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/451.png" id="67_jocs3"]
-[ext_resource type="Texture2D" uid="uid://3vyd3nj71doe" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/452.png" id="68_du8jc"]
-[ext_resource type="Texture2D" uid="uid://ciuyya4hc8cce" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/453.png" id="69_86k3h"]
-[ext_resource type="Texture2D" uid="uid://bxxy32rfretjs" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/454.png" id="70_3s776"]
-[ext_resource type="Texture2D" uid="uid://ctp4oay0wfqio" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/455.png" id="71_dbf3v"]
-[ext_resource type="Texture2D" uid="uid://dor5ahr4qhu0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/456.png" id="72_mg66h"]
-[ext_resource type="Texture2D" uid="uid://dx06s7x500q85" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/457.png" id="73_l105y"]
-[ext_resource type="Texture2D" uid="uid://bead0wshytgt3" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/458.png" id="74_hu3f0"]
-[ext_resource type="Texture2D" uid="uid://cxqgjkjdf5iwr" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/459.png" id="75_muk7p"]
-[ext_resource type="Texture2D" uid="uid://7k8tng1meo34" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/460.png" id="76_j5t27"]
-[ext_resource type="Texture2D" uid="uid://c7n1blfe8arcx" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/461.png" id="77_q1why"]
-[ext_resource type="Texture2D" uid="uid://bi4w75tvtvxj" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/462.png" id="78_fgx52"]
-[ext_resource type="Texture2D" uid="uid://cf71jvsi23xg" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/463.png" id="79_3ud4t"]
-[ext_resource type="Texture2D" uid="uid://dwdx3xtdv6wly" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/464.png" id="80_4deuj"]
-[ext_resource type="Texture2D" uid="uid://dli06ccjdh4xi" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/465.png" id="81_cn8ug"]
-[ext_resource type="Texture2D" uid="uid://bpqjywv63iqvv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/466.png" id="82_bxscv"]
-[ext_resource type="Texture2D" uid="uid://bkxcsk6ig48v4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/467.png" id="83_sism5"]
-[ext_resource type="Texture2D" uid="uid://d1ao4c87hx52s" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/468.png" id="84_j4qt2"]
-[ext_resource type="Texture2D" uid="uid://cas57ucfgaufy" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/469.png" id="85_d8pge"]
-[ext_resource type="Texture2D" uid="uid://bav2a4xyk1evm" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/470.png" id="86_bxkyi"]
-[ext_resource type="Texture2D" uid="uid://dtn3thoi727cv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/471.png" id="87_yp7m3"]
-[ext_resource type="Texture2D" uid="uid://m5omqdlrrgw4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/472.png" id="88_lfv8y"]
-[ext_resource type="Texture2D" uid="uid://oxryi0kehwcu" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/473.png" id="89_umquq"]
-[ext_resource type="Texture2D" uid="uid://cm3a2da4ibsu0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/474.png" id="90_j0qs5"]
-[ext_resource type="Texture2D" uid="uid://d0370q23ak0gk" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/475.png" id="91_h7b4m"]
-[ext_resource type="Texture2D" uid="uid://dyssng2dybw0w" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/476.png" id="92_iyhox"]
-[ext_resource type="Texture2D" uid="uid://jkwwh14cpkqw" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/477.png" id="93_7chly"]
-[ext_resource type="Texture2D" uid="uid://du3g5fnrwyinf" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/478.png" id="94_0lfex"]
-[ext_resource type="Texture2D" uid="uid://doed3ijewcvch" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/479.png" id="95_84cn7"]
-[ext_resource type="Texture2D" uid="uid://cxf0w2tni5fi" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/480.png" id="96_wciht"]
-[ext_resource type="Texture2D" uid="uid://c1lxkp8c0twvs" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/481.png" id="97_0v8hy"]
-[ext_resource type="Texture2D" uid="uid://fqn0xfrx5ro4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/482.png" id="98_dc64n"]
-[ext_resource type="Texture2D" uid="uid://gxdqwsdjl6ms" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/483.png" id="99_g7foy"]
-[ext_resource type="Texture2D" uid="uid://c8c8t02un03m3" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/484.png" id="100_2nyox"]
-[ext_resource type="Texture2D" uid="uid://cugus5tmu58yt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/485.png" id="101_0c8hu"]
-[ext_resource type="Texture2D" uid="uid://cv4isf7ipcd7g" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/486.png" id="102_hahux"]
-[ext_resource type="Texture2D" uid="uid://pfd6ds2x0tvt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/487.png" id="103_lg5le"]
-[ext_resource type="Texture2D" uid="uid://dlw34x53w3j23" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/488.png" id="104_rllq2"]
-[ext_resource type="Texture2D" uid="uid://urgx1vr78804" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/489.png" id="105_vxuwb"]
-[ext_resource type="Texture2D" uid="uid://ckygnchmtruoc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/490.png" id="106_hmbns"]
-[ext_resource type="Texture2D" uid="uid://g4fdxxtkmgky" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/491.png" id="107_u4iwn"]
-[ext_resource type="Texture2D" uid="uid://dxab7s1cyp5ij" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/492.png" id="108_6nvyg"]
-[ext_resource type="Texture2D" uid="uid://bxlm4gkdc06dg" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/493.png" id="109_2sgfp"]
-[ext_resource type="Texture2D" uid="uid://behspkbla6gaw" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/494.png" id="110_qdtr7"]
-[ext_resource type="Texture2D" uid="uid://6l73wuo6k2re" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/495.png" id="111_s0hsn"]
-[ext_resource type="Texture2D" uid="uid://bga0mv2i4f47" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/496.png" id="112_gqsgv"]
-[ext_resource type="Texture2D" uid="uid://c5dsp2jqg3h7y" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/497.png" id="113_argfh"]
-[ext_resource type="Texture2D" uid="uid://cwo5dcbahx3yc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/498.png" id="114_7y2s5"]
-[ext_resource type="Texture2D" uid="uid://tog5ksno1adt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/499.png" id="115_mk4ly"]
-[ext_resource type="AudioStream" uid="uid://d2xroxieovqqf" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/celebration.ogg" id="116_o2ktj"]
-[ext_resource type="Texture2D" uid="uid://cecgelesbhmk0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/500.png" id="116_tc0hw"]
+[ext_resource type="Texture2D" uid="uid://bmpae0mr87myn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/387.png" id="2_yju6p"]
+[ext_resource type="Texture2D" uid="uid://csjrlqrhetb15" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/388.png" id="3_rasvp"]
+[ext_resource type="Texture2D" uid="uid://d24uddq3pyamh" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/389.png" id="4_hx0pl"]
+[ext_resource type="Texture2D" uid="uid://dtutv83rxejs1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/390.png" id="5_olaxh"]
+[ext_resource type="Texture2D" uid="uid://5rrrd6qvykw3" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/391.png" id="6_bv6sf"]
+[ext_resource type="Texture2D" uid="uid://cprdnsl7gfd3v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/392.png" id="7_mlh4x"]
+[ext_resource type="Texture2D" uid="uid://cb6hgut5qy3co" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/393.png" id="8_bwsko"]
+[ext_resource type="Texture2D" uid="uid://h2y3gg5kd02c" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/394.png" id="9_ory03"]
+[ext_resource type="Texture2D" uid="uid://dik3tajjoxkun" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/395.png" id="10_8tq3u"]
+[ext_resource type="Texture2D" uid="uid://kcnf8ldcx78v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/396.png" id="11_6vxcg"]
+[ext_resource type="Texture2D" uid="uid://rch8dcb7njln" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/397.png" id="12_d2n0y"]
+[ext_resource type="Texture2D" uid="uid://bxbtwl8wrvqf0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/398.png" id="13_v7xg8"]
+[ext_resource type="Texture2D" uid="uid://cpjcap5ikf11y" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/399.png" id="14_rgako"]
+[ext_resource type="Texture2D" uid="uid://bleqm4wmiko1m" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/400.png" id="15_pxmdk"]
+[ext_resource type="Texture2D" uid="uid://dt7jq1xvsbg0x" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/401.png" id="16_ulrfo"]
+[ext_resource type="Texture2D" uid="uid://c6bqwprunhdij" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/402.png" id="17_5debo"]
+[ext_resource type="Texture2D" uid="uid://bejp63xt66l3y" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/403.png" id="18_3qftb"]
+[ext_resource type="Texture2D" uid="uid://cwmq1e3y5c15q" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/404.png" id="19_hyq0s"]
+[ext_resource type="Texture2D" uid="uid://mul5ig5wphoc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/405.png" id="20_2en8q"]
+[ext_resource type="Texture2D" uid="uid://cb6v2iulywn0c" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/406.png" id="21_j5sul"]
+[ext_resource type="Texture2D" uid="uid://k7vino4dwld7" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/358.png" id="21_nf0au"]
+[ext_resource type="Texture2D" uid="uid://ciexdmwt16k60" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/407.png" id="22_0bs5p"]
+[ext_resource type="Texture2D" uid="uid://wva4xx5q8q3r" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/359.png" id="22_1e6yi"]
+[ext_resource type="Texture2D" uid="uid://htvaq063lnq8" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/360.png" id="23_jkoe8"]
+[ext_resource type="Texture2D" uid="uid://dyh5qocnvlp42" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/408.png" id="23_p6ax1"]
+[ext_resource type="Texture2D" uid="uid://dqens530a6eni" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/361.png" id="24_g0tqo"]
+[ext_resource type="Texture2D" uid="uid://bxa7leghloy5v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/409.png" id="24_gj6e1"]
+[ext_resource type="AudioStream" uid="uid://cfqlquq06vtqd" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/stare.ogg" id="24_iow6b"]
+[ext_resource type="Texture2D" uid="uid://bwfskc8eh8eq6" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/410.png" id="25_nibg8"]
+[ext_resource type="Texture2D" uid="uid://d1jx047xi1rpt" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/362.png" id="25_rnxqk"]
+[ext_resource type="Texture2D" uid="uid://dkc14brbwaoyt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/411.png" id="26_6q7qe"]
+[ext_resource type="Texture2D" uid="uid://dj304jo1i5vij" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/364.png" id="26_muh0q"]
+[ext_resource type="Texture2D" uid="uid://bmosn86huvmjp" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/651.png" id="27_blo1m"]
+[ext_resource type="Texture2D" uid="uid://dietlohr07pwn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/412.png" id="27_ju66i"]
+[ext_resource type="Texture2D" uid="uid://cfsccyap121xv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/413.png" id="28_35ufp"]
+[ext_resource type="Texture2D" uid="uid://b7xg3c2bj7m8m" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/652.png" id="28_eq7qq"]
+[ext_resource type="Texture2D" uid="uid://cekj7p4u6qr1k" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/414.png" id="29_25di5"]
+[ext_resource type="Texture2D" uid="uid://b5qwrgtgodod1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/415.png" id="30_clkhh"]
+[ext_resource type="Texture2D" uid="uid://e2o7nuxryu0g" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/416.png" id="31_53cyx"]
+[ext_resource type="Texture2D" uid="uid://o7hm3vcdc3ln" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/417.png" id="32_qf7x4"]
+[ext_resource type="Texture2D" uid="uid://fowgc77idvar" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/418.png" id="33_cfwn5"]
+[ext_resource type="Texture2D" uid="uid://cnlx4q5f2tnqt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/419.png" id="34_djkbe"]
+[ext_resource type="Texture2D" uid="uid://dpnnycdm4m5pr" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/420.png" id="35_i6hh2"]
+[ext_resource type="Texture2D" uid="uid://bevo8bagk4qhb" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/421.png" id="36_vckbi"]
+[ext_resource type="Texture2D" uid="uid://bxdhxpbbrotd4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/422.png" id="37_4ye2r"]
+[ext_resource type="Texture2D" uid="uid://dbagrwx3bapkd" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/423.png" id="38_defsd"]
+[ext_resource type="Texture2D" uid="uid://cy5x7762rlseo" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/424.png" id="39_t6hxw"]
+[ext_resource type="Texture2D" uid="uid://k30u72x4vnqf" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/425.png" id="40_cpojd"]
+[ext_resource type="Texture2D" uid="uid://dnu4csfksk6mu" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/426.png" id="41_a2lha"]
+[ext_resource type="Texture2D" uid="uid://cajpceh0cvodq" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/427.png" id="42_mu5lk"]
+[ext_resource type="Texture2D" uid="uid://bhd6bq8tsajne" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/428.png" id="43_uodn0"]
+[ext_resource type="Texture2D" uid="uid://dnt84f1t0ab5o" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/429.png" id="44_beqjw"]
+[ext_resource type="Texture2D" uid="uid://c38knfct5gfuv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/430.png" id="45_bu0ui"]
+[ext_resource type="Texture2D" uid="uid://3lcqd5wg5yb7" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/431.png" id="46_c1pwm"]
+[ext_resource type="Texture2D" uid="uid://ct1hahfu7y2ho" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/432.png" id="47_fa36j"]
+[ext_resource type="Texture2D" uid="uid://c2as48xqm5ry1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/433.png" id="48_j4un1"]
+[ext_resource type="Texture2D" uid="uid://vr6dr0jvt8kn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/434.png" id="49_swlfo"]
+[ext_resource type="Texture2D" uid="uid://dj4hqe24iftlu" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/435.png" id="50_vhjwc"]
+[ext_resource type="Texture2D" uid="uid://xlmfu810ghts" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/436.png" id="51_lbkch"]
+[ext_resource type="Texture2D" uid="uid://b75mfwfjkljkh" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/437.png" id="52_i6xyn"]
+[ext_resource type="Texture2D" uid="uid://brktsmtkfi6qc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/438.png" id="53_ppvu6"]
+[ext_resource type="Texture2D" uid="uid://bxmuyu7oh7x5i" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/439.png" id="54_wm6k1"]
+[ext_resource type="Texture2D" uid="uid://bs88dtbvrvxa4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/440.png" id="55_tfdqo"]
+[ext_resource type="Texture2D" uid="uid://ncvs1iutr5qg" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/441.png" id="56_j4ucu"]
+[ext_resource type="Texture2D" uid="uid://dhmdr8hxf7age" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/442.png" id="57_qrnlj"]
+[ext_resource type="Texture2D" uid="uid://cufgegmexyrfn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/443.png" id="58_lq85i"]
+[ext_resource type="Texture2D" uid="uid://cxtyaxv7waub0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/444.png" id="59_4cd08"]
+[ext_resource type="Texture2D" uid="uid://dgyjjk2q4b1vt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/445.png" id="60_ey7ku"]
+[ext_resource type="Texture2D" uid="uid://nr64vqm270pv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/446.png" id="61_t1oon"]
+[ext_resource type="Texture2D" uid="uid://hu0hqkmjq6q6" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/447.png" id="62_nws1g"]
+[ext_resource type="Texture2D" uid="uid://bxe1n33ufuyll" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/448.png" id="63_lpxu3"]
+[ext_resource type="Texture2D" uid="uid://dj1otmwxxwtot" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/449.png" id="64_vsdau"]
+[ext_resource type="Texture2D" uid="uid://3mbdy760jdeh" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/450.png" id="65_qa35f"]
+[ext_resource type="Texture2D" uid="uid://bh7m4nodq1iqe" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/451.png" id="66_0q5pd"]
+[ext_resource type="Texture2D" uid="uid://3vyd3nj71doe" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/452.png" id="67_cpgce"]
+[ext_resource type="Texture2D" uid="uid://ciuyya4hc8cce" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/453.png" id="68_2u7r3"]
+[ext_resource type="Texture2D" uid="uid://bxxy32rfretjs" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/454.png" id="69_pqu6j"]
+[ext_resource type="Texture2D" uid="uid://ctp4oay0wfqio" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/455.png" id="70_rvbtd"]
+[ext_resource type="Texture2D" uid="uid://dor5ahr4qhu0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/456.png" id="71_n7wjr"]
+[ext_resource type="Texture2D" uid="uid://dx06s7x500q85" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/457.png" id="72_nrkb2"]
+[ext_resource type="Texture2D" uid="uid://bead0wshytgt3" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/458.png" id="73_0ft7h"]
+[ext_resource type="Texture2D" uid="uid://cxqgjkjdf5iwr" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/459.png" id="74_74wxp"]
+[ext_resource type="Texture2D" uid="uid://7k8tng1meo34" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/460.png" id="75_744qh"]
+[ext_resource type="Texture2D" uid="uid://c7n1blfe8arcx" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/461.png" id="76_hbira"]
+[ext_resource type="Texture2D" uid="uid://bi4w75tvtvxj" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/462.png" id="77_jlnbk"]
+[ext_resource type="Texture2D" uid="uid://cf71jvsi23xg" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/463.png" id="78_crula"]
+[ext_resource type="Texture2D" uid="uid://dwdx3xtdv6wly" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/464.png" id="79_rkm53"]
+[ext_resource type="Texture2D" uid="uid://dli06ccjdh4xi" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/465.png" id="80_xemxu"]
+[ext_resource type="Texture2D" uid="uid://bpqjywv63iqvv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/466.png" id="81_wyjcd"]
+[ext_resource type="Texture2D" uid="uid://bkxcsk6ig48v4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/467.png" id="82_f31x4"]
+[ext_resource type="Texture2D" uid="uid://d1ao4c87hx52s" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/468.png" id="83_jnni2"]
+[ext_resource type="Texture2D" uid="uid://cas57ucfgaufy" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/469.png" id="84_vht7p"]
+[ext_resource type="Texture2D" uid="uid://bav2a4xyk1evm" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/470.png" id="85_1h7u6"]
+[ext_resource type="Texture2D" uid="uid://dtn3thoi727cv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/471.png" id="86_hykbr"]
+[ext_resource type="Texture2D" uid="uid://m5omqdlrrgw4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/472.png" id="87_y15x7"]
+[ext_resource type="Texture2D" uid="uid://oxryi0kehwcu" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/473.png" id="88_fw1gt"]
+[ext_resource type="Texture2D" uid="uid://cm3a2da4ibsu0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/474.png" id="89_dy8dn"]
+[ext_resource type="Texture2D" uid="uid://d0370q23ak0gk" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/475.png" id="90_fol6r"]
+[ext_resource type="Texture2D" uid="uid://dyssng2dybw0w" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/476.png" id="91_frw6n"]
+[ext_resource type="Texture2D" uid="uid://jkwwh14cpkqw" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/477.png" id="92_u5yyd"]
+[ext_resource type="Texture2D" uid="uid://du3g5fnrwyinf" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/478.png" id="93_rpdxx"]
+[ext_resource type="Texture2D" uid="uid://doed3ijewcvch" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/479.png" id="94_lafvg"]
+[ext_resource type="Texture2D" uid="uid://cxf0w2tni5fi" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/480.png" id="95_mi4t6"]
+[ext_resource type="Texture2D" uid="uid://c1lxkp8c0twvs" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/481.png" id="96_ljwpw"]
+[ext_resource type="Texture2D" uid="uid://fqn0xfrx5ro4" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/482.png" id="97_rxnaq"]
+[ext_resource type="Texture2D" uid="uid://gxdqwsdjl6ms" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/483.png" id="98_iqp00"]
+[ext_resource type="Texture2D" uid="uid://c8c8t02un03m3" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/484.png" id="99_gq5ej"]
+[ext_resource type="Texture2D" uid="uid://cugus5tmu58yt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/485.png" id="100_jrjmy"]
+[ext_resource type="Texture2D" uid="uid://cv4isf7ipcd7g" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/486.png" id="101_4v2v1"]
+[ext_resource type="Texture2D" uid="uid://pfd6ds2x0tvt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/487.png" id="102_8il8h"]
+[ext_resource type="Texture2D" uid="uid://dlw34x53w3j23" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/488.png" id="103_6ling"]
+[ext_resource type="Texture2D" uid="uid://urgx1vr78804" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/489.png" id="104_2dr1y"]
+[ext_resource type="Texture2D" uid="uid://ckygnchmtruoc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/490.png" id="105_cv7ae"]
+[ext_resource type="Texture2D" uid="uid://g4fdxxtkmgky" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/491.png" id="106_p0mce"]
+[ext_resource type="Texture2D" uid="uid://dxab7s1cyp5ij" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/492.png" id="107_sh4e7"]
+[ext_resource type="Texture2D" uid="uid://bxlm4gkdc06dg" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/493.png" id="108_eck81"]
+[ext_resource type="Texture2D" uid="uid://behspkbla6gaw" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/494.png" id="109_bdyop"]
+[ext_resource type="Texture2D" uid="uid://6l73wuo6k2re" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/495.png" id="110_qtjvc"]
+[ext_resource type="Texture2D" uid="uid://bga0mv2i4f47" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/496.png" id="111_h2ceg"]
+[ext_resource type="Texture2D" uid="uid://c5dsp2jqg3h7y" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/497.png" id="112_e838v"]
+[ext_resource type="Texture2D" uid="uid://cwo5dcbahx3yc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/498.png" id="113_jm05u"]
+[ext_resource type="Texture2D" uid="uid://tog5ksno1adt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/499.png" id="114_x2iw6"]
+[ext_resource type="Texture2D" uid="uid://cecgelesbhmk0" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/500.png" id="115_s1dwx"]
+[ext_resource type="AudioStream" uid="uid://d2xroxieovqqf" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/celebration.ogg" id="124_tbwck"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_q7u4x"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_4dxau"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_o2ktj")
+"texture": ExtResource("2_yju6p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_lon5n")
+"texture": ExtResource("3_rasvp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_vp2gx")
+"texture": ExtResource("4_hx0pl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_adxec")
+"texture": ExtResource("5_olaxh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_fi6r4")
+"texture": ExtResource("6_bv6sf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_yk572")
+"texture": ExtResource("7_mlh4x")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_rvla8")
+"texture": ExtResource("8_bwsko")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_seco7")
+"texture": ExtResource("9_ory03")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_ci8ha")
+"texture": ExtResource("10_8tq3u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_tvna0")
+"texture": ExtResource("11_6vxcg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_djt0u")
+"texture": ExtResource("12_d2n0y")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_lwgf5")
+"texture": ExtResource("13_v7xg8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_e5qfb")
+"texture": ExtResource("14_rgako")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_n0pf0")
+"texture": ExtResource("15_pxmdk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_ju0fp")
+"texture": ExtResource("16_ulrfo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_wicwl")
+"texture": ExtResource("17_5debo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_ury0c")
+"texture": ExtResource("18_3qftb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_hfxv4")
+"texture": ExtResource("19_hyq0s")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_83d5n")
+"texture": ExtResource("20_2en8q")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_djrv2")
+"texture": ExtResource("21_j5sul")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_hh44g")
+"texture": ExtResource("22_0bs5p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_72ebq")
+"texture": ExtResource("23_p6ax1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_4y13p")
+"texture": ExtResource("24_gj6e1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("26_6svio")
+"texture": ExtResource("25_nibg8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("27_5f0qt")
+"texture": ExtResource("26_6q7qe")
 }, {
 "duration": 1.0,
-"texture": ExtResource("28_ld0vn")
+"texture": ExtResource("27_ju66i")
 }, {
 "duration": 1.0,
-"texture": ExtResource("29_seyql")
+"texture": ExtResource("28_35ufp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("30_o17ht")
+"texture": ExtResource("29_25di5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("31_2av1v")
+"texture": ExtResource("30_clkhh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("32_ne6qr")
+"texture": ExtResource("31_53cyx")
 }, {
 "duration": 1.0,
-"texture": ExtResource("33_0x3pd")
+"texture": ExtResource("32_qf7x4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("34_sc8be")
+"texture": ExtResource("33_cfwn5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("35_yjnb4")
+"texture": ExtResource("34_djkbe")
 }, {
 "duration": 1.0,
-"texture": ExtResource("36_5lqde")
+"texture": ExtResource("35_i6hh2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("37_g8pnm")
+"texture": ExtResource("36_vckbi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("38_ffeip")
+"texture": ExtResource("37_4ye2r")
 }, {
 "duration": 1.0,
-"texture": ExtResource("39_2j5ep")
+"texture": ExtResource("38_defsd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("40_20u3r")
+"texture": ExtResource("39_t6hxw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("41_vyb2s")
+"texture": ExtResource("40_cpojd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("42_t1ij5")
+"texture": ExtResource("41_a2lha")
 }, {
 "duration": 1.0,
-"texture": ExtResource("43_jdmw1")
+"texture": ExtResource("42_mu5lk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("44_37gk4")
+"texture": ExtResource("43_uodn0")
 }, {
 "duration": 1.0,
-"texture": ExtResource("45_h8tu0")
+"texture": ExtResource("44_beqjw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("46_ophan")
+"texture": ExtResource("45_bu0ui")
 }, {
 "duration": 1.0,
-"texture": ExtResource("47_gsnj0")
+"texture": ExtResource("46_c1pwm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("48_7wq8i")
+"texture": ExtResource("47_fa36j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("49_p2vrw")
+"texture": ExtResource("48_j4un1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("50_6xts2")
+"texture": ExtResource("49_swlfo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("51_u8g64")
+"texture": ExtResource("50_vhjwc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("52_810yg")
+"texture": ExtResource("51_lbkch")
 }, {
 "duration": 1.0,
-"texture": ExtResource("53_gxdng")
+"texture": ExtResource("52_i6xyn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("54_odo72")
+"texture": ExtResource("53_ppvu6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("55_roerl")
+"texture": ExtResource("54_wm6k1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("56_gjvr0")
+"texture": ExtResource("55_tfdqo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("57_wdtk0")
+"texture": ExtResource("56_j4ucu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("58_dhq28")
+"texture": ExtResource("57_qrnlj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("59_hy3px")
+"texture": ExtResource("58_lq85i")
 }, {
 "duration": 1.0,
-"texture": ExtResource("60_81fvx")
+"texture": ExtResource("59_4cd08")
 }, {
 "duration": 1.0,
-"texture": ExtResource("61_ceypl")
+"texture": ExtResource("60_ey7ku")
 }, {
 "duration": 1.0,
-"texture": ExtResource("62_wfs5q")
+"texture": ExtResource("61_t1oon")
 }, {
 "duration": 1.0,
-"texture": ExtResource("63_5soml")
+"texture": ExtResource("62_nws1g")
 }, {
 "duration": 1.0,
-"texture": ExtResource("64_d4s4j")
+"texture": ExtResource("63_lpxu3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("65_cmhbo")
+"texture": ExtResource("64_vsdau")
 }, {
 "duration": 1.0,
-"texture": ExtResource("66_gn14n")
+"texture": ExtResource("65_qa35f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("67_jocs3")
+"texture": ExtResource("66_0q5pd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("68_du8jc")
+"texture": ExtResource("67_cpgce")
 }, {
 "duration": 1.0,
-"texture": ExtResource("69_86k3h")
+"texture": ExtResource("68_2u7r3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("70_3s776")
+"texture": ExtResource("69_pqu6j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("71_dbf3v")
+"texture": ExtResource("70_rvbtd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("72_mg66h")
+"texture": ExtResource("71_n7wjr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("73_l105y")
+"texture": ExtResource("72_nrkb2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("74_hu3f0")
+"texture": ExtResource("73_0ft7h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("75_muk7p")
+"texture": ExtResource("74_74wxp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("76_j5t27")
+"texture": ExtResource("75_744qh")
 }, {
 "duration": 1.0,
-"texture": ExtResource("77_q1why")
+"texture": ExtResource("76_hbira")
 }, {
 "duration": 1.0,
-"texture": ExtResource("78_fgx52")
+"texture": ExtResource("77_jlnbk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("79_3ud4t")
+"texture": ExtResource("78_crula")
 }, {
 "duration": 1.0,
-"texture": ExtResource("80_4deuj")
+"texture": ExtResource("79_rkm53")
 }, {
 "duration": 1.0,
-"texture": ExtResource("81_cn8ug")
+"texture": ExtResource("80_xemxu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("82_bxscv")
+"texture": ExtResource("81_wyjcd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("83_sism5")
+"texture": ExtResource("82_f31x4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("84_j4qt2")
+"texture": ExtResource("83_jnni2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("85_d8pge")
+"texture": ExtResource("84_vht7p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("86_bxkyi")
+"texture": ExtResource("85_1h7u6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("87_yp7m3")
+"texture": ExtResource("86_hykbr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("88_lfv8y")
+"texture": ExtResource("87_y15x7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("89_umquq")
+"texture": ExtResource("88_fw1gt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("90_j0qs5")
+"texture": ExtResource("89_dy8dn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("91_h7b4m")
+"texture": ExtResource("90_fol6r")
 }, {
 "duration": 1.0,
-"texture": ExtResource("92_iyhox")
+"texture": ExtResource("91_frw6n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("93_7chly")
+"texture": ExtResource("92_u5yyd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("94_0lfex")
+"texture": ExtResource("93_rpdxx")
 }, {
 "duration": 1.0,
-"texture": ExtResource("95_84cn7")
+"texture": ExtResource("94_lafvg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("96_wciht")
+"texture": ExtResource("95_mi4t6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("97_0v8hy")
+"texture": ExtResource("96_ljwpw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("98_dc64n")
+"texture": ExtResource("97_rxnaq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("99_g7foy")
+"texture": ExtResource("98_iqp00")
 }, {
 "duration": 1.0,
-"texture": ExtResource("100_2nyox")
+"texture": ExtResource("99_gq5ej")
 }, {
 "duration": 1.0,
-"texture": ExtResource("101_0c8hu")
+"texture": ExtResource("100_jrjmy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("102_hahux")
+"texture": ExtResource("101_4v2v1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("103_lg5le")
+"texture": ExtResource("102_8il8h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("104_rllq2")
+"texture": ExtResource("103_6ling")
 }, {
 "duration": 1.0,
-"texture": ExtResource("105_vxuwb")
+"texture": ExtResource("104_2dr1y")
 }, {
 "duration": 1.0,
-"texture": ExtResource("106_hmbns")
+"texture": ExtResource("105_cv7ae")
 }, {
 "duration": 1.0,
-"texture": ExtResource("107_u4iwn")
+"texture": ExtResource("106_p0mce")
 }, {
 "duration": 1.0,
-"texture": ExtResource("108_6nvyg")
+"texture": ExtResource("107_sh4e7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("109_2sgfp")
+"texture": ExtResource("108_eck81")
 }, {
 "duration": 1.0,
-"texture": ExtResource("110_qdtr7")
+"texture": ExtResource("109_bdyop")
 }, {
 "duration": 1.0,
-"texture": ExtResource("111_s0hsn")
+"texture": ExtResource("110_qtjvc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("112_gqsgv")
+"texture": ExtResource("111_h2ceg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("113_argfh")
+"texture": ExtResource("112_e838v")
 }, {
 "duration": 1.0,
-"texture": ExtResource("114_7y2s5")
+"texture": ExtResource("113_jm05u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("115_mk4ly")
+"texture": ExtResource("114_x2iw6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("116_tc0hw")
+"texture": ExtResource("115_s1dwx")
 }],
 "loop": true,
 "name": &"default",
 "speed": 93.5
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6pqj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_g0tqo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_nf0au")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_1e6yi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_jkoe8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_rnxqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_muh0q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_blo1m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_eq7qq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 30.0
 }]
 
 [node name="MeowmersJumpscare" type="Control"]
@@ -478,32 +519,76 @@ mouse_filter = 2
 script = ExtResource("1_2tdu0")
 
 [node name="Meowmers" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="MeowmersReference" type="AnimatedSprite2D" parent="Meowmers"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(574, 248)
-sprite_frames = SubResource("SpriteFrames_q7u4x")
-frame_progress = 0.8399074
+sprite_frames = SubResource("SpriteFrames_4dxau")
+frame_progress = 0.3474498
 
 [node name="MeowmersTex" type="TextureRect" parent="Meowmers"]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-texture = ExtResource("95_84cn7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("72_nrkb2")
 expand_mode = 1
 
-[node name="DanceTimer" type="Timer" parent="."]
+[node name="Static" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StaticTex" type="TextureRect" parent="Static"]
 unique_name_in_owner = true
-autostart = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("25_rnxqk")
+expand_mode = 1
+
+[node name="StaticReference" type="AnimatedSprite2D" parent="Static"]
+unique_name_in_owner = true
+visible = false
+sprite_frames = SubResource("SpriteFrames_q6pqj")
+autoplay = "default"
+frame = 4
+frame_progress = 0.802131
 
 [node name="MeowmersMusic" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("116_o2ktj")
+stream = ExtResource("124_tbwck")
 bus = &"SFX"
+
+[node name="StaticSFX" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("24_iow6b")
+bus = &"SFX"
+
+[node name="DanceTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DanceTimer" to="." method="on_timeout"]

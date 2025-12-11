@@ -52,3 +52,8 @@ func load_dance() -> void:
 	if meowmers_dancing_tween and meowmers_dancing_tween.is_running():
 		return
 	do_schmooves()
+	
+func on_timeout() -> void:
+	if meowmers_dancing_tween and meowmers_dancing_tween.is_running():
+		return
+	do_schmooves()
