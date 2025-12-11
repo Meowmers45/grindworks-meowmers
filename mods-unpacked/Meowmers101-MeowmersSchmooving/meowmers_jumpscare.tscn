@@ -531,7 +531,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 visible = false
 sprite_frames = SubResource("SpriteFrames_4dxau")
-frame_progress = 0.3474498
+frame_progress = 0.7633075
 
 [node name="MeowmersTex" type="TextureRect" parent="Meowmers"]
 unique_name_in_owner = true
@@ -543,7 +543,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("72_nrkb2")
+texture = ExtResource("69_pqu6j")
 expand_mode = 1
 
 [node name="Static" type="Control" parent="."]
