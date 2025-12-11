@@ -12,7 +12,6 @@ var meowmers_dancing_tween: Tween
 @onready var meowmers_ref := %MeowmersReference
 @onready var meowmers_tex := %MeowmersTex
 @onready var meowmers_mus := %MeowmersMusic
-@onready var timer := %DanceTimer
 
 func _ready() -> void:
 	BattleService.s_battle_ending.connect(load_dance)
@@ -49,11 +48,6 @@ func do_schmooves() -> void:
 	)
 
 func load_dance() -> void:
-	if meowmers_dancing_tween and meowmers_dancing_tween.is_running():
-		return
-	do_schmooves()
-	
-func on_timeout() -> void:
 	if meowmers_dancing_tween and meowmers_dancing_tween.is_running():
 		return
 	do_schmooves()
