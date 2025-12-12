@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://dk4pwcb1fwoso"]
+[gd_scene load_steps=118 format=3 uid="uid://dk4pwcb1fwoso"]
 
 [ext_resource type="Script" uid="uid://ba0sgxq1ws3du" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/meowmers_jumpscare.gd" id="1_2tdu0"]
 [ext_resource type="Texture2D" uid="uid://bmpae0mr87myn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/387.png" id="2_yju6p"]
@@ -21,22 +21,13 @@
 [ext_resource type="Texture2D" uid="uid://cwmq1e3y5c15q" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/404.png" id="19_hyq0s"]
 [ext_resource type="Texture2D" uid="uid://mul5ig5wphoc" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/405.png" id="20_2en8q"]
 [ext_resource type="Texture2D" uid="uid://cb6v2iulywn0c" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/406.png" id="21_j5sul"]
-[ext_resource type="Texture2D" uid="uid://k7vino4dwld7" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/358.png" id="21_nf0au"]
 [ext_resource type="Texture2D" uid="uid://ciexdmwt16k60" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/407.png" id="22_0bs5p"]
-[ext_resource type="Texture2D" uid="uid://wva4xx5q8q3r" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/359.png" id="22_1e6yi"]
-[ext_resource type="Texture2D" uid="uid://htvaq063lnq8" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/360.png" id="23_jkoe8"]
 [ext_resource type="Texture2D" uid="uid://dyh5qocnvlp42" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/408.png" id="23_p6ax1"]
-[ext_resource type="Texture2D" uid="uid://dqens530a6eni" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/361.png" id="24_g0tqo"]
 [ext_resource type="Texture2D" uid="uid://bxa7leghloy5v" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/409.png" id="24_gj6e1"]
-[ext_resource type="AudioStream" uid="uid://cfqlquq06vtqd" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/stare.ogg" id="24_iow6b"]
 [ext_resource type="Texture2D" uid="uid://bwfskc8eh8eq6" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/410.png" id="25_nibg8"]
-[ext_resource type="Texture2D" uid="uid://d1jx047xi1rpt" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/362.png" id="25_rnxqk"]
 [ext_resource type="Texture2D" uid="uid://dkc14brbwaoyt" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/411.png" id="26_6q7qe"]
-[ext_resource type="Texture2D" uid="uid://dj304jo1i5vij" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/364.png" id="26_muh0q"]
-[ext_resource type="Texture2D" uid="uid://bmosn86huvmjp" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/651.png" id="27_blo1m"]
 [ext_resource type="Texture2D" uid="uid://dietlohr07pwn" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/412.png" id="27_ju66i"]
 [ext_resource type="Texture2D" uid="uid://cfsccyap121xv" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/413.png" id="28_35ufp"]
-[ext_resource type="Texture2D" uid="uid://b7xg3c2bj7m8m" path="res://mods-unpacked/itsevan-foxyjumpscare/assets/652.png" id="28_eq7qq"]
 [ext_resource type="Texture2D" uid="uid://cekj7p4u6qr1k" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/414.png" id="29_25di5"]
 [ext_resource type="Texture2D" uid="uid://b5qwrgtgodod1" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/415.png" id="30_clkhh"]
 [ext_resource type="Texture2D" uid="uid://e2o7nuxryu0g" path="res://mods-unpacked/Meowmers101-MeowmersSchmooving/416.png" id="31_53cyx"]
@@ -476,38 +467,6 @@ animations = [{
 "speed": 93.5
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_q6pqj"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("24_g0tqo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_nf0au")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_1e6yi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_jkoe8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_rnxqk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_muh0q")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_blo1m")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_eq7qq")
-}],
-"loop": true,
-"name": &"default",
-"speed": 30.0
-}]
-
 [node name="MeowmersJumpscare" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -543,45 +502,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("13_v7xg8")
+texture = ExtResource("2_yju6p")
 expand_mode = 1
-
-[node name="Static" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="StaticTex" type="TextureRect" parent="Static"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("25_rnxqk")
-expand_mode = 1
-
-[node name="StaticReference" type="AnimatedSprite2D" parent="Static"]
-unique_name_in_owner = true
-visible = false
-sprite_frames = SubResource("SpriteFrames_q6pqj")
-autoplay = "default"
-frame = 4
-frame_progress = 0.802131
 
 [node name="MeowmersMusic" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("124_tbwck")
-bus = &"SFX"
-
-[node name="StaticSFX" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("24_iow6b")
 bus = &"SFX"

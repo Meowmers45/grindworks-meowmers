@@ -12,12 +12,20 @@ var meowmers_dancing_tween: Tween
 @onready var meowmers_ref := %MeowmersReference
 @onready var meowmers_tex := %MeowmersTex
 @onready var meowmers_mus := %MeowmersMusic
+@onready var fademusic1 := AudioManager.fade_music(0.0, 0.0, false)
+@onready var fademusic2 := AudioManager.fade_music(1.0, STATIC_FADE_TIME, false)
 
 func _ready() -> void:
 	BattleService.s_battle_ending.connect(load_dance)
 
 func _process(_delta: float) -> void:
 	meowmers_tex.set_texture(get_texture(meowmers_ref))
+
+func music_fadein() -> void:
+	AudioManager.fade_music(1.0, STATIC_FADE_TIME, false)
+	
+func music_fadeout() -> void:
+	AudioManager.fade_music(0.0, 0.0, false)
 
 func get_texture(sprite: AnimatedSprite2D) -> Texture2D:
 	return sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
@@ -31,11 +39,14 @@ func do_schmooves() -> void:
 	# Play the anim and sound
 	meowmers_dancing_tween.tween_callback(meowmers_tex.show)
 	meowmers_dancing_tween.tween_callback(meowmers_ref.play)
+	meowmers_dancing_tween.tween_callback(music_fadeout)
 	meowmers_dancing_tween.tween_callback(meowmers_mus.play)
+	meowmers_dancing_tween.tween_callback(meowmers_tex.show)
 	meowmers_dancing_tween.tween_interval(8.0)
 	# Fade Meowmers and the song out
 	meowmers_dancing_tween.tween_property(meowmers_mus, 'volume_db', -INF, STATIC_FADE_TIME)
 	meowmers_dancing_tween.parallel().tween_property(meowmers_tex, 'modulate:a', 0.0, STATIC_FADE_TIME)
+	meowmers_dancing_tween.tween_callback(music_fadein)
 
 	meowmers_dancing_tween.finished.connect(
 		func():
