@@ -22,10 +22,11 @@ func _process(_delta: float) -> void:
 	meowmers_tex.set_texture(get_texture(meowmers_ref))
 
 func music_fadein() -> void:
+	AudioManager.set_music_volume(0.0)
 	AudioManager.fade_music(1.0, STATIC_FADE_TIME, false)
 	
 func music_fadeout() -> void:
-	AudioManager.fade_music(0.0, 0.0, false)
+	AudioManager.stop_music()
 
 func get_texture(sprite: AnimatedSprite2D) -> Texture2D:
 	return sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
