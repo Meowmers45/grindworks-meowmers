@@ -59,7 +59,18 @@ func do_schmooves() -> void:
 			meowmers_ref.frame = 0
 	)
 
+func fifty_fifty_chance_float() -> bool:
+	# This will return true roughly 50% of the time.
+	# The condition is met if the random number is less than 0.5.
+	if randf() < 0.5:
+		return true # Chance succeeded
+	else:
+		return false # Chance failed
+
 func load_dance() -> void:
 	if meowmers_dancing_tween and meowmers_dancing_tween.is_running():
 		return
-	do_schmooves()
+	if fifty_fifty_chance_float():
+		do_schmooves()
+	else:
+		print("no schmooves for you...")
