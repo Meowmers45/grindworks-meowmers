@@ -8,6 +8,7 @@ const ROLL_CHANCE := 10000
 var meowmers_dancing_tween: Tween
 
 @export_tool_button("Get to Schmooving") var dance_button = do_schmooves
+@export_tool_button("Get to Schmooving (Maybe)") var dance_button_maybe = load_dance
 
 @onready var meowmers_ref := %MeowmersReference
 @onready var meowmers_tex := %MeowmersTex
