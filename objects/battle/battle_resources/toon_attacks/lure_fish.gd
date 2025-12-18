@@ -57,7 +57,7 @@ func action():
 		else:
 			apply_lure(target)
 	else:
-		manager.battle_text(target,"IMMUNE")
+		manager.battle_text(target,"MISSED")
 		await user.animator.animation_finished
 
 	if dollar_move_seq.is_running():
