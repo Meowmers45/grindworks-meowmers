@@ -15,7 +15,6 @@ func action():
 		
 		# Place button in hand
 		user.toon.left_hand_bone.add_child(button)
-		await manager.sleep(2.3)
 	
 	# Place a storm cloud above the cog
 	var cloud = load('res://models/props/gags/storm_cloud/storm_cloud.tscn').instantiate()
