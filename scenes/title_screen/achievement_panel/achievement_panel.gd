@@ -70,6 +70,7 @@ static var achievement_order: Dictionary[String, Array] = {
 		## Pocket Prank Unlocks
 		ProgressFile.GameAchievement.UNLOCK_LAW_BOOK,
 		ProgressFile.GameAchievement.UNLOCK_DAGGER,
+		ProgressFile.GameAchievement.UNLOCK_WINGTIPS,
 	],
 	
 }

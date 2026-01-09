@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bgvvhpnbd3nqe"]
+[gd_scene load_steps=26 format=3 uid="uid://bgvvhpnbd3nqe"]
 
 [ext_resource type="PackedScene" uid="uid://d1qs8nf0s0y85" path="res://objects/general_ui/ui_panel/ui_panel.tscn" id="1_bwryn"]
 [ext_resource type="FontFile" uid="uid://815gwlftl5ik" path="res://fonts/impress-bt.ttf" id="2_0hji2"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://b7ri5sq021cvo" path="res://ui_assets/misc/uiAccessoryDelete_down.png" id="6_bs0ac"]
 [ext_resource type="Texture2D" uid="uid://dn8vndd37lqom" path="res://ui_assets/misc/uiAccessoryDelete_rollover.png" id="7_nxqst"]
 [ext_resource type="Theme" uid="uid://dhqxwi6busihb" path="res://objects/general_ui/settings_menu/slider_theme.tres" id="9_dnno6"]
+[ext_resource type="Texture2D" uid="uid://qfltts6duk0u" path="res://ui_assets/achievements/achievement_bg.png" id="11_5vuyg"]
+[ext_resource type="Texture2D" uid="uid://d4nd5tsflit5c" path="res://ui_assets/pick_a_toon/questionmark.png" id="12_5k7uv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ddgja"]
 font = ExtResource("3_7uwv2")
@@ -76,9 +78,9 @@ font_size = 12
 font_color = Color(0, 0, 0, 1)
 
 [node name="SettingsMenu" instance=ExtResource("1_bwryn")]
-offset_left = -266.0
+offset_left = -273.0
 offset_top = -284.0
-offset_right = 266.0
+offset_right = 273.0
 offset_bottom = 284.0
 script = ExtResource("2_2jdde")
 title = "Settings"
@@ -94,7 +96,7 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
-pivot_offset = Vector2(266, 284)
+pivot_offset = Vector2(273, 284)
 
 [node name="Title" parent="Panel" index="0"]
 offset_top = 48.0
@@ -115,9 +117,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -222.0
+offset_left = -230.0
 offset_top = -184.5
-offset_right = 222.0
+offset_right = 230.0
 offset_bottom = 184.5
 grow_horizontal = 2
 grow_vertical = 2
@@ -250,6 +252,69 @@ font_size = 24.0
 text = "Standard"
 label_settings = SubResource("LabelSettings_xxrhd")
 
+[node name="ColorblindToggle" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings" index="5"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle" index="0"]
+layout_mode = 2
+text = "Color Blind Mode:"
+label_settings = SubResource("LabelSettings_n41hl")
+
+[node name="ColorblindHover" type="Control" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle" index="1"]
+custom_minimum_size = Vector2(50.195, 0)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorblindHover" index="0"]
+modulate = Color(0.8509804, 0, 1, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.500004
+offset_top = -14.5
+offset_right = 14.500004
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_5vuyg")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorblindHover" index="1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.097473
+offset_top = -11.097473
+offset_right = 11.097473
+offset_bottom = 11.097473
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_5k7uv")
+expand_mode = 1
+
+[node name="ColorBlindButton" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle" index="2" instance=ExtResource("4_aygce")]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_vnbpc")
+custom_minimum_size = Vector2(160, 60)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture_normal = ExtResource("5_p4xtr")
+texture_pressed = ExtResource("6_bs0ac")
+texture_hover = ExtResource("7_nxqst")
+texture_disabled = ExtResource("6_bs0ac")
+text = "Disabled"
+font_size = 24.0
+
+[node name="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorBlindButton" index="0"]
+text = "Disabled"
+label_settings = SubResource("LabelSettings_xxrhd")
+
 [node name="AudioSettings" type="VBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer" index="2"]
 layout_mode = 2
 
@@ -263,7 +328,9 @@ vertical_alignment = 1
 [node name="MasterVolume" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings" index="1"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/MasterVolume" index="0"]
+[node name="MasterLabel" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/MasterVolume" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(225, 0)
 layout_mode = 2
 text = "Master Volume:"
 label_settings = SubResource("LabelSettings_n41hl")
@@ -282,7 +349,8 @@ scrollable = false
 [node name="MusicVolume" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings" index="2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/MusicVolume" index="0"]
+[node name="MusicLabel" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/MusicVolume" index="0"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Music Volume:"
 label_settings = SubResource("LabelSettings_n41hl")
@@ -301,7 +369,8 @@ scrollable = false
 [node name="SFXVolume" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings" index="3"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/SFXVolume" index="0"]
+[node name="SFXLabel" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/SFXVolume" index="0"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "SFX Volume:"
 label_settings = SubResource("LabelSettings_n41hl")
@@ -429,7 +498,9 @@ label_settings = SubResource("LabelSettings_xxrhd")
 [node name="CameraSensitivity" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings" index="4"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CameraSensitivity" index="0"]
+[node name="CamSensitivityLabel" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CameraSensitivity" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(232, 0)
 layout_mode = 2
 text = "Cam Sensitivity:"
 label_settings = SubResource("LabelSettings_n41hl")
@@ -759,6 +830,9 @@ label_settings = SubResource("LabelSettings_xxrhd")
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/FPSLimit/FPSButton" to="." method="change_fps"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/AntiAliasing/AliasButton" to="." method="toggle_anti_aliasing"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/CameraShake/CameraShakeButton" to="." method="toggle_camera_shake"]
+[connection signal="mouse_entered" from="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorblindHover" to="." method="colorblind_hover"]
+[connection signal="mouse_exited" from="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorblindHover" to="." method="colorblind_unhover"]
+[connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorBlindButton" to="." method="toggle_colorblind"]
 [connection signal="value_changed" from="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/MasterVolume/MasterSlider" to="." method="set_bus_volume" binds= ["Master"]]
 [connection signal="value_changed" from="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/MusicVolume/MusicSlider" to="." method="set_bus_volume" binds= ["Music"]]
 [connection signal="value_changed" from="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/SFXVolume/SFXSlider" to="." method="set_bus_volume" binds= ["SFX"]]
@@ -780,6 +854,7 @@ label_settings = SubResource("LabelSettings_xxrhd")
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/FPSLimit/FPSButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/AntiAliasing/AliasButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/CameraShake/CameraShakeButton"]
+[editable path="Panel/SettingScroller/MarginContainer/SettingContainer/VideoSettings/ColorblindToggle/ColorBlindButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/AudioSettings/AmbientSound/AmbientButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/ImStuck/StuckButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/BattleSpeed/SpeedButton"]

@@ -39,6 +39,7 @@ var total_cogs_defeated : int:
 @export_storage var special_chests_opened: int = 0
 @export_storage var times_jumped: int = 0
 @export_storage var times_stranger_seen: int = 0
+@export_storage var paint_silo_victories: int = 0
 
 
 var proxies_unlocked: bool:
@@ -151,6 +152,7 @@ enum GameAchievement {
 	UNLOCK_BIRD_WINGS,
 	UNLOCK_WEIRD_GLASSES,
 	UNLOCK_ROLODEX,
+	UNLOCK_WINGTIPS,
 }
 
 const PATH := "res://objects/save_file/achievements/resources/"
@@ -193,6 +195,7 @@ const ACHIEVEMENT_RESOURCES := {
 	GameAchievement.UNLOCK_BIRD_WINGS: PATH + "achievement_item_bird_wings.tres",
 	GameAchievement.UNLOCK_WEIRD_GLASSES: PATH + "achievement_item_weird_glasses.tres",
 	GameAchievement.UNLOCK_ROLODEX: PATH + "achievement_item_rolodex.tres",
+	GameAchievement.UNLOCK_WINGTIPS: PATH + "achievement_item_wingtips.tres",
 }
 
 @export var achievements_earned := {
@@ -234,6 +237,7 @@ const ACHIEVEMENT_RESOURCES := {
 	GameAchievement.UNLOCK_BIRD_WINGS: false,
 	GameAchievement.UNLOCK_WEIRD_GLASSES: false,
 	GameAchievement.UNLOCK_ROLODEX: false,
+	GameAchievement.UNLOCK_WINGTIPS: false,
 }
 
 var achievement_count: int:

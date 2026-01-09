@@ -54,6 +54,7 @@ var control_style: bool:
 	get: return SaveFileService.settings_file.control_style
 
 var run_speed := 8.0
+var gravity := 16.0
 var ignore_battles := false
 
 @onready var gui: Control = %GUI

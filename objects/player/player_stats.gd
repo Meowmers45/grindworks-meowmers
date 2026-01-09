@@ -43,6 +43,11 @@ var debug_gag_points := false
 		luck = x
 		s_luck_changed.emit(x)
 		print("Luck set to %.2f" % x)
+@export var agility := 1.0:
+	set(x):
+		agility = x
+		s_agility_changed.emit(x)
+		print("Agility set to %.2f" % x)
 
 @export var crit_mult := 1.25
 @export var mod_cog_dmg_mult := 1.0
@@ -71,6 +76,7 @@ var debug_gag_points := false
 		s_extra_lives_changed.emit(x)
 signal s_extra_lives_changed(value: int)
 signal s_luck_changed(new_luck: float)
+signal s_agility_changed(new_agility: float)
 
 @export var toonup_boost := 1.0  # MULTIPLICATIVE
 @export var toonup_round_boost := 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cqxrerk1d75to"]
+[gd_scene load_steps=43 format=3 uid="uid://cqxrerk1d75to"]
 
 [ext_resource type="PackedScene" uid="uid://b0d1er4oqiqcn" path="res://objects/general_ui/general_button/general_button.tscn" id="1_6oj83"]
 [ext_resource type="Script" uid="uid://bg0as47hsfrlg" path="res://scenes/title_screen/title_screen.gd" id="1_pgrta"]
@@ -88,6 +88,13 @@ resource_local_to_scene = true
 shader = ExtResource("10_ngpco")
 shader_parameter/Shift_Hue = 0.585
 shader_parameter/alpha = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_otspg"]
+resource_local_to_scene = true
+font = ExtResource("10_dmagf")
+font_size = 32
+font_color = Color(0.454902, 0.658824, 1, 1)
+shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Environment" id="Environment_77gfr"]
 ambient_light_source = 2
@@ -422,6 +429,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="SecretSeedLabel" type="Label" parent="GUI"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.5
+offset_top = 207.0
+offset_right = 320.5
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(123.5, 16.5)
+text = "Secret Seed: AAAAAAAAAAAAA"
+label_settings = SubResource("LabelSettings_otspg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="World3D" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
@@ -444,8 +472,9 @@ fov = 58.5
 [node name="ToonOrigin" type="Node3D" parent="World3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.99648)
 
-[node name="CharacterDisplay" parent="World3D/ToonOrigin" instance=ExtResource("15_otspg")]
+[node name="CharacterDisplay" parent="World3D/ToonOrigin" node_paths=PackedStringArray("character_clipboard") instance=ExtResource("15_otspg")]
 unique_name_in_owner = true
+character_clipboard = NodePath("../../../GUI/CharacterClipboard")
 
 [node name="Props" type="Node3D" parent="World3D"]
 
@@ -853,6 +882,7 @@ game_time = 999.0
 max_tries = 999
 quota = 1
 base_damage = -1
+want_instructions = false
 
 [node name="Marker3D" type="Marker3D" parent="World3D/Props/Moles/MoleStompGame"]
 gizmo_extents = 1.0
@@ -869,6 +899,7 @@ game_time = 999.0
 max_tries = 999
 quota = 1
 base_damage = -1
+want_instructions = false
 
 [node name="Marker3D" type="Marker3D" parent="World3D/Props/Moles/MoleStompGame2"]
 gizmo_extents = 1.0
@@ -885,6 +916,7 @@ game_time = 999.0
 max_tries = 999
 quota = 1
 base_damage = -1
+want_instructions = false
 
 [node name="Marker3D" type="Marker3D" parent="World3D/Props/Moles/MoleStompGame4"]
 gizmo_extents = 1.0
@@ -901,6 +933,7 @@ game_time = 999.0
 max_tries = 999
 quota = 1
 base_damage = -1
+want_instructions = false
 
 [node name="Marker3D" type="Marker3D" parent="World3D/Props/Moles/MoleStompGame5"]
 gizmo_extents = 1.0
@@ -917,6 +950,7 @@ game_time = 999.0
 max_tries = 999
 quota = 1
 base_damage = -1
+want_instructions = false
 
 [node name="Marker3D" type="Marker3D" parent="World3D/Props/Moles/MoleStompGame3"]
 gizmo_extents = 1.0

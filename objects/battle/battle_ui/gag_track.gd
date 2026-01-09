@@ -125,7 +125,7 @@ func refund_gag(gag: ToonAttack):
 				refresh()
 				return
 			var new_balance: int = player.stats.gag_balance[track.track_name]
-			new_balance = clamp(new_balance + gag.price, 0, player.stats.gag_cap)
+			new_balance = new_balance + gag.price
 			player.stats.gag_balance[track.track_name] = new_balance
 			refresh()
 
