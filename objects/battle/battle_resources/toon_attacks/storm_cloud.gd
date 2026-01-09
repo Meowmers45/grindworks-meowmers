@@ -68,7 +68,11 @@ func action():
 		await manager.check_pulses(targets)
 	else:
 		AudioManager.play_sound(load("res://audio/sfx/battle/gags/squirt/AA_throw_stormcloud_miss.ogg"))
-		target.set_animation('sidestep-left')
+		if skip_button_movie != true:
+			target.set_animation('sidestep-left')
+		else:
+			target.speak("Seems my suit is unable to be dampened this time.")
+			await Task.delay(1.25)
 		manager.battle_text(target,"MISSED")
 		await target.animator.animation_finished
 	
