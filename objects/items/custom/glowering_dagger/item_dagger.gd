@@ -126,7 +126,7 @@ func hurt_cog() -> void:
 		if effect.get_status_name() == effect_name and effect.target == cog:
 			leeched = true
 	if leeched:
-		manager.affect_target(Util.get_player(), -damage)
+		manager.affect_target(Util.get_player(), -damage * 0.05)
 	AudioManager.play_sound(load("res://audio/sfx/battle/cogs/attacks/special/tt_s_ara_cfg_toonHit.ogg"))
 	await Task.delay(3.0)
 	
