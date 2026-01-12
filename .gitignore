@@ -76,3 +76,5 @@ android/build/res/values/godot_project_name_string.xml
 android/build/res/values/themes.xml
 android/build/settings.gradle
 android/build/src/com/godot/game/GodotApp.java
+TTGW+M-nogradle.apk
+*.apk
