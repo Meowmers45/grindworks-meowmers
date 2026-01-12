@@ -16,10 +16,9 @@ warnings/check_angle_interpolation_type_conflicting=false
 [application]
 
 config/name="Toontown: The Grindworks + Meowmers"
-config/version="1.2.3"
+config/version="1.2.5"
 run/main_scene="uid://lxi0qm8aebs1"
 config/features=PackedStringArray("4.5", "Forward Plus")
-boot_splash/bg_color=Color(1, 0.79607844, 0.1882353, 1)
 config/icon="uid://cgljrd8dis8an"
 config/windows_native_icon="res://ui_assets/general/icon.ico"
 
@@ -54,7 +53,7 @@ mouse_cursor/custom_image="res://ui_assets/cursor.png"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/graphedit2/plugin.cfg", "res://addons/intervals/plugin.cfg", "res://addons/mod_loader/_export_plugin/plugin.cfg", "res://addons/mod_tool/plugin.cfg", "res://addons/node_screenshot_tool/plugin.cfg", "res://addons/scene_lock/plugin.cfg", "res://addons/script-tabs/plugin.cfg", "res://addons/task/plugin.cfg", "res://addons/toonlike_tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/graphedit2/plugin.cfg", "res://addons/intervals/plugin.cfg", "res://addons/mod_loader/_export_plugin/plugin.cfg", "res://addons/moon-dfx/plugin.cfg", "res://addons/node_screenshot_tool/plugin.cfg", "res://addons/scene_lock/plugin.cfg", "res://addons/script-tabs/plugin.cfg", "res://addons/task/plugin.cfg", "res://addons/toonlike_tools/plugin.cfg")
 
 [file_customization]
 
@@ -119,7 +118,7 @@ move_right={
 sprint={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
 jump={
@@ -221,7 +220,6 @@ mouse_jump={
 swap_pocket_prank={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194326,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
 
