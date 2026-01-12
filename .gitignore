@@ -17,7 +17,7 @@
 *.dmg
 
 *.zip
-.android/
+android/
 android/.build_version
 android/build/.gdignore
 android/build/AndroidManifest.xml
