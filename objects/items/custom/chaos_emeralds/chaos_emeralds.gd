@@ -3,6 +3,10 @@ extends ItemScriptActive
 const IFRAME_SUPER_TIME := 3.0
 const supertransform = "res://audio/sfx/items/chaos_emeralds.ogg"
 
+var r = 0
+var g = 0
+var b = 0
+
 @export var tween_duration: float = 1.0
 @export var colors: Array[Color] = [
 	Color.RED,
@@ -13,6 +17,11 @@ const supertransform = "res://audio/sfx/items/chaos_emeralds.ogg"
 	Color.INDIGO,
 	Color.PURPLE
 ]
+
+func use() -> void:
+	AudioManager.play_sound(load(supertransform))
+	player.do_invincibility_frames(75.0)
+	do_iframe_tween_super(75.0)
 
 var current_tween: Tween = null
 
@@ -54,12 +63,10 @@ func do_iframe_tween_super(time := IFRAME_SUPER_TIME) -> Tween:
 	var fade_strength := 0.4
 	var delta: float
 
+
 	color_timer += delta * speed
 
 	# Use sine waves to smoothly oscillate RGB values between 0 and 1
-	var r = sin(color_timer) * 0.5 + 0.5
-	var g = sin(color_timer + 2.0) * 0.5 + 0.5
-	var b = sin(color_timer + 4.0) * 0.5 + 0.5
 	
 	var SUPER_COLOR := Color(r, g, b, 1.0)
 
@@ -67,6 +74,9 @@ func do_iframe_tween_super(time := IFRAME_SUPER_TIME) -> Tween:
 
 	toon.color_overlay_mat.set_color(SUPER_COLOR)
 	while delay > delay_minimum:
+		r = sin(color_timer) * 0.5 + 0.5
+		g = sin(color_timer + 2.0) * 0.5 + 0.5
+		b = sin(color_timer + 4.0) * 0.5 + 0.5
 		iframe_tween_super.tween_callback(toon.color_overlay_mat.fade_in.bind(toon, SUPER_COLOR, delay / 2.0, fade_strength))
 		iframe_tween_super.tween_interval(delay / 2.0)
 		iframe_tween_super.tween_callback(toon.color_overlay_mat.fade_out.bind(toon, SUPER_COLOR, delay / 2.0))
@@ -76,6 +86,9 @@ func do_iframe_tween_super(time := IFRAME_SUPER_TIME) -> Tween:
 
 	delay = delay_minimum
 	while blink_time < time:
+		r = sin(color_timer) * 0.5 + 0.5
+		g = sin(color_timer + 2.0) * 0.5 + 0.5
+		b = sin(color_timer + 4.0) * 0.5 + 0.5
 		iframe_tween_super.tween_callback(toon.color_overlay_mat.fade_in.bind(toon, SUPER_COLOR, delay / 2.0, fade_strength))
 		iframe_tween_super.tween_interval(delay / 2.0)
 		iframe_tween_super.tween_callback(toon.color_overlay_mat.fade_out.bind(toon, SUPER_COLOR, delay / 2.0))
@@ -84,8 +97,3 @@ func do_iframe_tween_super(time := IFRAME_SUPER_TIME) -> Tween:
 
 	iframe_tween_super.tween_callback(toon.legs.show)
 	return iframe_tween_super
-
-func use() -> void:
-	AudioManager.play_sound(load(supertransform))
-	player.do_invincibility_frames(75.0)
-	do_iframe_tween_super(75.0)

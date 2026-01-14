@@ -490,7 +490,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 visible = false
 sprite_frames = SubResource("SpriteFrames_4dxau")
-frame_progress = 0.11931343
+frame_progress = 0.911388
 
 [node name="MeowmersTex" type="TextureRect" parent="Meowmers"]
 unique_name_in_owner = true
@@ -502,7 +502,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_yju6p")
+texture = ExtResource("29_25di5")
 expand_mode = 1
 
 [node name="MeowmersMusic" type="AudioStreamPlayer" parent="."]

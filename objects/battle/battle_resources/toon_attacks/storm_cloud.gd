@@ -71,10 +71,11 @@ func action():
 		if skip_button_movie != true:
 			target.set_animation('sidestep-left')
 		else:
-			target.speak("Seems my suit is unable to be dampened this time.")
-			await Task.delay(1.25)
+			target.speak("It would seem my suit is unable to be dampened this time.")
+			await Task.delay(1.0)
 		manager.battle_text(target,"MISSED")
-		await target.animator.animation_finished
+		if skip_button_movie != true:
+			await target.animator.animation_finished
 	
 	# Cleanup
 	button.queue_free()
