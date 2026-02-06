@@ -7,7 +7,7 @@ const CHEST = "res://objects/interactables/treasure_chest/treasure_chest.tscn"
 const DOODLE := preload("res://objects/items/resources/passive/doodle.tres")
 const WORLD_ITEM = preload("res://objects/items/world_item/world_item.tscn")
 const ACC_POOL = preload("res://objects/items/pools/accessories.tres")
-const MONARCH_BUTTERFLY = "res://mods-unpacked/alder-GreenFolio/extensions/objects/items/resources/active/monarch_butterfly.tres"
+const MONARCH_BUTTERFLY := preload("res://mods-unpacked/alder-GreenFolio/extensions/objects/items/resources/active/monarch_butterfly.tres")
 func use() -> void:
 	# Makes this work in debug rooms
 	var zone
@@ -31,7 +31,7 @@ func use() -> void:
 			print("Green Folio enabled!")
 			var item = WORLD_ITEM.instantiate()
 			item.override_replacement_rolls = true
-			item.item = preload(MONARCH_BUTTERFLY)
+			item.item = MONARCH_BUTTERFLY
 			zone.add_child(item)
 			item.global_position = rel_pos + (rel_basis * Vector3(-1 * i, 0.25, 0))
 			var dust_cloud = Globals.DUST_CLOUD.instantiate()
@@ -41,9 +41,17 @@ func use() -> void:
 			await Task.delay(0.1)
 			# Proceed to use the mod's functionality (e.g., instance a scene, call a function)
 		else:
-			print("Mod not found, feature disabled.")
-			attempt_disconnect()
-			Util.get_player().stats.current_active_item = null
+			print("Mod not found, have a doodle instead :]")
+			var item = WORLD_ITEM.instantiate()
+			item.override_replacement_rolls = true
+			item.item = DOODLE
+			zone.add_child(item)
+			item.global_position = rel_pos + (rel_basis * Vector3(-1 * i, 0.25, 0))
+			var dust_cloud = Globals.DUST_CLOUD.instantiate()
+			zone.add_child(dust_cloud)
+			dust_cloud.scale *= item.scale
+			dust_cloud.global_position = item.global_position
+			await Task.delay(0.1)
 		
 	attempt_disconnect()
 	Util.get_player().stats.current_active_item = null

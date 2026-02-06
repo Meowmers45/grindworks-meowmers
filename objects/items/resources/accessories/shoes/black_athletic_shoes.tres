@@ -13,8 +13,9 @@ qualitoon = 4
 rarity = 7
 world_y_offset = -0.2
 item_name = "Black Athletic Shoes"
-item_description = "Iconic to a certain toon, Maybe two?"
-big_description = "Makes Meowmers and Aaron use accuracy, Does nothing for everyone else."
+item_description = "Iconic to a certain toon, Maybe two, Maybe three?"
+big_description = "Makes Meowmers, Aaron, and Bubbles use accuracy, Does nothing for everyone else.
+(Even if you get rid of this item, accuracy will still be used)"
 pickup_sfx = ExtResource("3_6qthj")
 item_script = ExtResource("2_6qthj")
 icon = ExtResource("1_6qthj")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=28 format=3 uid="uid://cg5tf8pt1wt8r"]
+[gd_resource type="Resource" script_class="PlayerCharacter" load_steps=27 format=3 uid="uid://cg5tf8pt1wt8r"]
 
 [ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_tjnsi"]
 [ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="2_nsl05"]
@@ -22,7 +22,6 @@
 [ext_resource type="Resource" uid="uid://djij80h8jh7yd" path="res://objects/items/resources/accessories/glasses/star_glasses.tres" id="19_vy1xy"]
 [ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="20_tjnsi"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="21_6w60k"]
-[ext_resource type="Resource" uid="uid://c83uyagxkxjp5" path="res://objects/items/resources/active/butterfly_spawner.tres" id="23_1e7xa"]
 
 [sub_resource type="Resource" id="Resource_jj61k"]
 script = ExtResource("2_nsl05")
@@ -63,7 +62,7 @@ character_blurb = "Aaron's reliable sister, She REALLY knows her way around- YEO
 dna = SubResource("Resource_ax4gq")
 gag_loadout = ExtResource("9_tjnsi")
 starting_laff = 30
-starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtResource("12_tjnsi"), ExtResource("12_03pg8"), ExtResource("14_m7xp7"), ExtResource("15_d8vio"), ExtResource("16_n58ag"), ExtResource("21_6w60k"), ExtResource("18_tjnsi"), ExtResource("19_nsl05"), ExtResource("17_8k275"), ExtResource("19_vy1xy"), ExtResource("20_tjnsi"), ExtResource("23_1e7xa")])
+starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtResource("12_tjnsi"), ExtResource("12_03pg8"), ExtResource("14_m7xp7"), ExtResource("15_d8vio"), ExtResource("16_n58ag"), ExtResource("21_6w60k"), ExtResource("18_tjnsi"), ExtResource("19_nsl05"), ExtResource("17_8k275"), ExtResource("19_vy1xy"), ExtResource("20_tjnsi")])
 base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 1,

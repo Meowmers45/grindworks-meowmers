@@ -18,5 +18,8 @@ func on_battle_started(manager: BattleManager) -> void:
 	elif Util.get_player().character.character_name == "Aaron":
 		Util.get_player().use_accuracy = 1
 		manager.battle_ui.refresh_tracks()
+	elif Util.get_player().character.character_name == "Bubbles" and Util.get_player().stats.abbie:
+		Util.get_player().use_accuracy = 1
+		manager.battle_ui.refresh_tracks()
 	else:
 		return
