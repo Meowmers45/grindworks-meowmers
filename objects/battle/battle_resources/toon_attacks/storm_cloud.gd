@@ -71,8 +71,8 @@ func action():
 		if skip_button_movie != true:
 			target.set_animation('sidestep-left')
 		else:
-			target.speak("It would seem my suit is unable to be dampened this time.")
-			await Task.delay(1.0)
+			target.set_animation('squirt-small')
+			await Task.delay(2.5)
 		manager.battle_text(target,"MISSED")
 		if skip_button_movie != true:
 			await target.animator.animation_finished

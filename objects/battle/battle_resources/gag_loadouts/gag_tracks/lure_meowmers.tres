@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Track" load_steps=33 format=3 uid="uid://c5iijr0sad8jv"]
+[gd_resource type="Resource" script_class="Track" format=3 uid="uid://c5iijr0sad8jv"]
 
 [ext_resource type="Script" uid="uid://cwnjrxjvy5kc3" path="res://objects/battle/battle_resources/toon_attacks/toon_attack.gd" id="1_f8f2j"]
 [ext_resource type="Texture2D" uid="uid://0y0we63o3mb8" path="res://ui_assets/battle/gags/inventory_1dollarbill.png" id="2_burlp"]

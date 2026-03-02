@@ -9,11 +9,13 @@ func first_time_setup(player : Player) -> void:
 	player.stats.luck = 0.85
 	player.stats.crit_mult = 1.25
 	player.stats.funny_dance = true
+	player.stats.abbie = true
 	player.stats.pink_slips = 0
 	player.stats.gag_cap = 15
 	player.stats.debug_gag_points = false
 	player.stats.shop_discount = 5
 	player.use_accuracy = 1
+	Util.get_player().alt_gag_hotswap = true
 	player.stats.extra_jumps = 2
 	for track in Util.get_player().stats.gag_balance.keys():
 		Util.get_player().stats.gag_regeneration[track] += 1

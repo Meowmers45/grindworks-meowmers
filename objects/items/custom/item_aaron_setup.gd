@@ -14,6 +14,7 @@ func first_time_setup(player : Player) -> void:
 	player.stats.debug_gag_points = false
 	player.stats.shop_discount = 7
 	player.use_accuracy = 1
+	Util.get_player().alt_gag_hotswap = true
 	player.stats.extra_jumps = 5
 	for track in Util.get_player().stats.gag_balance.keys():
 		Util.get_player().stats.gag_regeneration[track] += 3

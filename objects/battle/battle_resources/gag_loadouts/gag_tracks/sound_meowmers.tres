@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Track" load_steps=38 format=3 uid="uid://dobu7h82sbbal"]
+[gd_resource type="Resource" script_class="Track" format=3 uid="uid://dobu7h82sbbal"]
 
 [ext_resource type="Script" uid="uid://cwnjrxjvy5kc3" path="res://objects/battle/battle_resources/toon_attacks/toon_attack.gd" id="1_kubd6"]
 [ext_resource type="Texture2D" uid="uid://b42plu52oeyaq" path="res://ui_assets/battle/gags/inventory_bikehorn.png" id="2_uu317"]

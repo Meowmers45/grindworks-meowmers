@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StatusAutoStorm" load_steps=5 format=3 uid="uid://btyafkpomq103"]
+[gd_resource type="Resource" script_class="StatusAutoStorm" format=3 uid="uid://btyafkpomq103"]
 
 [ext_resource type="Script" uid="uid://dy1fvdycipi6p" path="res://objects/battle/battle_resources/status_effects/auto_squirt_meowmers.gd" id="1_o2kql"]
 [ext_resource type="Texture2D" uid="uid://d7gsim4q6a7k" path="res://ui_assets/battle/gags/inventory_storm_cloud.png" id="2_qmwl1"]
