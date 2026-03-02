@@ -49,6 +49,8 @@ func get_color_blind_mapping() -> Dictionary:
 		elif battle_speed_idx >= SpeedOptions.size():
 			battle_speed_idx = SpeedOptions.size() - 1
 @export var control_style := true
+@export var want_tts := true
+var cog_tts = want_tts
 @export var camera_sensitivity := 1.0:
 	set(x):
 		camera_sensitivity = clampf(x, 0.5, 1.5)

@@ -732,6 +732,32 @@ font_size = 24.0
 text = "On"
 label_settings = SubResource("LabelSettings_xxrhd")
 
+[node name="CogTTSButton" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings" index="13" unique_id=201624713]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CogTTSButton" index="0" unique_id=966453569]
+layout_mode = 2
+text = "Cog TTS:"
+label_settings = SubResource("LabelSettings_n41hl")
+
+[node name="CogTTSButton" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CogTTSButton" index="1" unique_id=1683391824 instance=ExtResource("4_aygce")]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_r8twx")
+custom_minimum_size = Vector2(160, 60)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+texture_normal = ExtResource("5_p4xtr")
+texture_pressed = ExtResource("6_bs0ac")
+texture_hover = ExtResource("7_nxqst")
+texture_disabled = ExtResource("6_bs0ac")
+text = "On"
+font_size = 24.0
+
+[node name="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CogTTSButton/CogTTSButton" index="0"]
+text = "On"
+label_settings = SubResource("LabelSettings_xxrhd")
+
 [node name="SaveFileSettings" type="VBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer" index="4" unique_id=1145017814]
 layout_mode = 2
 
@@ -906,6 +932,7 @@ label_settings = SubResource("LabelSettings_xxrhd")
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/IntroSkip/IntroSkipButton" to="." method="toggle_intro_skip"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CustomCogs/CustomCogsButton" to="." method="toggle_custom_cogs"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/ButtonPrompts/ButtonPromptsButton" to="." method="toggle_button_prompts"]
+[connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CogTTSButton/CogTTSButton" to="." method="toggle_cog_tts"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/SaveFileSettings/OpenFolder/SaveFolderButton" to="." method="open_save_folder"]
 [connection signal="pressed" from="Panel/SaveButton" to="." method="close" binds= [true]]
 
@@ -926,6 +953,7 @@ label_settings = SubResource("LabelSettings_xxrhd")
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/IntroSkip/IntroSkipButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CustomCogs/CustomCogsButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/ButtonPrompts/ButtonPromptsButton"]
+[editable path="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CogTTSButton/CogTTSButton"]
 [editable path="Panel/SettingScroller/MarginContainer/SettingContainer/SaveFileSettings/OpenFolder/SaveFolderButton"]
 [editable path="Panel/SaveButton"]
 [editable path="ControlTemplate/GeneralButton"]

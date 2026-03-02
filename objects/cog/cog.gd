@@ -543,8 +543,10 @@ func speak(phrase: String, want_sfx := true):
 	body.nametag.hide()
 	
 	bubble.set_text(phrase)
+	
+	var want_tts = SaveFileService.settings_file.want_tts
 
-	if want_sfx:
+	if want_sfx and want_tts == false:
 		# Play speech sfx
 		# Figure out the appropriate sound effect
 		if phrase.contains("!"):
@@ -559,6 +561,9 @@ func speak(phrase: String, want_sfx := true):
 		
 		if is_inside_tree():
 			sfx.play()
+	elif want_sfx and want_tts == true:
+		var voice = DisplayServer.tts_get_voices_for_language("English")
+		DisplayServer.tts_speak(phrase, voice, 100)
 	
 	await bubble.finished
 	body.nametag.show()
