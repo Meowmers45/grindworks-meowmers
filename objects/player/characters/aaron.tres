@@ -17,9 +17,9 @@
 [ext_resource type="Resource" uid="uid://tnnppqjvfyvh" path="res://objects/items/resources/accessories/backpacks/spider_legs.tres" id="16_yres6"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="17_he2ya"]
 [ext_resource type="Resource" uid="uid://bywh4tc8sqocf" path="res://objects/items/resources/accessories/backpacks/bird_wings.tres" id="17_hqvip"]
-[ext_resource type="Resource" path="res://objects/items/resources/passive/aaron_setup.tres" id="18_e74dl"]
-[ext_resource type="Resource" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="19_d4u5m"]
-[ext_resource type="Resource" path="res://objects/items/resources/passive/meowmers_boost.tres" id="20_3l4wf"]
+[ext_resource type="Resource" uid="uid://dy3g7t8wu48ke" path="res://objects/items/resources/passive/aaron_setup.tres" id="18_e74dl"]
+[ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="19_d4u5m"]
+[ext_resource type="Resource" uid="uid://crkswlws27tuq" path="res://objects/items/resources/passive/meowmers_boost.tres" id="20_3l4wf"]
 [ext_resource type="Resource" uid="uid://c8wjy8fdkxarx" path="res://objects/items/resources/active/gag_button.tres" id="22_qeupi"]
 [ext_resource type="Resource" uid="uid://dv5u2vhslq87m" path="res://objects/items/resources/accessories/backpacks/cog_pack.tres" id="23_qeupi"]
 
@@ -65,7 +65,8 @@ starting_items = Array[ExtResource("10_e74dl")]([ExtResource("18_e74dl"), ExtRes
 base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 3,
-"Sound": 2
+"Sound": 2,
+"Squirt": 3
 })
 additional_stats = Dictionary[String, Variant]({
 "luck": 0.15

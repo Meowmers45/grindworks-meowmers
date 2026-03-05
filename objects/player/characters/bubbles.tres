@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://bmcon3qwk21kv" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/bubbles_loadout.tres" id="9_tjnsi"]
 [ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="10_yj7wl"]
 [ext_resource type="Resource" uid="uid://dtv0v1prk5ssc" path="res://objects/items/resources/passive/bubbles_setup.tres" id="11_tjnsi"]
-[ext_resource type="Resource" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="12_03pg8"]
+[ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="12_03pg8"]
 [ext_resource type="Resource" uid="uid://c5ei2gaae6n5p" path="res://objects/items/resources/passive/bubbles_squirt_boost.tres" id="12_tjnsi"]
 [ext_resource type="Resource" uid="uid://dd2sc8vd5o40q" path="res://objects/items/resources/passive/meowmers_nerf_accuracy.tres" id="14_m7xp7"]
 [ext_resource type="Resource" uid="uid://cjn8tya2r3xfn" path="res://objects/items/resources/passive/red_tape.tres" id="15_d8vio"]
@@ -66,7 +66,7 @@ starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtReso
 base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 3,
-"Squirt": 2
+"Squirt": 3
 })
 additional_stats = Dictionary[String, Variant]({
 "luck": 0.85

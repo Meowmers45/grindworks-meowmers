@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://c5iijr0sad8jv" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/lure_meowmers.tres" id="3_jrgkr"]
 [ext_resource type="Resource" uid="uid://dobu7h82sbbal" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/sound_meowmers.tres" id="4_yl54n"]
 [ext_resource type="Resource" uid="uid://0528viy6hdsv" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/throw.tres" id="5_rwthh"]
-[ext_resource type="Resource" uid="uid://dvxiqtapdvmj4" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/squirt.tres" id="6_cr1jq"]
+[ext_resource type="Resource" uid="uid://dvdwbudsffhth" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/squirt_meowmers.tres" id="6_cr1jq"]
 [ext_resource type="Script" uid="uid://ckypnf7t805p3" path="res://objects/battle/battle_resources/gag_loadouts/gag_loadout.gd" id="7_4qm7k"]
 [ext_resource type="Resource" uid="uid://qwq2obvn5icd" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/drop_meowmers.tres" id="7_cr1jq"]
 
