@@ -1,7 +1,10 @@
 extends DropSmall
 
-const HIT_RANGE := Vector2i(2, 7)
+const HIT_RANGE := Vector2i(2, 25)
 const PITCH_INCREASE := 0.1
+const PITCH_INCREASE_FUCK := 0.05
+
+var sfx_fuck = preload("res://audio/sfx/battle/gags/drop/AA_drop_brick_funny.ogg")
 
 var hit_count: Dictionary[Cog, int] = {}
 
@@ -65,6 +68,7 @@ func do_hit(cog: Cog, index: int) -> Tween:
 	hit_tween.tween_callback(
 	func():
 		AudioManager.play_sound(sfx_hit).pitch_scale = 1.0 + (PITCH_INCREASE * index)
+		AudioManager.play_sound(sfx_fuck).pitch_scale = 1.0 + (PITCH_INCREASE_FUCK * index)
 		manager.affect_target(cog, damage * hit_count[cog])
 		apply_debuff(cog, damage * hit_count[cog])
 		hit_count[cog] += 1
@@ -83,5 +87,5 @@ func do_hit(cog: Cog, index: int) -> Tween:
 	return hit_tween
 
 func get_store_summary() -> String:
-	var summary := "Hits a random Cog 2-7 times.\n" + get_stats()
+	var summary := "Hits a random Cog 2-25 times.\n" + get_stats()
 	return summary

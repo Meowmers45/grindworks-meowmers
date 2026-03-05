@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Track" format=3 uid="uid://dvdwbudsffhth"]
+
+[ext_resource type="Script" uid="uid://cwnjrxjvy5kc3" path="res://objects/battle/battle_resources/toon_attacks/toon_attack.gd" id="1_yjin7"]
+[ext_resource type="Resource" uid="uid://6d2lnauj885s" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/squirt_flower.tres" id="2_2ou0y"]
+[ext_resource type="Resource" uid="uid://ogf18kx0knl5" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/water_glass.tres" id="3_7tsvw"]
+[ext_resource type="Resource" uid="uid://d1725jt347v4e" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/squirt_gun.tres" id="4_yeps3"]
+[ext_resource type="Resource" uid="uid://l45knio5jpal" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/seltzer_bottle.tres" id="5_qtwwd"]
+[ext_resource type="Resource" uid="uid://cgu3xv44h8pmc" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/fire_hose.tres" id="6_dmh8r"]
+[ext_resource type="Resource" uid="uid://cug4jv7oh22w3" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/storm_cloud.tres" id="7_lbca7"]
+[ext_resource type="Resource" uid="uid://c0ch4wycmdgui" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/geyser.tres" id="8_k1w5p"]
+[ext_resource type="Script" uid="uid://b6b6pfoqyolr" path="res://objects/battle/battle_resources/gag_loadouts/track.gd" id="9_qsd8l"]
+[ext_resource type="Resource" uid="uid://bhh4obxdx75cg" path="res://objects/battle/battle_resources/gag_loadouts/gags/squirt/alt_squirt_gun.tres" id="10_abb1e"]
+
+[resource]
+script = ExtResource("9_qsd8l")
+track_type = 1
+track_name = "Squirt"
+track_color = Color(0.968627, 0.2, 0.721569, 1)
+gags = Array[ExtResource("1_yjin7")]([ExtResource("2_2ou0y"), ExtResource("3_7tsvw"), ExtResource("4_yeps3"), ExtResource("5_qtwwd"), ExtResource("6_dmh8r"), ExtResource("7_lbca7"), ExtResource("8_k1w5p")])
+mod_gags = Dictionary[ExtResource("1_yjin7"), int]({
+ExtResource("2_2ou0y"): 0,
+ExtResource("3_7tsvw"): 1,
+ExtResource("4_yeps3"): 2,
+ExtResource("5_qtwwd"): 3,
+ExtResource("6_dmh8r"): 4,
+ExtResource("7_lbca7"): 5,
+ExtResource("8_k1w5p"): 6,
+ExtResource("10_abb1e"): 2
+})

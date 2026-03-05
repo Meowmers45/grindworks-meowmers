@@ -1,0 +1,10 @@
+[gd_resource type="Resource" format=3 uid="uid://bhh4obxdx75cg"]
+
+[ext_resource type="Texture2D" uid="uid://h6jqac2vi0hb" path="res://ui_assets/battle/gags/inventory_water_gun.png" id="1_kgcn4"]
+[ext_resource type="Script" uid="uid://lhfre8nibo4" path="res://objects/battle/battle_resources/toon_attacks/altsquirt_gun.gd" id="2_kgcn4"]
+
+[resource]
+script = ExtResource("2_kgcn4")
+icon = ExtResource("1_kgcn4")
+damage = 13
+action_name = "Squirt Gun (Full Auto)"

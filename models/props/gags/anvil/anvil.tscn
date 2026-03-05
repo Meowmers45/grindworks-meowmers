@@ -74,18 +74,18 @@ _data = {
 &"drop": SubResource("Animation_1s651")
 }
 
-[node name="anvil2" type="Node3D"]
+[node name="anvil2" type="Node3D" unique_id=360394276]
 
-[node name="anvil" type="Node3D" parent="."]
+[node name="anvil" type="Node3D" parent="." unique_id=1678645173]
 transform = Transform3D(0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="anvil"]
+[node name="Skeleton3D" type="Skeleton3D" parent="anvil" unique_id=467909609]
 bones/0/name = "joint_scale_anvil"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 bones/0/enabled = true
 bones/0/position = Vector3(0, 0, -0.788475)
-bones/0/rotation = Quaternion(-0.497688, 0.502301, -0.502301, 0.497688)
+bones/0/rotation = Quaternion(-0.4976882, 0.50230116, -0.50230116, 0.4976882)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "anvil_uv"
 bones/1/parent = 0
@@ -95,11 +95,9 @@ bones/1/position = Vector3(0, 0, 0)
 bones/1/rotation = Quaternion(0, 0, 0, 1)
 bones/1/scale = Vector3(1, 1, 1)
 
-[node name="anvil_uv" type="MeshInstance3D" parent="anvil/Skeleton3D"]
+[node name="anvil_uv" type="MeshInstance3D" parent="anvil/Skeleton3D" unique_id=705560264]
 mesh = SubResource("ArrayMesh_jlqss")
 skin = SubResource("Skin_gflqj")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_00pqx")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1515524758]
+libraries/ = SubResource("AnimationLibrary_00pqx")
