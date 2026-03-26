@@ -7,8 +7,9 @@
 [ext_resource type="Resource" uid="uid://0528viy6hdsv" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/throw.tres" id="5_swisd"]
 [ext_resource type="Script" uid="uid://ckypnf7t805p3" path="res://objects/battle/battle_resources/gag_loadouts/gag_loadout.gd" id="6_mt33k"]
 [ext_resource type="Resource" uid="uid://qwq2obvn5icd" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/drop_meowmers.tres" id="6_p6dn6"]
+[ext_resource type="Resource" uid="uid://ovd2dnjmrvjx" path="res://objects/battle/battle_resources/gag_loadouts/gag_tracks/squirt_meowmers_gunonly.tres" id="7_u0d1r"]
 
 [resource]
 script = ExtResource("6_mt33k")
-loadout = Array[ExtResource("1_swisd")]([ExtResource("2_p6dn6"), ExtResource("3_swisd"), ExtResource("4_p6dn6"), ExtResource("5_swisd"), ExtResource("6_p6dn6")])
+loadout = Array[ExtResource("1_swisd")]([ExtResource("2_p6dn6"), ExtResource("3_swisd"), ExtResource("4_p6dn6"), ExtResource("5_swisd"), ExtResource("6_p6dn6"), ExtResource("7_u0d1r")])
 metadata/_custom_type_script = "uid://ckypnf7t805p3"

@@ -70,7 +70,7 @@ bottoms = SubResource("Resource_mpv18")
 script = ExtResource("7_4epji")
 character_name = "Meowmers"
 character_summary = "Starts with 5 turns (Max of 7)
-Squirtless
+Squirtless (Has a unique Squirt Gun)
 Lure and Sound will hit all Cogs
 A 0 damage Storm Cloud will hit all Cogs every round"
 character_blurb = "Cogs and Toons alike wonder where she gets her extreme speed from, Truth is, Not even she knows."
@@ -82,6 +82,7 @@ base_stats = SubResource("Resource_q3qk8")
 starting_gags = Dictionary[String, int]({
 "Drop": 3,
 "Sound": 2,
+"Squirt": 1,
 "Throw": 2
 })
 additional_stats = Dictionary[String, Variant]({

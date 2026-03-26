@@ -40,6 +40,8 @@ func action():
 			var splat = load("res://objects/battle/effects/splat/splat.tscn").instantiate()
 			if Util.get_player().stats.has_item('Witch Hat'):
 				splat.modulate = POISON_COLOR
+			elif Util.get_player().stats.abbie:
+				splat.modulate = BOILING_COLOR
 			else:
 				splat.modulate = Globals.SQUIRT_COLOR
 			splat.set_text("SPLASH!")

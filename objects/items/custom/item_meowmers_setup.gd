@@ -5,6 +5,7 @@ func first_time_setup(player : Player) -> void:
 	player.stats.gags_unlocked['Sound'] = 2
 	player.stats.gags_unlocked['Throw'] = 2
 	player.stats.gags_unlocked['Drop'] = 3
+	player.stats.gags_unlocked['Squirt'] = 1
 	player.stats.gag_effectiveness['Squirt'] = 1.0
 	player.stats.funny_dance = true
 	player.stats.pink_slips = 5

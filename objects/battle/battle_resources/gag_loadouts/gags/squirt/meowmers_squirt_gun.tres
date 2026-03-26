@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://bhh4obxdx75cg"]
+
+[ext_resource type="Texture2D" uid="uid://h6jqac2vi0hb" path="res://ui_assets/battle/gags/inventory_water_gun.png" id="1_kgcn4"]
+[ext_resource type="Script" uid="uid://cxuv28oicjrwp" path="res://objects/battle/battle_resources/toon_attacks/meowmers_altsquirt_gun.gd" id="2_meow0"]
+
+[resource]
+script = ExtResource("2_meow0")
+icon = ExtResource("1_kgcn4")
+damage = 7
+target_type = 2
+action_name = "Squirt Gun (MS)"
