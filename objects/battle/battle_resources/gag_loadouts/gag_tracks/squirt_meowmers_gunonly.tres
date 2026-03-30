@@ -10,3 +10,6 @@ track_type = 1
 track_name = "Squirt"
 track_color = Color(0.968627, 0.2, 0.721569, 1)
 gags = Array[ExtResource("1_erlos")]([ExtResource("4_meow1")])
+mod_gags = Dictionary[ExtResource("1_erlos"), int]({
+ExtResource("4_meow1"): 0
+})
