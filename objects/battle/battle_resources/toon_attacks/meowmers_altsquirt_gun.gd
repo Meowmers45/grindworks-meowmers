@@ -2,7 +2,7 @@ extends SquirtGun
 
 var sfx_hit: AudioStream = preload("res://audio/sfx/battle/gags/squirt/AA_squirt_neonwatergun.ogg")
 
-const HIT_RANGE := Vector2i(1, 15)
+const HIT_RANGE := Vector2i(1, 7)
 const PITCH_INCREASE := 0.1
 const PITCH_INCREASE_FUCK := 0.05
 

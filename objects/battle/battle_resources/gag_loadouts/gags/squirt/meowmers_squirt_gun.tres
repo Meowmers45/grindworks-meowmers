@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("2_meow0")
 icon = ExtResource("1_kgcn4")
-damage = 7
+damage = 13
 target_type = 2
-action_name = "Squirt Gun (MS)"
+action_name = "Squirt Gun (Meowmers)"
