@@ -78,3 +78,5 @@ android/build/settings.gradle
 android/build/src/com/godot/game/GodotApp.java
 TTGW+M-nogradle.apk
 *.apk
+ToontownTheGrindworksMeowmers.console.exe
+ToontownTheGrindworksMeowmers.exe
