@@ -68,7 +68,8 @@ func do_hit(cog: Cog, index: int) -> Tween:
 	hit_tween.tween_callback(
 	func():
 		AudioManager.play_sound(sfx_hit).pitch_scale = 1.0 + (PITCH_INCREASE * index)
-		AudioManager.play_sound(sfx_fuck).pitch_scale = 1.0 + (PITCH_INCREASE_FUCK * index)
+		if randf() <= 0.15:
+			AudioManager.play_sound(sfx_fuck)
 		manager.affect_target(cog, damage * hit_count[cog])
 		apply_debuff(cog, damage * hit_count[cog])
 		hit_count[cog] += 1
