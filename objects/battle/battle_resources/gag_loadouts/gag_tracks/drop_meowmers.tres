@@ -8,7 +8,6 @@
 [ext_resource type="Resource" uid="uid://doe7eiwy4sm5y" path="res://objects/battle/battle_resources/gag_loadouts/gags/drop/safe.tres" id="6_ynf6q"]
 [ext_resource type="Resource" uid="uid://c67xcvusaysdi" path="res://objects/battle/battle_resources/gag_loadouts/gags/drop/piano.tres" id="7_20jua"]
 [ext_resource type="Resource" uid="uid://cavn2ph00cuks" path="res://objects/battle/battle_resources/gag_loadouts/gags/drop/statue.tres" id="8_2ej8p"]
-[ext_resource type="Resource" uid="uid://bmx80pp17bbl6" path="res://objects/battle/battle_resources/gag_loadouts/gags/drop/bricks.tres" id="9_hg2tx"]
 [ext_resource type="Script" uid="uid://b6b6pfoqyolr" path="res://objects/battle/battle_resources/gag_loadouts/track.gd" id="10_3i27x"]
 [ext_resource type="Resource" uid="uid://db7dai1buni7s" path="res://objects/battle/battle_resources/gag_loadouts/gags/drop/bricks_meowmers.tres" id="11_pi2nc"]
 
@@ -25,6 +24,5 @@ ExtResource("5_i22oi"): 3,
 ExtResource("6_ynf6q"): 4,
 ExtResource("7_20jua"): 5,
 ExtResource("8_2ej8p"): 6,
-ExtResource("9_hg2tx"): 1,
 ExtResource("11_pi2nc"): 2
 })
