@@ -29,5 +29,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 9 (2026-06)
 - Removed doodle reappear sfx from entrance
 - Settings > Gameplay "Partner Dialogue" toggle (SettingsFile.partner_dialogue); all partner speech routed via ToonPartner.speak()
+## Iteration 10 (2026-06)
+- Follow spacing 1.6 -> 3.0 (history 120)
+- Goodbye: wave + line + Toon.teleport_out on player.s_dying (lose) and in penthouse win_game after cage opens (win); partner then stays departed
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

@@ -2,9 +2,9 @@ extends Actor
 class_name ToonPartner
 
 ## Trail-following (Tails style) values
-const FOLLOW_SPACING := 1.6
+const FOLLOW_SPACING := 3.0
 const RECORD_STEP := 0.1
-const MAX_HISTORY := 80
+const MAX_HISTORY := 120
 const SNAP_DISTANCE := 15.0
 const RUN_SPEED := 8.0
 const TRAIL_ANIMS: Array[String] = ['walk', 'run', 'jump']
@@ -36,6 +36,11 @@ const EMOTE_DURATION := 2.5
 
 ## Entrance
 const ENTRANCE_PHRASES: Array[String] = ["Hi, pal!", "I'm here!", "Let's go!", "Ready when you are!"]
+
+## Goodbye
+const WIN_GOODBYES: Array[String] = ["We did it! See ya, pal!", "Toontastic run! Bye for now!", "Great teamwork! Later!"]
+const LOSE_GOODBYES: Array[String] = ["Oh no! I'll catch you next time!", "We'll get 'em next time, pal!", "Don't give up! See ya!"]
+const GOODBYE_WAVE_TIME := 2.0
 
 ## Nameplate
 const NAMEPLATE_HEIGHT := 1.0
@@ -70,6 +75,8 @@ var partner_name := ""
 ## Stays dormant (hidden, silent) until the player first gains control, so it sits out opening sequences
 var active := false
 var entering := false
+## Set once the partner has said goodbye; it stays gone for the rest of the run
+var departed := false
 var accessories: Array[ItemAccessory] = []
 var shoes: ItemShoe
 var idle_time := 0.0
@@ -110,13 +117,15 @@ func _ready() -> void:
 		shoes.place_shoes(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
+	if is_instance_valid(player):
+		player.s_dying.connect(say_goodbye.bind(false))
 
 func _process(_delta: float) -> void:
 	if toon.head_bone:
 		nameplate.global_position = Vector3(global_position.x, toon.head_bone.global_position.y + NAMEPLATE_HEIGHT, global_position.z)
 
 func _physics_process(delta: float) -> void:
-	if not is_instance_valid(player) or not player.is_inside_tree():
+	if not is_instance_valid(player) or not player.is_inside_tree() or departed:
 		return
 	if not active:
 		_dormant_tick()
@@ -158,6 +167,24 @@ func do_entrance() -> void:
 	face_position(player.global_position)
 	speak(ENTRANCE_PHRASES.pick_random())
 	play_emote('wave', EMOTE_DURATION, Toon.Emotion.DELIGHTED)
+
+## Waves, then teleports out (on run win or loss)
+func say_goodbye(won := true) -> void:
+	if departed:
+		return
+	departed = true
+	if not active or not visible:
+		hide()
+		return
+	cheering = true
+	entering = false
+	face_position(player.global_position)
+	speak((WIN_GOODBYES if won else LOSE_GOODBYES).pick_random())
+	set_animation('wave')
+	toon.set_emotion(Toon.Emotion.DELIGHTED if won else Toon.Emotion.SAD)
+	await Task.delay(GOODBYE_WAVE_TIME)
+	await toon.teleport_out()
+	hide()
 
 #region Following
 
@@ -248,7 +275,7 @@ func _on_floor_started(_game_floor) -> void:
 		await Task.delay(0.25)
 		waited += 0.25
 	await Task.delay(1.0)
-	if is_inside_tree() and visible and active and state == PartnerState.FOLLOW:
+	if is_inside_tree() and visible and active and not departed and state == PartnerState.FOLLOW:
 		speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
 
 #endregion
@@ -275,7 +302,7 @@ func _check_gag_unlocks() -> void:
 	prev_gag_total = total
 
 func cheer(phrase: String, with_sfx: bool) -> void:
-	if not is_inside_tree() or not visible or not active:
+	if not is_inside_tree() or not visible or not active or departed:
 		return
 	speak(phrase)
 	if with_sfx:
