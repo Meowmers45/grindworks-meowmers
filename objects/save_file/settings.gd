@@ -67,6 +67,10 @@ var cog_tts = want_tts
 @export var button_prompts := true
 ## Toon Partner speech bubbles (cheers, tips, greetings, emotes)
 @export var partner_dialogue := true
+## How far behind the player the Toon Partner follows
+@export var partner_follow_distance := 3.0:
+	set(x):
+		partner_follow_distance = clampf(x, 1.0, 6.0)
 
 
 
