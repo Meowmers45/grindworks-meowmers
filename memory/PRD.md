@@ -19,5 +19,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Partner says a random tip/joke 2.5s after Util.s_floor_started
 ## Iteration 5 (2026-06)
 - PlayerCharacter.partner_shoes (ItemShoe) applied to partner; saved as path
+## Iteration 6 (2026-06)
+- Item.unique export; ItemService.flag_check discards unique items the player owns or that are already in play; partner script refuses to spawn a 2nd ToonPartner
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
