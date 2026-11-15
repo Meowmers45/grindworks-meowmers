@@ -64,6 +64,8 @@ var state := PartnerState.FOLLOW
 
 var dna: ToonDNA
 var partner_name := ""
+## Stays dormant (hidden, silent) until the player first gains control, so it sits out opening sequences
+var active := false
 var accessories: Array[ItemAccessory] = []
 var shoes: ItemShoe
 var idle_time := 0.0
@@ -112,6 +114,9 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
+	if not active:
+		_dormant_tick()
+		return
 	_check_passive_heal()
 	_check_gag_unlocks()
 	if state != PartnerState.FOLLOW:
@@ -119,6 +124,21 @@ func _physics_process(delta: float) -> void:
 	visible = player.visible
 	_follow_trail()
 	_check_idle_emote(delta)
+
+func player_has_control() -> bool:
+	return player.visible and player.controller.current_state.accepts_interaction()
+
+## Keep baselines current without reacting, and wake up once the player can move
+func _dormant_tick() -> void:
+	hide()
+	if stats:
+		prev_hp = stats.hp
+		tracked_stats = null
+		_check_gag_unlocks()
+	if state == PartnerState.FOLLOW and player_has_control():
+		active = true
+		snap_to_player()
+		show()
 
 #region Following
 
@@ -202,8 +222,14 @@ func heal_player() -> void:
 #region Floor chatter
 
 func _on_floor_started(_game_floor) -> void:
+	# Wait out any floor intro before chatting
 	await Task.delay(FLOOR_CHAT_DELAY)
-	if is_inside_tree() and visible and state == PartnerState.FOLLOW:
+	var waited := 0.0
+	while waited < 30.0 and not (active and is_instance_valid(player) and player_has_control()):
+		await Task.delay(0.25)
+		waited += 0.25
+	await Task.delay(1.0)
+	if is_inside_tree() and visible and active and state == PartnerState.FOLLOW:
 		toon.speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
 
 #endregion
@@ -230,7 +256,7 @@ func _check_gag_unlocks() -> void:
 	prev_gag_total = total
 
 func cheer(phrase: String, with_sfx: bool) -> void:
-	if not is_inside_tree() or not visible:
+	if not is_inside_tree() or not visible or not active:
 		return
 	toon.speak(phrase)
 	if with_sfx:
@@ -278,6 +304,9 @@ func _check_idle_emote(delta: float) -> void:
 
 func battle_started(battle: BattleNode) -> void:
 	state = PartnerState.BATTLE
+	if not active:
+		active = true
+		snap_to_player()
 	show()
 	var pos := battle.get_partner_position(player.partners.find(self))
 	var tween := move_to(pos)
