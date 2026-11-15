@@ -35,7 +35,6 @@ const IDLE_EMOTES: Array[Dictionary] = [
 const EMOTE_DURATION := 2.5
 
 ## Entrance
-const ENTRANCE_SFX := preload("res://audio/sfx/doodle/teleport_reappear.ogg")
 const ENTRANCE_PHRASES: Array[String] = ["Hi, pal!", "I'm here!", "Let's go!", "Ready when you are!"]
 
 ## Nameplate
@@ -152,7 +151,6 @@ func _dormant_tick() -> void:
 func do_entrance() -> void:
 	entering = true
 	face_position(player.global_position)
-	AudioManager.play_sound(ENTRANCE_SFX)
 	await toon.teleport_in()
 	entering = false
 	if state != PartnerState.FOLLOW:
