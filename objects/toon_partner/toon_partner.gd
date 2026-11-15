@@ -156,7 +156,7 @@ func do_entrance() -> void:
 	if state != PartnerState.FOLLOW:
 		return
 	face_position(player.global_position)
-	toon.speak(ENTRANCE_PHRASES.pick_random())
+	speak(ENTRANCE_PHRASES.pick_random())
 	play_emote('wave', EMOTE_DURATION, Toon.Emotion.DELIGHTED)
 
 #region Following
@@ -231,7 +231,7 @@ func heal_player() -> void:
 	if not is_instance_valid(player) or player.stats.hp <= 0:
 		return
 	var amount := ceili(player.stats.max_hp * HEAL_PERCENT)
-	toon.speak(HEAL_PHRASES.pick_random())
+	speak(HEAL_PHRASES.pick_random())
 	AudioManager.play_sound(HEAL_SFX)
 	player.quick_heal(amount)
 	prev_hp = player.stats.hp
@@ -249,7 +249,7 @@ func _on_floor_started(_game_floor) -> void:
 		waited += 0.25
 	await Task.delay(1.0)
 	if is_inside_tree() and visible and active and state == PartnerState.FOLLOW:
-		toon.speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
+		speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
 
 #endregion
 
@@ -277,7 +277,7 @@ func _check_gag_unlocks() -> void:
 func cheer(phrase: String, with_sfx: bool) -> void:
 	if not is_inside_tree() or not visible or not active:
 		return
-	toon.speak(phrase)
+	speak(phrase)
 	if with_sfx:
 		AudioManager.play_sound(CHEER_SFX)
 	# Don't interrupt the partner mid-gag in battle
@@ -314,7 +314,7 @@ func _check_idle_emote(delta: float) -> void:
 	var emote: Dictionary = IDLE_EMOTES.pick_random()
 	face_position(ppos)
 	if not emote['phrase'].is_empty():
-		toon.speak(emote['phrase'])
+		speak(emote['phrase'])
 	play_emote(emote['anim'], EMOTE_DURATION, emote['emotion'])
 
 #endregion
@@ -379,7 +379,11 @@ func get_animation() -> String:
 	return animator.current_animation if animator else ""
 
 func speak(phrase: String) -> void:
-	toon.speak(phrase)
+	if dialogue_enabled():
+		toon.speak(phrase)
+
+static func dialogue_enabled() -> bool:
+	return SaveFileService.settings_file.partner_dialogue
 
 func quick_heal(amount: int, allow_iframes := true) -> void:
 	if is_instance_valid(player):

@@ -166,6 +166,7 @@ func toggle_ambient_sfx() -> void:
 @onready var custom_cogs_button : GeneralButton = %CustomCogsButton
 @onready var button_prompts_button: GeneralButton = %ButtonPromptsButton
 @onready var cog_tts_button: GeneralButton = %CogTTSButton
+@onready var partner_dialogue_button: GeneralButton = %PartnerDialogueButton
 
 func _sync_gameplay_settings() -> void:
 	speed_button.text = get_speed_string(SaveFileService.settings_file.SpeedOptions[get_setting("battle_speed_idx")])
@@ -181,6 +182,7 @@ func _sync_gameplay_settings() -> void:
 	button_prompts_button.text = get_toggle_text(get_setting('button_prompts'))
 	popups_button.text = get_toggle_text(get_setting('item_popups'))
 	cog_tts_button.text = get_toggle_text(get_setting('want_tts'))
+	partner_dialogue_button.text = get_toggle_text(get_setting('partner_dialogue'))
 	
 	if not is_instance_valid(Util.floor_manager) or Util.stuck_lock:
 		stuck_element.queue_free()
@@ -225,6 +227,10 @@ func toggle_control_style() -> void:
 func toggle_cog_tts() -> void:
 	toggle_setting('want_tts')
 	cog_tts_button.text = get_toggle_text(get_setting('want_tts'))
+
+func toggle_partner_dialogue() -> void:
+	toggle_setting('partner_dialogue')
+	partner_dialogue_button.text = get_toggle_text(get_setting('partner_dialogue'))
 
 func set_cam_sens(value: float) -> void:
 	update_setting('camera_sensitivity', value)

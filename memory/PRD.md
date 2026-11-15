@@ -26,5 +26,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Partner dormant (hidden, no cheers/heals/chat/emotes) until player first has control; floor chat waits for intro to end
 ## Iteration 8 (2026-06)
 - Partner entrance: teleport hole pop-in (Toon.teleport_in) + greeting + wave on first activation
+## Iteration 9 (2026-06)
+- Removed doodle reappear sfx from entrance
+- Settings > Gameplay "Partner Dialogue" toggle (SettingsFile.partner_dialogue); all partner speech routed via ToonPartner.speak()
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
