@@ -37,6 +37,24 @@ const EMOTE_DURATION := 2.5
 ## Nameplate
 const NAMEPLATE_HEIGHT := 1.0
 
+## Floor chatter
+const FLOOR_CHAT_DELAY := 2.5
+const FLOOR_LINES: Array[String] = [
+	"Tip: Lure a Cog before you Trap it!",
+	"Tip: Throw at a lured Cog to knock it back!",
+	"Tip: Squirt and Throw make a great combo!",
+	"Tip: Keep an eye on your Laff meter!",
+	"Tip: Sound gags hit more than one Cog!",
+	"Tip: Save some beans for the shop.",
+	"Why did the Cog cross the road? It was outsourced!",
+	"What's a Cog's favorite dance? The Robot!",
+	"Cogs can't take a joke... let's give them a few!",
+	"I told a Flunky a joke. He filed it for later!",
+	"Knock knock! Who's there? Not the Cogs for long!",
+	"This floor looks Toontastic!",
+	"Let's show these Cogs who's boss!",
+]
+
 enum PartnerState { FOLLOW, BATTLE }
 var state := PartnerState.FOLLOW
 
@@ -46,6 +64,7 @@ var state := PartnerState.FOLLOW
 
 var dna: ToonDNA
 var partner_name := ""
+var accessories: Array[ItemAccessory] = []
 var idle_time := 0.0
 var last_player_pos := Vector3.ZERO
 var animator: AnimationPlayer
@@ -78,7 +97,10 @@ func _ready() -> void:
 	set_animation('neutral')
 	nameplate.text = partner_name
 	nameplate.visible = not partner_name.is_empty()
+	for accessory in accessories:
+		accessory.place_accessory(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
+	Util.s_floor_started.connect(_on_floor_started)
 
 func _process(_delta: float) -> void:
 	if toon.head_bone:
@@ -171,6 +193,15 @@ func heal_player() -> void:
 	AudioManager.play_sound(HEAL_SFX)
 	player.quick_heal(amount)
 	prev_hp = player.stats.hp
+
+#endregion
+
+#region Floor chatter
+
+func _on_floor_started(_game_floor) -> void:
+	await Task.delay(FLOOR_CHAT_DELAY)
+	if is_inside_tree() and visible and state == PartnerState.FOLLOW:
+		toon.speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
 
 #endregion
 

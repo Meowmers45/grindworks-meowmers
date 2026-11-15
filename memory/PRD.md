@@ -14,5 +14,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 3 (2026-06)
 - Nameplate (Label3D above head), random Toon name or PlayerCharacter.partner_name; saved in item arbitrary_data
 - Idle emotes after 4s standing still: wave, applause laugh, shrug, happy/victory dance
+## Iteration 4 (2026-06)
+- PlayerCharacter.partner_accessories (ItemAccessory array) placed on partner toon; saved as paths
+- Partner says a random tip/joke 2.5s after Util.s_floor_started
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

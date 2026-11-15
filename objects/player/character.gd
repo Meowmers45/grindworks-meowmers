@@ -22,6 +22,8 @@ enum Character {
 @export var partner_dna: ToonDNA
 ## Name for the Toon Partner item (if this character starts with it). Leave empty for random.
 @export var partner_name := ""
+## Hat / glasses / backpack items worn by the Toon Partner (one per slot; later entries win)
+@export var partner_accessories: Array[ItemAccessory] = []
 @export var gag_loadout: GagLoadout
 @export var starting_laff := 25
 @export var starting_items: Array[Item]
