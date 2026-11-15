@@ -24,5 +24,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 7 (2026-06)
 - FIX: partner never spawned (duplicate guard saw old partner pending deletion during reset_stats); guard now checks live sibling item-script nodes
 - Partner dormant (hidden, no cheers/heals/chat/emotes) until player first has control; floor chat waits for intro to end
+## Iteration 8 (2026-06)
+- Partner entrance: teleport hole pop-in (Toon.teleport_in) + greeting + wave on first activation
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

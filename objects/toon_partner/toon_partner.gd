@@ -34,6 +34,10 @@ const IDLE_EMOTES: Array[Dictionary] = [
 ]
 const EMOTE_DURATION := 2.5
 
+## Entrance
+const ENTRANCE_SFX := preload("res://audio/sfx/doodle/teleport_reappear.ogg")
+const ENTRANCE_PHRASES: Array[String] = ["Hi, pal!", "I'm here!", "Let's go!", "Ready when you are!"]
+
 ## Nameplate
 const NAMEPLATE_HEIGHT := 1.0
 
@@ -66,6 +70,7 @@ var dna: ToonDNA
 var partner_name := ""
 ## Stays dormant (hidden, silent) until the player first gains control, so it sits out opening sequences
 var active := false
+var entering := false
 var accessories: Array[ItemAccessory] = []
 var shoes: ItemShoe
 var idle_time := 0.0
@@ -122,6 +127,8 @@ func _physics_process(delta: float) -> void:
 	if state != PartnerState.FOLLOW:
 		return
 	visible = player.visible
+	if entering:
+		return
 	_follow_trail()
 	_check_idle_emote(delta)
 
@@ -139,6 +146,20 @@ func _dormant_tick() -> void:
 		active = true
 		snap_to_player()
 		show()
+		do_entrance()
+
+## Pops up out of a teleport hole and waves hello
+func do_entrance() -> void:
+	entering = true
+	face_position(player.global_position)
+	AudioManager.play_sound(ENTRANCE_SFX)
+	await toon.teleport_in()
+	entering = false
+	if state != PartnerState.FOLLOW:
+		return
+	face_position(player.global_position)
+	toon.speak(ENTRANCE_PHRASES.pick_random())
+	play_emote('wave', EMOTE_DURATION, Toon.Emotion.DELIGHTED)
 
 #region Following
 
