@@ -2,7 +2,6 @@ extends Actor
 class_name ToonPartner
 
 ## Trail-following (Tails style) values
-const FOLLOW_SPACING := 3.0
 const RECORD_STEP := 0.1
 const MAX_HISTORY := 120
 const SNAP_DISTANCE := 15.0
@@ -90,6 +89,9 @@ var cheering := false
 
 var player: Player:
 	get: return Util.get_player()
+## Follow distance comes from the settings slider
+var follow_spacing: float:
+	get: return SaveFileService.settings_file.partner_follow_distance
 ## Partner uses the player's stats & gag modifiers so gags behave like the player's own
 var stats: PlayerStats:
 	get: return player.stats if is_instance_valid(player) else null
@@ -217,20 +219,20 @@ func _follow_trail() -> void:
 	if not cheering:
 		set_animation(anim)
 
-## Walks back along the recorded path until we're FOLLOW_SPACING behind the player
+## Walks back along the recorded path until we're follow_spacing behind the player
 func _get_trail_index() -> int:
 	var dist := 0.0
 	var last := player.global_position
 	for i in range(trail_points.size() - 1, -1, -1):
 		dist += last.distance_to(trail_points[i])
 		last = trail_points[i]
-		if dist >= FOLLOW_SPACING:
+		if dist >= follow_spacing:
 			return i
 	return 0
 
 func snap_to_player() -> void:
 	var ppos := player.global_position
-	var behind := ppos - player.toon.global_basis.z.normalized() * FOLLOW_SPACING
+	var behind := ppos - player.toon.global_basis.z.normalized() * follow_spacing
 	behind.y = ppos.y
 	trail_points = [behind, ppos]
 	trail_anims = ['neutral', 'neutral']

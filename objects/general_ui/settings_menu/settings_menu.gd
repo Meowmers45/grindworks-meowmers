@@ -167,6 +167,7 @@ func toggle_ambient_sfx() -> void:
 @onready var button_prompts_button: GeneralButton = %ButtonPromptsButton
 @onready var cog_tts_button: GeneralButton = %CogTTSButton
 @onready var partner_dialogue_button: GeneralButton = %PartnerDialogueButton
+@onready var partner_distance_slider: HSlider = %PartnerDistanceSlider
 
 func _sync_gameplay_settings() -> void:
 	speed_button.text = get_speed_string(SaveFileService.settings_file.SpeedOptions[get_setting("battle_speed_idx")])
@@ -183,6 +184,8 @@ func _sync_gameplay_settings() -> void:
 	popups_button.text = get_toggle_text(get_setting('item_popups'))
 	cog_tts_button.text = get_toggle_text(get_setting('want_tts'))
 	partner_dialogue_button.text = get_toggle_text(get_setting('partner_dialogue'))
+	partner_distance_slider.value = get_setting('partner_follow_distance')
+	_update_partner_distance_label()
 	
 	if not is_instance_valid(Util.floor_manager) or Util.stuck_lock:
 		stuck_element.queue_free()
@@ -231,6 +234,13 @@ func toggle_cog_tts() -> void:
 func toggle_partner_dialogue() -> void:
 	toggle_setting('partner_dialogue')
 	partner_dialogue_button.text = get_toggle_text(get_setting('partner_dialogue'))
+
+func set_partner_distance(value: float) -> void:
+	update_setting('partner_follow_distance', value)
+	_update_partner_distance_label()
+
+func _update_partner_distance_label() -> void:
+	%PartnerDistanceLabel.set_text("Partner Distance: %.1f" % partner_distance_slider.value)
 
 func set_cam_sens(value: float) -> void:
 	update_setting('camera_sensitivity', value)

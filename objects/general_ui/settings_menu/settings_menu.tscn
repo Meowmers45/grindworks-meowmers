@@ -784,6 +784,29 @@ font_size = 24.0
 text = "On"
 label_settings = SubResource("LabelSettings_xxrhd")
 
+[node name="PartnerDistance" type="HBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings" index="15" unique_id=1987654324]
+layout_mode = 2
+
+[node name="PartnerDistanceLabel" type="Label" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/PartnerDistance" index="0" unique_id=1987654325]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(232, 0)
+layout_mode = 2
+text = "Partner Distance:"
+label_settings = SubResource("LabelSettings_n41hl")
+
+[node name="PartnerDistanceSlider" type="HSlider" parent="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/PartnerDistance" index="1" unique_id=1987654326]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+theme = ExtResource("9_dnno6")
+min_value = 1.0
+max_value = 6.0
+step = 0.1
+value = 3.0
+scrollable = false
+
 [node name="SaveFileSettings" type="VBoxContainer" parent="Panel/SettingScroller/MarginContainer/SettingContainer" index="4" unique_id=1145017814]
 layout_mode = 2
 
@@ -960,6 +983,7 @@ label_settings = SubResource("LabelSettings_xxrhd")
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/ButtonPrompts/ButtonPromptsButton" to="." method="toggle_button_prompts"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/CogTTSButton/CogTTSButton" to="." method="toggle_cog_tts"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/PartnerDialogue/PartnerDialogueButton" to="." method="toggle_partner_dialogue"]
+[connection signal="value_changed" from="Panel/SettingScroller/MarginContainer/SettingContainer/GameplaySettings/PartnerDistance/PartnerDistanceSlider" to="." method="set_partner_distance"]
 [connection signal="pressed" from="Panel/SettingScroller/MarginContainer/SettingContainer/SaveFileSettings/OpenFolder/SaveFolderButton" to="." method="open_save_folder"]
 [connection signal="pressed" from="Panel/SaveButton" to="." method="close" binds= [true]]
 
