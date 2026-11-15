@@ -26,7 +26,7 @@
 [ext_resource type="Resource" uid="uid://djij80h8jh7yd" path="res://objects/items/resources/accessories/glasses/star_glasses.tres" id="19_vy1xy"]
 [ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="20_tjnsi"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="21_6w60k"]
-[ext_resource type="Resource" path="res://objects/items/resources/passive/toon_partner.tres" id="27_k61wg"]
+[ext_resource type="Resource" uid="uid://dlcwf5tqlwbk2" path="res://objects/items/resources/passive/toon_partner.tres" id="27_k61wg"]
 
 [sub_resource type="Resource" id="Resource_jj61k"]
 script = ExtResource("2_nsl05")
@@ -62,7 +62,8 @@ script = ExtResource("10_yj7wl")
 character_name = "Bubbles"
 character_summary = "Starts with 3 turns (Max of 5)
 Lure and Sound will hit all Cogs
-Squirt now burns cogs"
+Squirt now burns cogs
+Aaron (From TTO) travels with you"
 character_blurb = "Aaron's reliable sister, She REALLY knows her way around- YEOWCH!!! Be careful with that boiling pot of water!"
 dna = SubResource("Resource_ax4gq")
 partner_dna = ExtResource("14_qrfge")

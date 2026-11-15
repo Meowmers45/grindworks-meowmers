@@ -31,7 +31,7 @@
 [ext_resource type="Resource" uid="uid://cfa02jl4ow8cm" path="res://objects/items/resources/active/recycle_bin.tres" id="31_cl0t1"]
 [ext_resource type="Resource" uid="uid://bjtq481jok2t4" path="res://objects/items/resources/active/big_foghorn.tres" id="31_r7ps3"]
 [ext_resource type="Resource" uid="uid://me4ctrsfpo78" path="res://objects/items/resources/active/chaos_emeralds.tres" id="32_r7ps3"]
-[ext_resource type="Resource" path="res://objects/items/resources/passive/toon_partner.tres" id="37_qs7wx"]
+[ext_resource type="Resource" uid="uid://dlcwf5tqlwbk2" path="res://objects/items/resources/passive/toon_partner.tres" id="37_qs7wx"]
 
 [sub_resource type="Resource" id="Resource_q3qk8"]
 script = ExtResource("1_oku4l")
@@ -49,7 +49,8 @@ character_name = "Meowmers"
 character_summary = "Starts with 5 turns (Max of 7)
 Squirtless (Has a unique Squirt Gun)
 Lure and Sound will hit all Cogs
-A 0 damage Storm Cloud will hit all Cogs every round"
+A 0 damage Storm Cloud will hit all Cogs every round
+Aaron travels with you"
 character_blurb = "Cogs and Toons alike wonder where she gets her extreme speed from, Truth is, Not even she knows."
 dna = ExtResource("3_r7ps3")
 partner_dna = ExtResource("11_tqwj3")

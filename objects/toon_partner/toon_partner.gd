@@ -12,10 +12,10 @@ const TRAIL_ANIMS: Array[String] = ['walk', 'run', 'jump']
 const HEAL_CHANCE := 0.075
 const HEAL_PERCENT := 0.1
 const HEAL_SFX := preload("res://audio/sfx/battle/gags/toonup/AA_heal_happydance.ogg")
-const HEAL_PHRASES: Array[String] = ["Hang in there!", "I got you!", "Toon-Up!", "Feel better!"]
+const HEAL_PHRASES: Array[String] = ["Hang in there!", "I got you!", "Toons of the World, Toon-Up!", "Feel better!"]
 
 ## Cheering
-const COG_CHEERS: Array[String] = ["Nice one!", "Gotcha!", "Woo-hoo!", "Take that, Cog!", "Toontastic!"]
+const COG_CHEERS: Array[String] = ["Nice one!", "Gotcha!", "Woo-hoo!", "Take that!", "Toontastic!"]
 const GAG_CHEERS: Array[String] = ["A new Gag! Awesome!", "Ooh, shiny new Gag!", "Look at you go!", "Gag power up!"]
 const CHEER_ANIM := 'happy-dance'
 const CHEER_SFX := preload("res://audio/sfx/battle/gags/toonup/AA_heal_happydance.ogg")
@@ -24,12 +24,12 @@ const CHEER_SFX := preload("res://audio/sfx/battle/gags/toonup/AA_heal_happydanc
 const IDLE_EMOTE_TIME := 4.0
 const IDLE_EMOTE_COOLDOWN := Vector2(6.0, 10.0)
 const IDLE_EMOTES: Array[Dictionary] = [
-	{'anim': 'wave', 'phrase': "Hi there!", 'emotion': Toon.Emotion.DELIGHTED},
-	{'anim': 'wave', 'phrase': "Hello!", 'emotion': Toon.Emotion.DELIGHTED},
+	{'anim': 'wave', 'phrase': "Hi there!", 'emotion': Toon.Emotion.NEUTRAL},
+	{'anim': 'wave', 'phrase': "Hello!", 'emotion': Toon.Emotion.NEUTRAL},
 	{'anim': 'applause', 'phrase': "Ha ha ha!", 'emotion': Toon.Emotion.LAUGH},
-	{'anim': 'shrug', 'phrase': "Hee hee!", 'emotion': Toon.Emotion.LAUGH},
-	{'anim': 'happy-dance', 'phrase': "", 'emotion': Toon.Emotion.DELIGHTED},
-	{'anim': 'victory-dance', 'phrase': "", 'emotion': Toon.Emotion.DELIGHTED},
+	{'anim': 'applause', 'phrase': "Hee hee!", 'emotion': Toon.Emotion.LAUGH},
+	{'anim': 'happy-dance', 'phrase': "", 'emotion': Toon.Emotion.NEUTRAL},
+	{'anim': 'victory-dance', 'phrase': "", 'emotion': Toon.Emotion.NEUTRAL},
 ]
 const EMOTE_DURATION := 2.5
 
@@ -46,12 +46,12 @@ const NAMEPLATE_HEIGHT := 1.0
 ## Floor chatter
 const FLOOR_CHAT_DELAY := 2.5
 const FLOOR_LINES: Array[String] = [
-	"Tip: Lure a Cog before you Trap it!",
-	"Tip: Throw at a lured Cog to knock it back!",
-	"Tip: Squirt and Throw make a great combo!",
-	"Tip: Keep an eye on your Laff meter!",
-	"Tip: Sound gags hit more than one Cog!",
-	"Tip: Save some beans for the shop.",
+	"Here's a tip, Lure a Cog before you Trap it!",
+	"Here's a tip, Throw at a lured Cog to knock it back!",
+	"Here's a tip, Squirt and Throw make a great combo!",
+	"Here's a tip, Keep an eye on your Laff meter!",
+	"Here's a tip, Sound gags hit more than one Cog!",
+	"Here's a tip, Save some beans for the shop.",
 	"Why did the Cog cross the road? It was outsourced!",
 	"What's a Cog's favorite dance? The Robot!",
 	"Cogs can't take a joke... let's give them a few!",
