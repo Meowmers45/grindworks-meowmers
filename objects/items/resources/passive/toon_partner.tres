@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Item" format=3]
+
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_item"]
+[ext_resource type="Script" path="res://objects/items/custom/toon_partner/toon_partner_script.gd" id="2_script"]
+
+[resource]
+script = ExtResource("1_item")
+qualitoon = 4
+evergreen = true
+realtime = true
+item_name = "Toon Partner"
+item_description = "A loyal Toon buddy!"
+big_description = "- Follows you everywhere
+- Uses a random Gag you own on a random Cog each round
+- 7.5% chance to pass their turn and buff you instead
+- 7.5% chance to heal you when you get hurt outside of battle"
+item_script = ExtResource("2_script")
+shop_category_title = "Special Item"
+shop_category_color = Color(0.60162, 0.201089, 1, 1)

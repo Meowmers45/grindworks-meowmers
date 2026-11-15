@@ -14,7 +14,8 @@ const FALLBACK_THROW_SFX := preload('res://audio/sfx/battle/gags/throw/AA_pie_th
 @export var status_effect_base: StatusEffect
 
 func action():
-	user = Util.get_player()
+	if not user is ToonPartner:
+		user = Util.get_player()
 	var cog: Cog = targets[0]
 	user.face_position(cog.global_position)
 	var throwable = model.instantiate()

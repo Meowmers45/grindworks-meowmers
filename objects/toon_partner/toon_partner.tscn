@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://objects/toon_partner/toon_partner.gd" id="1_partner"]
+[ext_resource type="PackedScene" path="res://objects/toon/toon.tscn" id="2_toon"]
+
+[node name="ToonPartner" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_partner")
+
+[node name="Toon" parent="." instance=ExtResource("2_toon")]
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.920243, 0)
