@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ToonDNA" format=3 uid="uid://coq114t1rn4xs"]
+
+[ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="1_gafjd"]
+[ext_resource type="Texture2D" uid="uid://cbcxdntd5peq0" path="res://models/toon/textures/clothes/shorts/tt_t_chr_avt_shorts_vampire.jpg" id="2_hu2g8"]
+[ext_resource type="Script" uid="uid://yg7gxug4rab" path="res://objects/toon/toon_dna.gd" id="3_thg0f"]
+[ext_resource type="Script" uid="uid://dfqwh4jmdy0iw" path="res://objects/toon/clothing/toon_shirt.gd" id="4_8vhnf"]
+[ext_resource type="Texture2D" uid="uid://btv1s8ehhsav7" path="res://models/toon/textures/clothes/shirts/desat_shirt_13.png" id="5_hqaci"]
+[ext_resource type="Texture2D" uid="uid://dh7dyokcfyw43" path="res://models/toon/textures/clothes/shirts/desat_sleeve_1.png" id="6_8nagr"]
+
+[sub_resource type="Resource" id="Resource_ugrs1"]
+script = ExtResource("1_gafjd")
+texture = ExtResource("2_hu2g8")
+
+[sub_resource type="Resource" id="Resource_2lryd"]
+script = ExtResource("4_8vhnf")
+shirt_texture = ExtResource("5_hqaci")
+sleeve_texture = ExtResource("6_8nagr")
+
+[resource]
+script = ExtResource("3_thg0f")
+body_type = 1
+species = 6
+eyelashes = false
+head_color = Color(0.34509805, 0.81960785, 0.9529412, 1)
+torso_color = Color(0.34509805, 0.81960785, 0.9529412, 1)
+leg_color = Color(0.34509805, 0.81960785, 0.9529412, 1)
+shirt = SubResource("Resource_2lryd")
+bottoms = SubResource("Resource_ugrs1")

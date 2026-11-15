@@ -9,11 +9,15 @@
 [ext_resource type="Texture2D" uid="uid://dhllol7bxd8qt" path="res://models/toon/textures/clothes/shirts/4thJulyShirt2.jpg" id="7_nsl05"]
 [ext_resource type="Texture2D" uid="uid://g7b1m4seqh7b" path="res://models/toon/textures/clothes/shirts/4thJulySleeve2.jpg" id="8_dsth0"]
 [ext_resource type="Resource" uid="uid://bmcon3qwk21kv" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/bubbles_loadout.tres" id="9_tjnsi"]
+[ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="10_3kqxc"]
 [ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="10_yj7wl"]
+[ext_resource type="Resource" uid="uid://t87i11mxrocf" path="res://objects/items/resources/accessories/hats/fedora.tres" id="11_k61wg"]
 [ext_resource type="Resource" uid="uid://dtv0v1prk5ssc" path="res://objects/items/resources/passive/bubbles_setup.tres" id="11_tjnsi"]
 [ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="12_03pg8"]
 [ext_resource type="Resource" uid="uid://c5ei2gaae6n5p" path="res://objects/items/resources/passive/bubbles_squirt_boost.tres" id="12_tjnsi"]
+[ext_resource type="Resource" uid="uid://t466jr8j087t" path="res://objects/items/resources/accessories/glasses/dorky_glasses.tres" id="13_2erhc"]
 [ext_resource type="Resource" uid="uid://dd2sc8vd5o40q" path="res://objects/items/resources/passive/meowmers_nerf_accuracy.tres" id="14_m7xp7"]
+[ext_resource type="Resource" uid="uid://coq114t1rn4xs" path="res://Aaron DNA (For Bubbles).tres" id="14_qrfge"]
 [ext_resource type="Resource" uid="uid://cjn8tya2r3xfn" path="res://objects/items/resources/passive/red_tape.tres" id="15_d8vio"]
 [ext_resource type="Resource" uid="uid://tnnppqjvfyvh" path="res://objects/items/resources/accessories/backpacks/spider_legs.tres" id="16_n58ag"]
 [ext_resource type="Resource" uid="uid://bh5mubvof8wpe" path="res://objects/items/resources/accessories/hats/tiara.tres" id="17_8k275"]
@@ -22,6 +26,7 @@
 [ext_resource type="Resource" uid="uid://djij80h8jh7yd" path="res://objects/items/resources/accessories/glasses/star_glasses.tres" id="19_vy1xy"]
 [ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="20_tjnsi"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="21_6w60k"]
+[ext_resource type="Resource" path="res://objects/items/resources/passive/toon_partner.tres" id="27_k61wg"]
 
 [sub_resource type="Resource" id="Resource_jj61k"]
 script = ExtResource("2_nsl05")
@@ -60,9 +65,13 @@ Lure and Sound will hit all Cogs
 Squirt now burns cogs"
 character_blurb = "Aaron's reliable sister, She REALLY knows her way around- YEOWCH!!! Be careful with that boiling pot of water!"
 dna = SubResource("Resource_ax4gq")
+partner_dna = ExtResource("14_qrfge")
+partner_name = "Aaron"
+partner_accessories = Array[ExtResource("10_3kqxc")]([ExtResource("11_k61wg"), ExtResource("20_tjnsi"), ExtResource("13_2erhc")])
+partner_shoes = ExtResource("21_6w60k")
 gag_loadout = ExtResource("9_tjnsi")
 starting_laff = 30
-starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtResource("12_tjnsi"), ExtResource("12_03pg8"), ExtResource("14_m7xp7"), ExtResource("15_d8vio"), ExtResource("16_n58ag"), ExtResource("21_6w60k"), ExtResource("18_tjnsi"), ExtResource("19_nsl05"), ExtResource("17_8k275"), ExtResource("19_vy1xy"), ExtResource("20_tjnsi")])
+starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtResource("12_tjnsi"), ExtResource("12_03pg8"), ExtResource("14_m7xp7"), ExtResource("15_d8vio"), ExtResource("16_n58ag"), ExtResource("21_6w60k"), ExtResource("18_tjnsi"), ExtResource("19_nsl05"), ExtResource("17_8k275"), ExtResource("19_vy1xy"), ExtResource("20_tjnsi"), ExtResource("27_k61wg")])
 base_stats = SubResource("Resource_jj61k")
 starting_gags = Dictionary[String, int]({
 "Drop": 3,

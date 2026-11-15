@@ -39,6 +39,7 @@ Meowmers travels with you"
 character_blurb = "Meowmers' Best friend, Not much else that sticks out."
 dna = ExtResource("3_hqvip")
 partner_dna = ExtResource("6_e7ooy")
+partner_name = "Meowmers"
 partner_accessories = Array[ExtResource("5_e7ooy")]([ExtResource("6_e74dl"), ExtResource("14_hqvip"), ExtResource("23_qeupi")])
 partner_shoes = ExtResource("17_he2ya")
 gag_loadout = ExtResource("8_w66ob")

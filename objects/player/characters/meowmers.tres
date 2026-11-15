@@ -53,6 +53,7 @@ A 0 damage Storm Cloud will hit all Cogs every round"
 character_blurb = "Cogs and Toons alike wonder where she gets her extreme speed from, Truth is, Not even she knows."
 dna = ExtResource("3_r7ps3")
 partner_dna = ExtResource("11_tqwj3")
+partner_name = "Aaron"
 partner_accessories = Array[ExtResource("10_cl0t1")]([ExtResource("11_tss6m"), ExtResource("17_i30qe"), ExtResource("13_qs7wx")])
 partner_shoes = ExtResource("24_s8570")
 gag_loadout = ExtResource("8_6y58e")

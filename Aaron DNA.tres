@@ -18,8 +18,7 @@ sleeve_texture = ExtResource("6_jdl7q")
 
 [resource]
 script = ExtResource("3_ym8oe")
-body_type = 2
-leg_type = 1
+body_type = 1
 species = 6
 eyelashes = false
 head_color = Color(0.22745098, 0.5803922, 0.98039216, 1)
