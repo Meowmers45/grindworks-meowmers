@@ -21,13 +21,33 @@ const GAG_CHEERS: Array[String] = ["A new Gag! Awesome!", "Ooh, shiny new Gag!",
 const CHEER_ANIM := 'happy-dance'
 const CHEER_SFX := preload("res://audio/sfx/battle/gags/toonup/AA_heal_happydance.ogg")
 
+## Idle emotes (when the player stands still)
+const IDLE_EMOTE_TIME := 4.0
+const IDLE_EMOTE_COOLDOWN := Vector2(6.0, 10.0)
+const IDLE_EMOTES: Array[Dictionary] = [
+	{'anim': 'wave', 'phrase': "Hi there!", 'emotion': Toon.Emotion.DELIGHTED},
+	{'anim': 'wave', 'phrase': "Hello!", 'emotion': Toon.Emotion.DELIGHTED},
+	{'anim': 'applause', 'phrase': "Ha ha ha!", 'emotion': Toon.Emotion.LAUGH},
+	{'anim': 'shrug', 'phrase': "Hee hee!", 'emotion': Toon.Emotion.LAUGH},
+	{'anim': 'happy-dance', 'phrase': "", 'emotion': Toon.Emotion.DELIGHTED},
+	{'anim': 'victory-dance', 'phrase': "", 'emotion': Toon.Emotion.DELIGHTED},
+]
+const EMOTE_DURATION := 2.5
+
+## Nameplate
+const NAMEPLATE_HEIGHT := 1.0
+
 enum PartnerState { FOLLOW, BATTLE }
 var state := PartnerState.FOLLOW
 
 @onready var toon: Toon = $Toon
 @onready var head_node: Node3D = $Head
+@onready var nameplate: Label3D = $Nameplate
 
 var dna: ToonDNA
+var partner_name := ""
+var idle_time := 0.0
+var last_player_pos := Vector3.ZERO
 var animator: AnimationPlayer
 var trail_points: Array[Vector3] = []
 var trail_anims: Array[String] = []
@@ -56,9 +76,15 @@ func _ready() -> void:
 	toon.construct_toon(dna)
 	animator = toon.body.animator
 	set_animation('neutral')
+	nameplate.text = partner_name
+	nameplate.visible = not partner_name.is_empty()
 	BattleService.s_cog_died.connect(_on_cog_died)
 
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
+	if toon.head_bone:
+		nameplate.global_position = Vector3(global_position.x, toon.head_bone.global_position.y + NAMEPLATE_HEIGHT, global_position.z)
+
+func _physics_process(delta: float) -> void:
 	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
 	_check_passive_heal()
@@ -67,6 +93,7 @@ func _physics_process(_delta: float) -> void:
 		return
 	visible = player.visible
 	_follow_trail()
+	_check_idle_emote(delta)
 
 #region Following
 
@@ -175,14 +202,41 @@ func cheer(phrase: String, with_sfx: bool) -> void:
 	if with_sfx:
 		AudioManager.play_sound(CHEER_SFX)
 	# Don't interrupt the partner mid-gag in battle
-	if cheering or (state == PartnerState.BATTLE and get_animation() != 'neutral'):
+	if state == PartnerState.BATTLE and get_animation() != 'neutral':
+		return
+	play_emote(CHEER_ANIM, 2.0)
+
+## Plays a one-off animation that the follow logic won't override
+func play_emote(anim: String, duration: float, emotion := Toon.Emotion.NEUTRAL) -> void:
+	if cheering:
 		return
 	cheering = true
-	set_animation(CHEER_ANIM)
-	await Task.delay(2.0)
+	set_animation(anim)
+	if emotion != Toon.Emotion.NEUTRAL:
+		toon.set_emotion(emotion)
+	await Task.delay(duration)
 	cheering = false
-	if is_instance_valid(self) and get_animation() == CHEER_ANIM:
+	toon.set_emotion(Toon.Emotion.NEUTRAL)
+	if get_animation() == anim:
 		set_animation('neutral')
+
+func _check_idle_emote(delta: float) -> void:
+	var ppos := player.global_position
+	var standing_still: bool = ppos.distance_to(last_player_pos) < 0.01 and player.controller.current_state.accepts_interaction()
+	last_player_pos = ppos
+	if not standing_still or cheering:
+		if not standing_still:
+			idle_time = 0.0
+		return
+	idle_time += delta
+	if idle_time < IDLE_EMOTE_TIME:
+		return
+	idle_time = -RNG.channel(RNG.ChannelTrueRandom).randf_range(IDLE_EMOTE_COOLDOWN.x, IDLE_EMOTE_COOLDOWN.y)
+	var emote: Dictionary = IDLE_EMOTES.pick_random()
+	face_position(ppos)
+	if not emote['phrase'].is_empty():
+		toon.speak(emote['phrase'])
+	play_emote(emote['anim'], EMOTE_DURATION, emote['emotion'])
 
 #endregion
 

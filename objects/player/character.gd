@@ -20,6 +20,8 @@ enum Character {
 @export var dna: ToonDNA
 ## DNA for the Toon Partner item (if this character starts with it). Leave empty for random.
 @export var partner_dna: ToonDNA
+## Name for the Toon Partner item (if this character starts with it). Leave empty for random.
+@export var partner_name := ""
 @export var gag_loadout: GagLoadout
 @export var starting_laff := 25
 @export var starting_items: Array[Item]

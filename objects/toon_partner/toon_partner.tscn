@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://objects/toon_partner/toon_partner.gd" id="1_partner"]
 [ext_resource type="PackedScene" path="res://objects/toon/toon.tscn" id="2_toon"]
+[ext_resource type="FontFile" path="res://fonts/impress-bt.ttf" id="3_font"]
 
 [node name="ToonPartner" type="CharacterBody3D"]
 collision_layer = 0
@@ -12,3 +13,16 @@ script = ExtResource("1_partner")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.920243, 0)
+
+[node name="Nameplate" type="Label3D" parent="."]
+top_level = true
+pixel_size = 0.0035
+billboard = 1
+no_depth_test = true
+render_priority = 3
+outline_render_priority = 2
+modulate = Color(0.25, 0.4, 1, 1)
+outline_modulate = Color(1, 1, 1, 0.85)
+font = ExtResource("3_font")
+font_size = 48
+outline_size = 14

@@ -14,7 +14,12 @@ func on_collect(item: Item, _object: Node3D) -> void:
 		dna = ToonDNA.new()
 		dna.randomize_dna()
 	item.arbitrary_data['dna'] = dna
-	spawn_partner(dna)
+	var partner_name: String = character.partner_name if character else ""
+	if partner_name.strip_edges().is_empty():
+		partner_name = Globals.get_random_toon_name().strip_edges()
+	item.arbitrary_data['name'] = partner_name
+	item.item_name = partner_name
+	spawn_partner(dna, partner_name)
 
 func on_load(item: Item) -> void:
 	var dna = item.arbitrary_data.get('dna')
@@ -22,11 +27,16 @@ func on_load(item: Item) -> void:
 		dna = ToonDNA.new()
 		dna.randomize_dna()
 		item.arbitrary_data['dna'] = dna
-	spawn_partner(dna)
+	var partner_name: String = item.arbitrary_data.get('name', "")
+	if partner_name.is_empty():
+		partner_name = Globals.get_random_toon_name().strip_edges()
+		item.arbitrary_data['name'] = partner_name
+	spawn_partner(dna, partner_name)
 
-func spawn_partner(dna: ToonDNA) -> void:
+func spawn_partner(dna: ToonDNA, partner_name: String) -> void:
 	partner = load(PARTNER_SCENE).instantiate()
 	partner.dna = dna
+	partner.partner_name = partner_name
 	SceneLoader.add_persistent_node(partner)
 	Util.get_player().partners.append(partner)
 

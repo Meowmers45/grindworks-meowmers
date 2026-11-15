@@ -11,5 +11,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 2 (2026-06)
 - Partner cheers on cog defeat (BattleService.s_cog_died) and gag unlocks (gags_unlocked total increase)
 - Partner can use Lure & Trap (trap_fall/trap_toss keep ToonPartner user; lure_fish dollar flies to user); skips already lured/trapped cogs
+## Iteration 3 (2026-06)
+- Nameplate (Label3D above head), random Toon name or PlayerCharacter.partner_name; saved in item arbitrary_data
+- Idle emotes after 4s standing still: wave, applause laugh, shrug, happy/victory dance
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
