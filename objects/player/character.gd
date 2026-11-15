@@ -24,6 +24,8 @@ enum Character {
 @export var partner_name := ""
 ## Hat / glasses / backpack items worn by the Toon Partner (one per slot; later entries win)
 @export var partner_accessories: Array[ItemAccessory] = []
+## Shoes worn by the Toon Partner
+@export var partner_shoes: ItemShoe
 @export var gag_loadout: GagLoadout
 @export var starting_laff := 25
 @export var starting_items: Array[Item]

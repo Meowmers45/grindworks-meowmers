@@ -17,5 +17,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 4 (2026-06)
 - PlayerCharacter.partner_accessories (ItemAccessory array) placed on partner toon; saved as paths
 - Partner says a random tip/joke 2.5s after Util.s_floor_started
+## Iteration 5 (2026-06)
+- PlayerCharacter.partner_shoes (ItemShoe) applied to partner; saved as path
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

@@ -65,6 +65,7 @@ var state := PartnerState.FOLLOW
 var dna: ToonDNA
 var partner_name := ""
 var accessories: Array[ItemAccessory] = []
+var shoes: ItemShoe
 var idle_time := 0.0
 var last_player_pos := Vector3.ZERO
 var animator: AnimationPlayer
@@ -99,6 +100,8 @@ func _ready() -> void:
 	nameplate.visible = not partner_name.is_empty()
 	for accessory in accessories:
 		accessory.place_accessory(toon)
+	if shoes:
+		shoes.place_shoes(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
 

@@ -25,7 +25,11 @@ func on_collect(item: Item, _object: Node3D) -> void:
 			if accessory and not accessory.resource_path.is_empty():
 				accessory_paths.append(accessory.resource_path)
 	item.arbitrary_data['accessories'] = accessory_paths
-	spawn_partner(dna, partner_name, accessory_paths)
+	var shoes_path := ""
+	if character and character.partner_shoes:
+		shoes_path = character.partner_shoes.resource_path
+	item.arbitrary_data['shoes'] = shoes_path
+	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
 func on_load(item: Item) -> void:
 	var dna = item.arbitrary_data.get('dna')
@@ -39,9 +43,10 @@ func on_load(item: Item) -> void:
 		item.arbitrary_data['name'] = partner_name
 	var accessory_paths: Array[String] = []
 	accessory_paths.assign(item.arbitrary_data.get('accessories', []))
-	spawn_partner(dna, partner_name, accessory_paths)
+	var shoes_path: String = item.arbitrary_data.get('shoes', "")
+	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
-func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[String]) -> void:
+func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[String], shoes_path := "") -> void:
 	partner = load(PARTNER_SCENE).instantiate()
 	partner.dna = dna
 	partner.partner_name = partner_name
@@ -49,6 +54,8 @@ func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[St
 		var accessory := load(path) as ItemAccessory
 		if accessory:
 			partner.accessories.append(accessory)
+	if not shoes_path.is_empty():
+		partner.shoes = load(shoes_path) as ItemShoe
 	SceneLoader.add_persistent_node(partner)
 	Util.get_player().partners.append(partner)
 
