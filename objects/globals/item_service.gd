@@ -396,7 +396,26 @@ func flag_check(item: Item) -> bool:
 	for tag in item.tags:
 		if tag in player.character.item_discard_tags:
 			return false
+	if item.unique and (player_owns_item(item) or is_unique_item_in_play(item)):
+		return false
 	return true
+
+## Whether a copy of this item is already sitting in the world/shop
+func is_unique_item_in_play(item: Item) -> bool:
+	for in_play: Item in items_in_play:
+		if in_play == item or (item.item_script and in_play.item_script == item.item_script):
+			return true
+	return false
+
+## Whether the player already has this item (or an evergreen copy of it)
+func player_owns_item(item: Item) -> bool:
+	var player: Player = Util.get_player()
+	if not is_instance_valid(player) or not player.stats:
+		return false
+	for owned: Item in player.stats.items:
+		if owned == item or (item.item_script and owned.item_script == item.item_script):
+			return true
+	return false
 
 const ITEM_GET_UI := "res://objects/items/ui/item_get_ui/item_get_ui.tscn"
 func display_item(item : Item) -> Control:

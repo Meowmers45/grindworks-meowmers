@@ -59,6 +59,8 @@ const QualityToRarity: Dictionary[QualitoonRating, Rarity] = {
 @export var rarity: Rarity = Rarity.NIL
 ## Evergreen items can appear multiple times per-run.
 @export var evergreen := false
+## Unique items can't be rolled again while the player already owns one (matched by item script).
+@export var unique := false
 ## Realtime items exist and run processes in the game world.
 ## They have to be marked to properly spawn in the game world when a save is loaded.
 @export var realtime := false

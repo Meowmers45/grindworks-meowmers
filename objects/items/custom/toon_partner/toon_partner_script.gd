@@ -47,6 +47,10 @@ func on_load(item: Item) -> void:
 	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
 func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[String], shoes_path := "") -> void:
+	# Only ever one Toon Partner at a time
+	for existing in Util.get_player().partners:
+		if existing is ToonPartner and is_instance_valid(existing) and not existing.is_queued_for_deletion():
+			return
 	partner = load(PARTNER_SCENE).instantiate()
 	partner.dna = dna
 	partner.partner_name = partner_name
