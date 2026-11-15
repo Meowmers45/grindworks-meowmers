@@ -93,5 +93,6 @@ func buff_player() -> void:
 	manager.add_status_effect(boost)
 	
 	manager.s_focus_char.emit(player)
-	player.toon.speak("Thanks, pal!")
+	if ToonPartner.dialogue_enabled():
+		player.toon.speak("Thanks, pal!")
 	await manager.sleep(1.5)

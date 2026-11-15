@@ -34,6 +34,9 @@ const IDLE_EMOTES: Array[Dictionary] = [
 ]
 const EMOTE_DURATION := 2.5
 
+## Entrance
+const ENTRANCE_PHRASES: Array[String] = ["Hi, pal!", "I'm here!", "Let's go!", "Ready when you are!"]
+
 ## Nameplate
 const NAMEPLATE_HEIGHT := 1.0
 
@@ -64,6 +67,9 @@ var state := PartnerState.FOLLOW
 
 var dna: ToonDNA
 var partner_name := ""
+## Stays dormant (hidden, silent) until the player first gains control, so it sits out opening sequences
+var active := false
+var entering := false
 var accessories: Array[ItemAccessory] = []
 var shoes: ItemShoe
 var idle_time := 0.0
@@ -112,13 +118,46 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
+	if not active:
+		_dormant_tick()
+		return
 	_check_passive_heal()
 	_check_gag_unlocks()
 	if state != PartnerState.FOLLOW:
 		return
 	visible = player.visible
+	if entering:
+		return
 	_follow_trail()
 	_check_idle_emote(delta)
+
+func player_has_control() -> bool:
+	return player.visible and player.controller.current_state.accepts_interaction()
+
+## Keep baselines current without reacting, and wake up once the player can move
+func _dormant_tick() -> void:
+	hide()
+	if stats:
+		prev_hp = stats.hp
+		tracked_stats = null
+		_check_gag_unlocks()
+	if state == PartnerState.FOLLOW and player_has_control():
+		active = true
+		snap_to_player()
+		show()
+		do_entrance()
+
+## Pops up out of a teleport hole and waves hello
+func do_entrance() -> void:
+	entering = true
+	face_position(player.global_position)
+	await toon.teleport_in()
+	entering = false
+	if state != PartnerState.FOLLOW:
+		return
+	face_position(player.global_position)
+	speak(ENTRANCE_PHRASES.pick_random())
+	play_emote('wave', EMOTE_DURATION, Toon.Emotion.DELIGHTED)
 
 #region Following
 
@@ -192,7 +231,7 @@ func heal_player() -> void:
 	if not is_instance_valid(player) or player.stats.hp <= 0:
 		return
 	var amount := ceili(player.stats.max_hp * HEAL_PERCENT)
-	toon.speak(HEAL_PHRASES.pick_random())
+	speak(HEAL_PHRASES.pick_random())
 	AudioManager.play_sound(HEAL_SFX)
 	player.quick_heal(amount)
 	prev_hp = player.stats.hp
@@ -202,9 +241,15 @@ func heal_player() -> void:
 #region Floor chatter
 
 func _on_floor_started(_game_floor) -> void:
+	# Wait out any floor intro before chatting
 	await Task.delay(FLOOR_CHAT_DELAY)
-	if is_inside_tree() and visible and state == PartnerState.FOLLOW:
-		toon.speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
+	var waited := 0.0
+	while waited < 30.0 and not (active and is_instance_valid(player) and player_has_control()):
+		await Task.delay(0.25)
+		waited += 0.25
+	await Task.delay(1.0)
+	if is_inside_tree() and visible and active and state == PartnerState.FOLLOW:
+		speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
 
 #endregion
 
@@ -230,9 +275,9 @@ func _check_gag_unlocks() -> void:
 	prev_gag_total = total
 
 func cheer(phrase: String, with_sfx: bool) -> void:
-	if not is_inside_tree() or not visible:
+	if not is_inside_tree() or not visible or not active:
 		return
-	toon.speak(phrase)
+	speak(phrase)
 	if with_sfx:
 		AudioManager.play_sound(CHEER_SFX)
 	# Don't interrupt the partner mid-gag in battle
@@ -269,7 +314,7 @@ func _check_idle_emote(delta: float) -> void:
 	var emote: Dictionary = IDLE_EMOTES.pick_random()
 	face_position(ppos)
 	if not emote['phrase'].is_empty():
-		toon.speak(emote['phrase'])
+		speak(emote['phrase'])
 	play_emote(emote['anim'], EMOTE_DURATION, emote['emotion'])
 
 #endregion
@@ -278,6 +323,9 @@ func _check_idle_emote(delta: float) -> void:
 
 func battle_started(battle: BattleNode) -> void:
 	state = PartnerState.BATTLE
+	if not active:
+		active = true
+		snap_to_player()
 	show()
 	var pos := battle.get_partner_position(player.partners.find(self))
 	var tween := move_to(pos)
@@ -331,7 +379,11 @@ func get_animation() -> String:
 	return animator.current_animation if animator else ""
 
 func speak(phrase: String) -> void:
-	toon.speak(phrase)
+	if dialogue_enabled():
+		toon.speak(phrase)
+
+static func dialogue_enabled() -> bool:
+	return SaveFileService.settings_file.partner_dialogue
 
 func quick_heal(amount: int, allow_iframes := true) -> void:
 	if is_instance_valid(player):

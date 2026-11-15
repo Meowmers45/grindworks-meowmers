@@ -65,6 +65,8 @@ var cog_tts = want_tts
 		return dev_tools or OS.has_feature("debug")
 @export var use_custom_cogs := true
 @export var button_prompts := true
+## Toon Partner speech bubbles (cheers, tips, greetings, emotes)
+@export var partner_dialogue := true
 
 
 
