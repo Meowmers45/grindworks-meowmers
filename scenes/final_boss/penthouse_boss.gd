@@ -221,12 +221,6 @@ func win_game() -> void:
 	scene.tween_callback(AudioManager.play_sound.bind(SFX_CAGE_LAND))
 	scene.tween_property(toon_cage.get_node('cage_door'), 'rotation_degrees:x', 90.0, 0.5)
 	scene.tween_callback(caged_toon.speak.bind("Whew, thanks for the rescue!"))
-	scene.tween_interval(2.0)
-	scene.tween_callback(func():
-		for partner in player.partners:
-			if partner is ToonPartner:
-				partner.say_goodbye(true)
-	)
 	
 	if unlock_toon and SaveFileService.progress_file.characters_unlocked < 6:
 		scene.tween_interval(4.0)

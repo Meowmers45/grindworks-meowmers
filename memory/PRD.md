@@ -32,5 +32,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 10 (2026-06)
 - Follow spacing 1.6 -> 3.0 (history 120)
 - Goodbye: wave + line + Toon.teleport_out on player.s_dying (lose) and in penthouse win_game after cage opens (win); partner then stays departed
+## Iteration 11 (2026-06)
+- Removed win goodbye from penthouse_boss.gd (file restored to original); goodbye now only on loss
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

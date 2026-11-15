@@ -38,7 +38,6 @@ const EMOTE_DURATION := 2.5
 const ENTRANCE_PHRASES: Array[String] = ["Hi, pal!", "I'm here!", "Let's go!", "Ready when you are!"]
 
 ## Goodbye
-const WIN_GOODBYES: Array[String] = ["We did it! See ya, pal!", "Toontastic run! Bye for now!", "Great teamwork! Later!"]
 const LOSE_GOODBYES: Array[String] = ["Oh no! I'll catch you next time!", "We'll get 'em next time, pal!", "Don't give up! See ya!"]
 const GOODBYE_WAVE_TIME := 2.0
 
@@ -118,7 +117,7 @@ func _ready() -> void:
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
 	if is_instance_valid(player):
-		player.s_dying.connect(say_goodbye.bind(false))
+		player.s_dying.connect(say_goodbye)
 
 func _process(_delta: float) -> void:
 	if toon.head_bone:
@@ -168,8 +167,8 @@ func do_entrance() -> void:
 	speak(ENTRANCE_PHRASES.pick_random())
 	play_emote('wave', EMOTE_DURATION, Toon.Emotion.DELIGHTED)
 
-## Waves, then teleports out (on run win or loss)
-func say_goodbye(won := true) -> void:
+## Waves, then teleports out when the player goes sad
+func say_goodbye() -> void:
 	if departed:
 		return
 	departed = true
@@ -179,9 +178,9 @@ func say_goodbye(won := true) -> void:
 	cheering = true
 	entering = false
 	face_position(player.global_position)
-	speak((WIN_GOODBYES if won else LOSE_GOODBYES).pick_random())
+	speak(LOSE_GOODBYES.pick_random())
 	set_animation('wave')
-	toon.set_emotion(Toon.Emotion.DELIGHTED if won else Toon.Emotion.SAD)
+	toon.set_emotion(Toon.Emotion.SAD)
 	await Task.delay(GOODBYE_WAVE_TIME)
 	await toon.teleport_out()
 	hide()
