@@ -80,3 +80,10 @@ TTGW+M-nogradle.apk
 *.apk
 ToontownTheGrindworksMeowmers.console.exe
 ToontownTheGrindworksMeowmers.exe
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
