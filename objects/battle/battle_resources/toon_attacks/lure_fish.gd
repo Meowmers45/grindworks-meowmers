@@ -38,7 +38,7 @@ func action():
 	dollar.get_node('AnimationPlayer').speed_scale = (0.7 / 2.0)
 	var dollar_move_seq := Sequence.new([
 		Wait.new(2.1),
-		LerpProperty.new(dollar, ^"global_position", 0.2, Util.get_player().to_global(Vector3(0, 3.5, -1.5))),
+		LerpProperty.new(dollar, ^"global_position", 0.2, user.to_global(Vector3(0, 3.5, -1.5))),
 		Func.new(dollar.queue_free),
 	]).as_tween(manager)
 

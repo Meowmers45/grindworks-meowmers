@@ -15,6 +15,12 @@ const HEAL_PERCENT := 0.1
 const HEAL_SFX := preload("res://audio/sfx/battle/gags/toonup/AA_heal_happydance.ogg")
 const HEAL_PHRASES: Array[String] = ["Hang in there!", "I got you!", "Toon-Up!", "Feel better!"]
 
+## Cheering
+const COG_CHEERS: Array[String] = ["Nice one!", "Gotcha!", "Woo-hoo!", "Take that, Cog!", "Toontastic!"]
+const GAG_CHEERS: Array[String] = ["A new Gag! Awesome!", "Ooh, shiny new Gag!", "Look at you go!", "Gag power up!"]
+const CHEER_ANIM := 'happy-dance'
+const CHEER_SFX := preload("res://audio/sfx/battle/gags/toonup/AA_heal_happydance.ogg")
+
 enum PartnerState { FOLLOW, BATTLE }
 var state := PartnerState.FOLLOW
 
@@ -26,6 +32,9 @@ var animator: AnimationPlayer
 var trail_points: Array[Vector3] = []
 var trail_anims: Array[String] = []
 var prev_hp := -1
+var prev_gag_total := -1
+var tracked_stats: PlayerStats
+var cheering := false
 
 var player: Player:
 	get: return Util.get_player()
@@ -47,11 +56,13 @@ func _ready() -> void:
 	toon.construct_toon(dna)
 	animator = toon.body.animator
 	set_animation('neutral')
+	BattleService.s_cog_died.connect(_on_cog_died)
 
 func _physics_process(_delta: float) -> void:
 	if not is_instance_valid(player) or not player.is_inside_tree():
 		return
 	_check_passive_heal()
+	_check_gag_unlocks()
 	if state != PartnerState.FOLLOW:
 		return
 	visible = player.visible
@@ -77,7 +88,8 @@ func _follow_trail() -> void:
 	var target := trail_points[idx]
 	var step := global_position.distance_to(target)
 	if step < 0.02:
-		set_animation('neutral')
+		if not cheering:
+			set_animation('neutral')
 		return
 	
 	face_position(target)
@@ -85,7 +97,8 @@ func _follow_trail() -> void:
 	var anim := trail_anims[idx]
 	if not anim in TRAIL_ANIMS:
 		anim = 'run' if step > 0.3 else 'walk'
-	set_animation(anim)
+	if not cheering:
+		set_animation(anim)
 
 ## Walks back along the recorded path until we're FOLLOW_SPACING behind the player
 func _get_trail_index() -> int:
@@ -131,6 +144,45 @@ func heal_player() -> void:
 	AudioManager.play_sound(HEAL_SFX)
 	player.quick_heal(amount)
 	prev_hp = player.stats.hp
+
+#endregion
+
+#region Cheering
+
+func _on_cog_died(_cog: Cog) -> void:
+	cheer(COG_CHEERS.pick_random(), false)
+
+func _check_gag_unlocks() -> void:
+	var s := stats
+	if not s:
+		return
+	var total := 0
+	for track in s.gags_unlocked.keys():
+		total += s.gags_unlocked[track]
+	# Re-baseline when the stats object is swapped (new run / character setup)
+	if s != tracked_stats:
+		tracked_stats = s
+		prev_gag_total = total
+		return
+	if total > prev_gag_total:
+		cheer(GAG_CHEERS.pick_random(), true)
+	prev_gag_total = total
+
+func cheer(phrase: String, with_sfx: bool) -> void:
+	if not is_inside_tree() or not visible:
+		return
+	toon.speak(phrase)
+	if with_sfx:
+		AudioManager.play_sound(CHEER_SFX)
+	# Don't interrupt the partner mid-gag in battle
+	if cheering or (state == PartnerState.BATTLE and get_animation() != 'neutral'):
+		return
+	cheering = true
+	set_animation(CHEER_ANIM)
+	await Task.delay(2.0)
+	cheering = false
+	if is_instance_valid(self) and get_animation() == CHEER_ANIM:
+		set_animation('neutral')
 
 #endregion
 

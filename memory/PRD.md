@@ -8,5 +8,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - objects/toon_partner/toon_partner_action.gd (gag use / 7.5% buff: +20% damage/defense/evasiveness/luck, 2 rounds)
 - objects/items/custom/toon_partner/toon_partner_script.gd + objects/items/resources/passive/toon_partner.tres
 - PlayerCharacter.partner_dna export; gag_throw.gd keeps ToonPartner as user
+## Iteration 2 (2026-06)
+- Partner cheers on cog defeat (BattleService.s_cog_died) and gag unlocks (gags_unlocked total increase)
+- Partner can use Lure & Trap (trap_fall/trap_toss keep ToonPartner user; lure_fish dollar flies to user); skips already lured/trapped cogs
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

@@ -2,7 +2,7 @@ extends ActionScript
 class_name ToonPartnerAction
 
 const BUFF_CHANCE := 0.075
-const ALLOWED_TRACKS: Array[String] = ["Throw", "Squirt", "Sound", "Drop"]
+const ALLOWED_TRACKS: Array[String] = ["Throw", "Squirt", "Sound", "Drop", "Lure", "Trap"]
 const BUFF_STATS: Array[String] = ['damage', 'defense', 'evasiveness', 'luck']
 const STAT_BOOST_REFERENCE := preload("res://objects/battle/battle_resources/status_effects/resources/status_effect_stat_boost.tres")
 
@@ -30,9 +30,18 @@ func get_available_gags() -> Array[ToonAttack]:
 		var unlocked: int = stats.gags_unlocked.get(track.track_name, 0)
 		for i in mini(unlocked, track.gags.size()):
 			var gag: ToonAttack = track.gags[i]
-			if gag and gag.damage > 0:
+			if gag and (gag.damage > 0 or gag is GagLure):
 				gags.append(gag)
-	return gags
+	return gags.filter(func(g: ToonAttack): return not get_valid_cogs(g).is_empty())
+
+## Cogs this gag would actually do something to (skips already lured/trapped Cogs)
+func get_valid_cogs(gag: ToonAttack) -> Array:
+	var player := Util.get_player()
+	if gag is GagLure:
+		return manager.cogs.filter(func(c: Cog): return not c.lured)
+	if gag is GagTrap:
+		return manager.cogs.filter(func(c: Cog): return not c.trap and not (c.lured and player.trap_needs_lure))
+	return manager.cogs.duplicate()
 
 func use_gag(base_gag: ToonAttack) -> void:
 	var player := Util.get_player()
@@ -43,7 +52,8 @@ func use_gag(base_gag: ToonAttack) -> void:
 	
 	# Pick a random Cog to hit
 	var cogs := manager.cogs
-	var idx := RNG.channel(RNG.ChannelTrueRandom).randi() % cogs.size()
+	var target: Cog = RNG.channel(RNG.ChannelTrueRandom).pick_random(get_valid_cogs(base_gag))
+	var idx := cogs.find(target)
 	match gag.target_type:
 		ActionTarget.ENEMY_SPLASH:
 			gag.reassess_splash_targets(idx, manager)

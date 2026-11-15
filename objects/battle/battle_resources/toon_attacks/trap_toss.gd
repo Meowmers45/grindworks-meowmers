@@ -21,7 +21,8 @@ var prop : Node3D
 
 func action():
 	var target = targets[0]
-	user = Util.get_player()
+	if not user is ToonPartner:
+		user = Util.get_player()
 	
 	if target.trap or (target.lured and user.trap_needs_lure):
 		return
