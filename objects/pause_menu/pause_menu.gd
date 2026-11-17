@@ -295,7 +295,11 @@ func add_partner_page() -> void:
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	list.add_theme_constant_override(&"separation", 14)
 	scroll.add_child(list)
-	
+	fill_partner_list(list, partners)
+
+func fill_partner_list(list: VBoxContainer, partners: Array) -> void:
+	for child in list.get_children():
+		child.queue_free()
 	var name_settings: LabelSettings = %Damage.label_settings.duplicate()
 	var item_settings: LabelSettings = %Damage.label_settings.duplicate()
 	item_settings.font_size = maxi(item_settings.font_size - 6, 12)
@@ -324,6 +328,46 @@ func add_partner_page() -> void:
 			item_label.mouse_entered.connect(Util.do_item_hover.bind(item))
 			item_label.mouse_exited.connect(HoverManager.stop_hover)
 			flow.add_child(item_label)
+		add_hand_off_row(list, partners, partner, item_settings)
+
+## Your passive items that can be handed to a partner
+func get_giftable_items() -> Array[Item]:
+	var result: Array[Item] = []
+	for item: Item in Util.get_player().stats.items:
+		if item and not item.item_name.is_empty() and (item.model or item.icon) \
+				and not "setup" in item.resource_path and ToonPartner.can_carry(item):
+			result.append(item)
+	return result
+
+func add_hand_off_row(list: VBoxContainer, partners: Array, partner: ToonPartner, settings: LabelSettings) -> void:
+	var giftable := get_giftable_items()
+	if giftable.is_empty():
+		return
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override(&"separation", 10)
+	list.add_child(row)
+	var label := Label.new()
+	label.label_settings = settings
+	label.text = "Give:"
+	row.add_child(label)
+	var picker := OptionButton.new()
+	picker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for item in giftable:
+		picker.add_item(item.item_name)
+	row.add_child(picker)
+	var give := Button.new()
+	give.text = "Give"
+	row.add_child(give)
+	give.pressed.connect(func():
+		var item: Item = giftable[picker.selected]
+		var player := Util.get_player()
+		if not item in player.stats.items:
+			return
+		item.remove_item(player)
+		partner.add_carried_item(item)
+		AudioManager.play_sound(SFX_STAT_CHANGE)
+		fill_partner_list(list, partners)
+	)
 
 #endregion
 

@@ -216,6 +216,9 @@ func _ready() -> void:
 		accessory.place_accessory(toon)
 	if shoes:
 		shoes.place_shoes(toon)
+	for item in carried_items:
+		if item is ItemAccessory:
+			item.place_accessory(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
 	Globals.s_elevator_entered.connect(_on_elevator_entered)
@@ -366,9 +369,13 @@ func refresh_sparkle() -> void:
 	mat.albedo_color = QUALITOON_COLORS[clampi(best, 0, QUALITOON_COLORS.size() - 1)]
 
 ## Whether this partner may grab a world item for itself
-func can_carry(item: Item) -> bool:
-	return item and not item is ItemActive and item.slot == Item.ItemSlot.PASSIVE and not item.evergreen \
-		and not ToonPartnerItemScript.is_partner_item(item)
+static func can_carry(item: Item) -> bool:
+	if not item or item is ItemActive or item is ItemShoe or item.evergreen or ToonPartnerItemScript.is_partner_item(item):
+		return false
+	# Hats, glasses and backpacks get worn by the partner
+	if item is ItemAccessory:
+		return true
+	return item.slot == Item.ItemSlot.PASSIVE
 
 ## Picks up a passive item: it keeps the effects (stats only), saved for the rest of the run
 func add_carried_item(item: Item) -> void:
@@ -378,8 +385,44 @@ func add_carried_item(item: Item) -> void:
 		paths.append(item.resource_path)
 		source_item.arbitrary_data['carried'] = paths
 	_run_item_script(item)
+	if item is ItemAccessory:
+		item.place_accessory(toon)
 	refresh_sparkle()
 	speak(PICKUP_LINES.pick_random())
+	show_pickup_bubble(item)
+
+## Small icon (or mini model) that pops up over the partner's head for a few seconds
+func show_pickup_bubble(item: Item) -> void:
+	var holder := Node3D.new()
+	add_child(holder)
+	var head_y := (toon.head_bone.global_position.y - global_position.y) if toon.head_bone else 1.5
+	holder.position = Vector3(0.0, head_y + NAMEPLATE_HEIGHT + 0.5, 0.0)
+	if item.icon:
+		var sprite := Sprite3D.new()
+		sprite.texture = item.icon
+		sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		sprite.no_depth_test = true
+		sprite.render_priority = 4
+		sprite.pixel_size = 0.45 / maxf(item.icon.get_width(), 1.0)
+		holder.add_child(sprite)
+	elif item.model:
+		var mini: Node3D = item.get_model().instantiate()
+		holder.add_child(mini)
+		if mini.has_method('setup'):
+			mini.setup(item)
+		holder.scale = Vector3.ONE * 0.35
+		var spin := holder.create_tween().set_loops()
+		spin.tween_property(mini, 'rotation_degrees:y', 360.0, 1.5).from(0.0)
+	else:
+		holder.queue_free()
+		return
+	var target_scale := holder.scale
+	holder.scale = Vector3.ONE * 0.01
+	var tween := holder.create_tween().set_trans(Tween.TRANS_BACK)
+	tween.tween_property(holder, 'scale', target_scale, 0.25).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(2.5)
+	tween.tween_property(holder, 'scale', Vector3.ONE * 0.01, 0.25).set_ease(Tween.EASE_IN)
+	tween.tween_callback(holder.queue_free)
 
 func _check_item_pickup(delta: float) -> void:
 	if not SaveFileService.settings_file.partner_item_pickup or not visible:

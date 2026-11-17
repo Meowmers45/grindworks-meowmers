@@ -67,5 +67,9 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Witch Hat / Bubbles squirt boost partner-capable via ToonPartner.s_gag_started
 - Pause menu Partners page (name, turns, items coloured by qualitoon w/ hover)
 - Sparkle colour by best item qualitoon (QUALITOON_COLORS)
+## Iteration 21 (2026-06)
+- Pickup bubble over partner (item icon Sprite3D or spinning mini model, ~3s)
+- Pause Partners page: "Give" row (OptionButton of your passive items -> Item.remove_item + partner.add_carried_item)
+- Partners wear picked-up / given hats, glasses, backpacks (ItemAccessory.place_accessory on partner toon; restored on reload)
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
