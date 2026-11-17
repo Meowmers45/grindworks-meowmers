@@ -52,5 +52,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - PlayerCharacter.partner_accuracy multiplier applied in BattleManager.roll_for_accuracy for ToonPartner users
 ## Iteration 16 (2026-06)
 - PlayerCharacter.partner_items (Array[Item]): stats_add/stats_multiply layered onto a copy of player battle stats for partner gags only (no item scripts, no visuals, money/hp ignored)
+## Iteration 17 (2026-06)
+- Per-partner items: PlayerCharacter.partner_items is now Array[PartnerItemList] (objects/toon_partner/partner_item_list.gd), indexed by ToonPartner.get_line_index()
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

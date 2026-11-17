@@ -79,7 +79,7 @@ func use_gag(base_gag: ToonAttack) -> void:
 	manager.show_action_name("%s!" % gag.action_name, "Partner Attack")
 	
 	# Partner borrows the player's battle stats while the gag runs (plus its own items, if set)
-	manager.battle_stats[user] = get_partner_stats(manager.battle_stats[player])
+	manager.battle_stats[user] = get_partner_stats(manager.battle_stats[player], user.get_line_index())
 	var prev_action := manager.current_action
 	manager.current_action = gag
 	var missed := [false]
@@ -95,14 +95,17 @@ func use_gag(base_gag: ToonAttack) -> void:
 	manager.battle_stats.erase(user)
 
 ## Player's battle stats, with the character's partner items layered on top for the partner only
-func get_partner_stats(player_stats: BattleStats) -> BattleStats:
+func get_partner_stats(player_stats: BattleStats, line_index: int) -> BattleStats:
 	var character: PlayerCharacter = Util.get_player().stats.character
-	if not character or character.partner_items.is_empty():
+	if not character or line_index < 0 or line_index >= character.partner_items.size():
+		return player_stats
+	var item_list: PartnerItemList = character.partner_items[line_index]
+	if not item_list or item_list.items.is_empty():
 		return player_stats
 	var partner_stats: BattleStats = player_stats.duplicate(true)
 	# Keep live buffs/debuffs from status effects
 	partner_stats.multipliers = player_stats.multipliers
-	for item: Item in character.partner_items:
+	for item: Item in item_list.items:
 		if not item:
 			continue
 		for stat in item.stats_add:

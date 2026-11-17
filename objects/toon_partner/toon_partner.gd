@@ -229,6 +229,16 @@ func _physics_process(delta: float) -> void:
 		_follow_trail()
 		_check_idle_emote(delta)
 
+## Position among Toon Partners in the line (0 = front)
+func get_line_index() -> int:
+	var idx := 0
+	for p in player.partners:
+		if p == self:
+			return idx
+		if p is ToonPartner and is_instance_valid(p) and not p.is_queued_for_deletion():
+			idx += 1
+	return -1
+
 func player_has_control() -> bool:
 	return player.visible and player.controller.current_state.accepts_interaction()
 
