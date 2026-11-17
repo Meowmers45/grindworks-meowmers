@@ -8,9 +8,11 @@
 [ext_resource type="Script" uid="uid://dfqwh4jmdy0iw" path="res://objects/toon/clothing/toon_shirt.gd" id="7_evqxs"]
 [ext_resource type="Texture2D" uid="uid://l5nmqw1hw5ti" path="res://models/toon/textures/clothes/shirts/desat_shirt_2_2.png" id="8_b3hhu"]
 [ext_resource type="Texture2D" uid="uid://dp1mwoshkp6pb" path="res://models/toon/textures/clothes/shirts/desat_sleeve_2_1.png" id="9_iq2rv"]
+[ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="10_iq2rv"]
 [ext_resource type="Resource" uid="uid://tyi7ukxtvcgc" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/standard_loadout.tres" id="10_pvy6g"]
 [ext_resource type="Resource" uid="uid://b8i0610w7dcxf" path="res://objects/items/resources/passive/oldman_setup.tres" id="11_0fwh0"]
 [ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="11_3lmvo"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="11_l0iwc"]
 [ext_resource type="Resource" uid="uid://bkifup6k18tov" path="res://objects/items/resources/passive/oldman_logic.tres" id="12_dm5l1"]
 [ext_resource type="Resource" uid="uid://dh87q08enl0bg" path="res://objects/items/resources/active/glowering_dagger.tres" id="13_cedi1"]
 

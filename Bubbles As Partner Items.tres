@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PartnerItemList" format=3 uid="uid://d2qbfjn0ksqm3"]
+
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_kbkmw"]
+[ext_resource type="Resource" uid="uid://bah0ngfo4oh3d" path="res://Bubbles DNA.tres" id="1_vljra"]
+[ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="2_4pqgd"]
+[ext_resource type="Resource" uid="uid://bh5mubvof8wpe" path="res://objects/items/resources/accessories/hats/tiara.tres" id="3_vljra"]
+[ext_resource type="Resource" uid="uid://djij80h8jh7yd" path="res://objects/items/resources/accessories/glasses/star_glasses.tres" id="4_bq076"]
+[ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="5_cw17i"]
+[ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="6_lag31"]
+[ext_resource type="Resource" uid="uid://c5ei2gaae6n5p" path="res://objects/items/resources/passive/bubbles_squirt_boost.tres" id="7_4pqgd"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="7_pedbk"]
+
+[resource]
+script = ExtResource("7_pedbk")
+dna = ExtResource("1_vljra")
+partner_name = "Bubbles"
+items = Array[ExtResource("1_kbkmw")]([ExtResource("2_4pqgd"), ExtResource("7_4pqgd"), ExtResource("3_vljra"), ExtResource("4_bq076"), ExtResource("5_cw17i"), ExtResource("6_lag31")])
+turns = 3
+metadata/_custom_type_script = "uid://cxvmxa5y0cquo"

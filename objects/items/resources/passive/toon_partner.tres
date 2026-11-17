@@ -1,11 +1,14 @@
 [gd_resource type="Resource" script_class="Item" format=3 uid="uid://dlcwf5tqlwbk2"]
 
 [ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_item"]
+[ext_resource type="PackedScene" uid="uid://dqjcn0b5fc3l6" path="res://objects/toon_partner/toon_partner_item.tscn" id="2_j15ee"]
 [ext_resource type="Script" uid="uid://co7bnhuwepghx" path="res://objects/items/custom/toon_partner/toon_partner_script.gd" id="2_script"]
+[ext_resource type="AudioStream" uid="uid://dchmgklf0w1dr" path="res://audio/sfx/items/doodle_pickup.ogg" id="3_rlefh"]
 
 [resource]
 script = ExtResource("1_item")
 qualitoon = 4
+rarity = 3
 evergreen = true
 realtime = true
 item_name = "Toon Partner"
@@ -14,6 +17,8 @@ big_description = "- Follows you everywhere
 - Uses a random Gag you own on a random Cog each round
 - 7.5% chance to pass their turn and buff you instead
 - 7.5% chance to heal you when you get hurt outside of battle"
+model = ExtResource("2_j15ee")
+pickup_sfx = ExtResource("3_rlefh")
 item_script = ExtResource("2_script")
 shop_category_title = "Special Item"
 shop_category_color = Color(0.60162, 0.201089, 1, 1)

@@ -125,6 +125,7 @@ var ADDITIONAL_TOON_PATHS := [
 	'res://objects/player/characters/meowmers.tres',
 	'res://objects/player/characters/aaron.tres',
 	'res://objects/player/characters/bubbles.tres',
+	'res://objects/player/characters/aaron_ttr.tres',
 ]
 
 func fetch_toon_unlock_order() -> Array[PlayerCharacter]:

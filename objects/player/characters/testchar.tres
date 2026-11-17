@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://yg7gxug4rab" path="res://objects/toon/toon_dna.gd" id="1_t03ah"]
 [ext_resource type="Resource" uid="uid://tyi7ukxtvcgc" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/standard_loadout.tres" id="2_w38qq"]
 [ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="4_al6k5"]
+[ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="5_peval"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="6_60pnt"]
 [ext_resource type="Resource" uid="uid://jubssojcpwa0" path="res://objects/items/resources/passive/mystery_setup.tres" id="6_qib3c"]
 
 [sub_resource type="Resource" id="Resource_q3qk8"]

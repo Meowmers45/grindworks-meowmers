@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://dsikqlc2iiid4" path="res://models/toon/textures/clothes/shirts/desat_shirt_1_4.png" id="5_7t0ro"]
 [ext_resource type="Texture2D" uid="uid://dh7dyokcfyw43" path="res://models/toon/textures/clothes/shirts/desat_sleeve_1.png" id="6_1n6id"]
 [ext_resource type="Resource" uid="uid://tyi7ukxtvcgc" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/standard_loadout.tres" id="8_b67yf"]
+[ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="10_1di23"]
 [ext_resource type="Resource" uid="uid://cgtsegmhqn4js" path="res://objects/items/resources/passive/pete_setup.tres" id="11_b67yf"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="11_bs6wn"]
 [ext_resource type="Resource" uid="uid://c8wjy8fdkxarx" path="res://objects/items/resources/active/gag_button.tres" id="12_7t0ro"]
 [ext_resource type="Resource" uid="uid://j2f777map5cr" path="res://objects/items/resources/passive/pete_logic.tres" id="13_1n6id"]
 

@@ -5,8 +5,10 @@
 [ext_resource type="Resource" uid="uid://bah0ngfo4oh3d" path="res://Bubbles DNA.tres" id="3_vy1xy"]
 [ext_resource type="Resource" uid="uid://bmcon3qwk21kv" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/bubbles_loadout.tres" id="9_tjnsi"]
 [ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="10_3kqxc"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="10_tjnsi"]
 [ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="10_yj7wl"]
 [ext_resource type="Resource" uid="uid://t87i11mxrocf" path="res://objects/items/resources/accessories/hats/fedora.tres" id="11_k61wg"]
+[ext_resource type="Resource" uid="uid://cmebvethyq7ke" path="res://Aaron (TTR) As Partner Items.tres" id="11_nsl05"]
 [ext_resource type="Resource" uid="uid://dtv0v1prk5ssc" path="res://objects/items/resources/passive/bubbles_setup.tres" id="11_tjnsi"]
 [ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="12_03pg8"]
 [ext_resource type="Resource" uid="uid://c5ei2gaae6n5p" path="res://objects/items/resources/passive/bubbles_squirt_boost.tres" id="12_tjnsi"]
@@ -43,6 +45,8 @@ partner_dna = ExtResource("14_qrfge")
 partner_name = "Aaron"
 partner_accessories = Array[ExtResource("10_3kqxc")]([ExtResource("11_k61wg"), ExtResource("20_tjnsi"), ExtResource("13_2erhc")])
 partner_shoes = ExtResource("21_6w60k")
+partner_accuracy = 1.5
+partner_items = Array[ExtResource("10_tjnsi")]([ExtResource("11_nsl05")])
 gag_loadout = ExtResource("9_tjnsi")
 starting_laff = 30
 starting_items = Array[ExtResource("1_tjnsi")]([ExtResource("11_tjnsi"), ExtResource("12_tjnsi"), ExtResource("12_03pg8"), ExtResource("14_m7xp7"), ExtResource("15_d8vio"), ExtResource("16_n58ag"), ExtResource("21_6w60k"), ExtResource("18_tjnsi"), ExtResource("19_nsl05"), ExtResource("17_8k275"), ExtResource("19_vy1xy"), ExtResource("20_tjnsi"), ExtResource("27_k61wg")])

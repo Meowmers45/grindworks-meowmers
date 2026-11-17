@@ -6,9 +6,12 @@
 [ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="8_3vnwk"]
 [ext_resource type="Resource" uid="uid://dkfdo6rq1sxyw" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/meowmers_loadout.tres" id="8_6y58e"]
 [ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="10_cl0t1"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="10_tqwj3"]
+[ext_resource type="Resource" uid="uid://c5j8m04401qxx" path="res://Aaron As Partner Items.tres" id="11_235hg"]
 [ext_resource type="Resource" uid="uid://bfltx0ohpcwsv" path="res://objects/items/resources/passive/meowmers_setup.tres" id="11_pgai2"]
 [ext_resource type="Resource" uid="uid://itr08gdkdq5d" path="res://Aaron DNA.tres" id="11_tqwj3"]
 [ext_resource type="Resource" uid="uid://t87i11mxrocf" path="res://objects/items/resources/accessories/hats/fedora.tres" id="11_tss6m"]
+[ext_resource type="Resource" uid="uid://d2qbfjn0ksqm3" path="res://Bubbles As Partner Items.tres" id="12_235hg"]
 [ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="13_pgai2"]
 [ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="13_qs7wx"]
 [ext_resource type="Resource" uid="uid://tnnppqjvfyvh" path="res://objects/items/resources/accessories/backpacks/spider_legs.tres" id="14_b1l7q"]
@@ -50,13 +53,17 @@ character_summary = "Starts with 5 turns (Max of 7)
 Squirtless (Has a unique Squirt Gun)
 Lure and Sound will hit all Cogs
 A 0 damage Storm Cloud will hit all Cogs every round
-Aaron travels with you"
+Aaron & Bubbles travel with you"
 character_blurb = "Cogs and Toons alike wonder where she gets her extreme speed from, Truth is, Not even she knows."
 dna = ExtResource("3_r7ps3")
 partner_dna = ExtResource("11_tqwj3")
 partner_name = "Aaron"
 partner_accessories = Array[ExtResource("10_cl0t1")]([ExtResource("11_tss6m"), ExtResource("17_i30qe"), ExtResource("13_qs7wx")])
 partner_shoes = ExtResource("24_s8570")
+max_toon_partners = 5
+ignore_partner_cap = true
+partner_accuracy = 2.0
+partner_items = Array[ExtResource("10_tqwj3")]([ExtResource("11_235hg"), ExtResource("12_235hg")])
 gag_loadout = ExtResource("8_6y58e")
 starting_laff = 45
 starting_items = Array[ExtResource("8_3vnwk")]([ExtResource("11_pgai2"), ExtResource("20_6y58e"), ExtResource("13_pgai2"), ExtResource("14_qmcxa"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("14_b1l7q"), ExtResource("16_77m2d"), ExtResource("17_i5c2s"), ExtResource("20_anfid"), ExtResource("20_anfid"), ExtResource("19_07e54"), ExtResource("20_pgm2o"), ExtResource("21_t11tf"), ExtResource("17_i30qe"), ExtResource("24_b1l7q"), ExtResource("24_s8570"), ExtResource("26_77m2d"), ExtResource("26_77m2d"), ExtResource("26_77m2d"), ExtResource("25_77m2d"), ExtResource("30_1xl6a"), ExtResource("25_s8570"), ExtResource("31_r7ps3"), ExtResource("32_r7ps3"), ExtResource("31_cl0t1"), ExtResource("26_qmcxa"), ExtResource("37_qs7wx")])

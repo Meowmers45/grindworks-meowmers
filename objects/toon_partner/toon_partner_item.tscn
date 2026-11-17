@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dqjcn0b5fc3l6"]
+
+[ext_resource type="Script" uid="uid://de01vnfqjy2vg" path="res://objects/toon_partner/toon_partner.gd" id="1_partner"]
+[ext_resource type="PackedScene" uid="uid://cy4iox7mj5ei0" path="res://objects/toon/toon.tscn" id="2_toon"]
+[ext_resource type="FontFile" uid="uid://815gwlftl5ik" path="res://fonts/impress-bt.ttf" id="3_font"]
+
+[node name="ToonPartner" type="CharacterBody3D" unique_id=798685481]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_partner")
+
+[node name="Toon" parent="." unique_id=2080275148 instance=ExtResource("2_toon")]
+randomize_dna = true
+
+[node name="Head" type="Node3D" parent="." unique_id=588467581]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.920243, 0)
+
+[node name="Nameplate" type="Label3D" parent="." unique_id=980474133]
+top_level = true
+pixel_size = 0.0035
+billboard = 1
+no_depth_test = true
+render_priority = 3
+outline_render_priority = 2
+modulate = Color(0.25, 0.4, 1, 1)
+outline_modulate = Color(1, 1, 1, 0.85)
+font = ExtResource("3_font")
+font_size = 48
+outline_size = 14

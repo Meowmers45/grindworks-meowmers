@@ -5,12 +5,15 @@
 [ext_resource type="Resource" uid="uid://c7umtna5hxxd3" path="res://Aaron DNA (TTR).tres" id="3_dtun7"]
 [ext_resource type="Resource" uid="uid://ddcq7jilb3isd" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/aaron_loadout.tres" id="4_6bkbc"]
 [ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="5_hnhwo"]
-[ext_resource type="Resource" uid="uid://b5ncaw2q6vlk8" path="res://objects/items/resources/accessories/hats/baseball_cap.tres" id="6_dtbqi"]
+[ext_resource type="Resource" uid="uid://bh5mubvof8wpe" path="res://objects/items/resources/accessories/hats/tiara.tres" id="6_2o8gb"]
 [ext_resource type="Resource" uid="uid://t466jr8j087t" path="res://objects/items/resources/accessories/glasses/dorky_glasses.tres" id="7_4s5rn"]
+[ext_resource type="Resource" uid="uid://djij80h8jh7yd" path="res://objects/items/resources/accessories/glasses/star_glasses.tres" id="7_6bkbc"]
 [ext_resource type="Resource" uid="uid://dv5u2vhslq87m" path="res://objects/items/resources/accessories/backpacks/cog_pack.tres" id="8_jur5m"]
 [ext_resource type="Resource" uid="uid://bah0ngfo4oh3d" path="res://Bubbles DNA.tres" id="9_dtun7"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="10_hnhwo"]
 [ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="10_jr550"]
 [ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="11_0mvld"]
+[ext_resource type="Resource" uid="uid://d2qbfjn0ksqm3" path="res://Bubbles As Partner Items.tres" id="11_6bkbc"]
 [ext_resource type="Resource" uid="uid://dy3g7t8wu48ke" path="res://objects/items/resources/passive/aaron_setup.tres" id="12_1pvdw"]
 [ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="13_rmcbd"]
 [ext_resource type="Resource" uid="uid://crkswlws27tuq" path="res://objects/items/resources/passive/meowmers_boost.tres" id="14_51jih"]
@@ -40,8 +43,10 @@ character_blurb = "Meowmers' Best friend, Not much else that sticks out. (TTR Va
 dna = ExtResource("3_dtun7")
 partner_dna = ExtResource("9_dtun7")
 partner_name = "Meowmers"
-partner_accessories = Array[ExtResource("5_hnhwo")]([ExtResource("6_dtbqi"), ExtResource("7_4s5rn"), ExtResource("8_jur5m")])
+partner_accessories = Array[ExtResource("5_hnhwo")]([ExtResource("6_2o8gb"), ExtResource("7_6bkbc"), ExtResource("19_dtun7")])
 partner_shoes = ExtResource("10_jr550")
+max_toon_partners = 4
+partner_items = Array[ExtResource("10_hnhwo")]([ExtResource("11_6bkbc")])
 gag_loadout = ExtResource("4_6bkbc")
 starting_laff = 30
 starting_items = Array[ExtResource("1_dtun7")]([ExtResource("12_1pvdw"), ExtResource("13_rmcbd"), ExtResource("14_51jih"), ExtResource("15_he2ix"), ExtResource("16_hk0i4"), ExtResource("17_licyu"), ExtResource("8_jur5m"), ExtResource("18_563ki"), ExtResource("7_4s5rn"), ExtResource("19_dtun7"), ExtResource("10_jr550"), ExtResource("20_a0mdh"), ExtResource("21_huguk")])

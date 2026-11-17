@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PartnerItemList" format=3 uid="uid://c5j8m04401qxx"]
+
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_nalxp"]
+[ext_resource type="Resource" uid="uid://itr08gdkdq5d" path="res://Aaron DNA.tres" id="1_pklpq"]
+[ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="2_pklpq"]
+[ext_resource type="Resource" uid="uid://t87i11mxrocf" path="res://objects/items/resources/accessories/hats/fedora.tres" id="3_3dosw"]
+[ext_resource type="Resource" uid="uid://t466jr8j087t" path="res://objects/items/resources/accessories/glasses/dorky_glasses.tres" id="4_qk6j1"]
+[ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="5_cgju2"]
+[ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="6_vbtg0"]
+[ext_resource type="Script" uid="uid://cxvmxa5y0cquo" path="res://objects/toon_partner/partner_item_list.gd" id="7_2e0e8"]
+
+[resource]
+script = ExtResource("7_2e0e8")
+dna = ExtResource("1_pklpq")
+partner_name = "Aaron"
+items = Array[ExtResource("1_nalxp")]([ExtResource("2_pklpq"), ExtResource("3_3dosw"), ExtResource("4_qk6j1"), ExtResource("5_cgju2"), ExtResource("6_vbtg0")])
+turns = 2
+metadata/_custom_type_script = "uid://cxvmxa5y0cquo"
