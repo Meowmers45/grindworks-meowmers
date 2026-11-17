@@ -76,5 +76,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Gift reaction: happy dance + "Thanks, <character name>!" when handed an item from pause menu
 ## Iteration 23 (2026-06)
 - Gift memory: last gifted item name saved (arbitrary_data.last_gift); 30% of idle emotes mention it
+## Iteration 24 (2026-06)
+- PartnerItemList.dna: preset look per partner in line (2nd+ partners no longer forced random when set)
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
