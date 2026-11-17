@@ -80,5 +80,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - PartnerItemList.dna: preset look per partner in line (2nd+ partners no longer forced random when set)
 ## Iteration 25 (2026-06)
 - PartnerItemList.partner_name: preset name per partner in line
+## Iteration 26 (2026-06)
+- FIX: ItemAccessory.place_accessory null-node crash (guards node/model/placement); Player.update_accessories skips null nodes
+- Removed partner sparkle particles
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
