@@ -17,7 +17,7 @@ func setup() -> void:
 	on_speed_changed(player.stats.speed)
 
 func on_item_removed() -> void:
-	Util.get_player().stats.multipliers.erase(multiplier)
+	get_owner_multipliers().erase(multiplier)
 
 ## Sync multipliers to current speed amount
 func on_speed_changed(speed: float) -> void:
@@ -28,4 +28,8 @@ func create_multiplier() -> void:
 	multiplier.stat = 'crit_mult'
 	multiplier.amount = 0.0
 	multiplier.additive = true
-	Util.get_player().stats.multipliers.append(multiplier)
+	get_owner_multipliers().append(multiplier)
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

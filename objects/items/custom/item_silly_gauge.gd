@@ -36,9 +36,13 @@ func on_item_use() -> void:
 	var choice: Array = StatChoices.pick_random()
 
 	var boost_amt: float = randf_range(BoostRange.x, BoostRange.y)
-	player.stats[choice[0]] += boost_amt
-	if BattleService.ongoing_battle:
-		BattleService.ongoing_battle.battle_stats[player][choice[0]] += boost_amt
+	add_owner_stat(choice[0], boost_amt)
+	if is_partner_owned():
+		return
 
 	player.boost_queue.queue_text("%s Up!" % choice[0].capitalize(), choice[1])
 	AudioManager.play_sound(load("res://audio/sfx/items/clock%s.ogg" % ClockSfxChoices.pick_random()), 2.0)
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

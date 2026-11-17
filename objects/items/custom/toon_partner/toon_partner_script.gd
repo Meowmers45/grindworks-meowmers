@@ -68,6 +68,7 @@ func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[St
 		partner.shoes = load(shoes_path) as ItemShoe
 	SceneLoader.add_persistent_node(partner)
 	Util.get_player().partners.append(partner)
+	partner.setup_items()
 
 ## Whether the character's partner cap allows one more Toon Partner
 static func can_add_partner(ignore: Node = null) -> bool:

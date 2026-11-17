@@ -15,7 +15,7 @@ func setup() -> void:
 	damage_mult.additive = true
 	damage_mult.stat = 'damage'
 	damage_mult.amount = 0.0
-	Util.get_player().stats.multipliers.append(damage_mult)
+	get_owner_multipliers().append(damage_mult)
 	
 	BattleService.s_round_ended.connect(on_round_start)
 	BattleService.s_cog_died.connect(on_cog_died)
@@ -30,4 +30,9 @@ func reset_boost() -> void:
 func on_cog_died(_cog) -> void:
 	if not is_instance_valid(BattleService.ongoing_battle): return
 	damage_mult.amount += BOOST_AMT
-	Util.get_player().boost_queue.queue_text("Rev up!", Color(0.937, 0.278, 0.278))
+	if not is_partner_owned():
+		Util.get_player().boost_queue.queue_text("Rev up!", Color(0.937, 0.278, 0.278))
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

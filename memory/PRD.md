@@ -54,5 +54,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - PlayerCharacter.partner_items (Array[Item]): stats_add/stats_multiply layered onto a copy of player battle stats for partner gags only (no item scripts, no visuals, money/hp ignored)
 ## Iteration 17 (2026-06)
 - Per-partner items: PlayerCharacter.partner_items is now Array[PartnerItemList] (objects/toon_partner/partner_item_list.gd), indexed by ToonPartner.get_line_index()
+## Iteration 18 (2026-06)
+- ItemScript: partner_owner, supports_partner_owner(), get_owner_multipliers(), add_owner_stat(); converted bee/dragon/dragonfly/butterfly wings, motorcycle boots, narrow glasses, cowboy hat, silly gauge
+- ToonPartner.setup_items() runs supported item scripts with partner_owner; stat_multipliers + stat_offsets merged into partner battle stats
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

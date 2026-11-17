@@ -139,6 +139,10 @@ var bored_timer := 0.0
 var away := false
 var teleporting := false
 var in_game := false
+## Stat effects from this partner's item scripts (only used for its own gags)
+var stat_multipliers: Array[StatMultiplier] = []
+var stat_offsets: Dictionary = {}
+var item_nodes: Node
 var game_cooldown := 10.0
 
 var player: Player:
@@ -228,6 +232,38 @@ func _physics_process(delta: float) -> void:
 	else:
 		_follow_trail()
 		_check_idle_emote(delta)
+
+func add_stat_offset(stat: String, amount: float) -> void:
+	stat_offsets[stat] = stat_offsets.get(stat, 0.0) + amount
+
+## This partner's items from the character's per-partner list
+func get_items() -> Array[Item]:
+	var result: Array[Item] = []
+	var character: PlayerCharacter = player.stats.character if is_instance_valid(player) and player.stats else null
+	var idx := get_line_index()
+	if not character or idx < 0 or idx >= character.partner_items.size() or not character.partner_items[idx]:
+		return result
+	for item in character.partner_items[idx].items:
+		if item:
+			result.append(item)
+	return result
+
+## Runs the stat side of item scripts that support partners (call once the partner is in line)
+func setup_items() -> void:
+	item_nodes = Node.new()
+	item_nodes.name = "PartnerItems"
+	add_child(item_nodes)
+	for item in get_items():
+		if not item.item_script:
+			continue
+		var node := Node.new()
+		node.set_script(item.item_script)
+		if not node is ItemScript or not node.supports_partner_owner():
+			node.free()
+			continue
+		node.partner_owner = self
+		item_nodes.add_child(node)
+		node.on_collect(item.duplicate(true), null)
 
 ## Position among Toon Partners in the line (0 = front)
 func get_line_index() -> int:

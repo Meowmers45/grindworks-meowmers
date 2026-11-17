@@ -18,7 +18,7 @@ func on_load(_item: Item) -> void:
 
 func on_item_removed() -> void:
 	for multiplier in multipliers:
-		Util.get_player().stats.multipliers.erase(multiplier)
+		get_owner_multipliers().erase(multiplier)
 
 func setup() -> void:
 	if not Util.get_player():
@@ -41,4 +41,8 @@ func create_multipliers() -> void:
 		mult.amount = 0.0
 		mult.additive = true
 		multipliers.append(mult)
-		Util.get_player().stats.multipliers.append(mult)
+		get_owner_multipliers().append(mult)
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true
