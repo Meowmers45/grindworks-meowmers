@@ -32,6 +32,8 @@ func on_collect(item: Item, _object: Node3D) -> void:
 		dna.randomize_dna()
 	item.arbitrary_data['dna'] = dna
 	var partner_name: String = character.partner_name if character else ""
+	if config and not config.partner_name.strip_edges().is_empty():
+		partner_name = config.partner_name.strip_edges()
 	if partner_name.strip_edges().is_empty():
 		partner_name = Globals.get_random_toon_name().strip_edges()
 	item.arbitrary_data['name'] = partner_name
