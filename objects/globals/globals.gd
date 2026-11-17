@@ -599,6 +599,7 @@ signal s_liquidator_boss_defeated
 signal s_pocket_prank_used(prank: ItemActive)
 signal s_special_chest_opened(chest: TreasureChest)
 signal s_player_jumped
+signal s_elevator_entered(elevator: Elevator)
 signal s_paint_silo_victory
 
 func on_floor_start(game_floor: GameFloor) -> void:
@@ -654,6 +655,8 @@ var custom_seeds: Dictionary[String, Variant] = {
 	
 	# Haunted by the phrase: "I'm neoNote."
 	"neonote": "res://objects/items/resources/custom_seeds/seed_neonote.tres",
+	
+	"poopcity": "res://objects/items/resources/custom_seeds/seed_poopcity.tres",
 	
 	# Mouse shopkeeper every floor :)
 	"mouse": "res://objects/items/resources/custom_seeds/seed_mouse.tres",

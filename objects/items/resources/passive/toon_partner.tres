@@ -7,7 +7,6 @@
 script = ExtResource("1_item")
 qualitoon = 4
 evergreen = true
-unique = true
 realtime = true
 item_name = "Toon Partner"
 item_description = "A loyal Toon buddy!"

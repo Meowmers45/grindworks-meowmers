@@ -1,4 +1,5 @@
 extends ItemScript
+class_name ToonPartnerItemScript
 
 const PARTNER_SCENE := "res://objects/toon_partner/toon_partner.tscn"
 
@@ -6,8 +7,15 @@ var partner: ToonPartner
 
 
 func on_collect(item: Item, _object: Node3D) -> void:
+	# Over the character's partner cap: this copy does nothing (now or on reload)
+	if not can_add_partner(self):
+		item.arbitrary_data['over_cap'] = true
+		return
 	var dna: ToonDNA
 	var character: PlayerCharacter = Util.get_player().stats.character
+	# Only the first partner uses the character's partner settings; extras are always random
+	if has_other_partner():
+		character = null
 	if character and character.partner_dna:
 		dna = character.partner_dna.duplicate(true)
 	else:
@@ -32,6 +40,8 @@ func on_collect(item: Item, _object: Node3D) -> void:
 	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
 func on_load(item: Item) -> void:
+	if item.arbitrary_data.get('over_cap', false):
+		return
 	var dna = item.arbitrary_data.get('dna')
 	if not dna is ToonDNA:
 		dna = ToonDNA.new()
@@ -47,10 +57,6 @@ func on_load(item: Item) -> void:
 	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
 func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[String], shoes_path := "") -> void:
-	# Only ever one Toon Partner at a time (ignore scripts being cleared by a stats reset)
-	for node in get_parent().get_children():
-		if node != self and node.get_script() == get_script() and not node.is_queued_for_deletion() and is_instance_valid(node.partner):
-			return
 	partner = load(PARTNER_SCENE).instantiate()
 	partner.dna = dna
 	partner.partner_name = partner_name
@@ -62,6 +68,34 @@ func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[St
 		partner.shoes = load(shoes_path) as ItemShoe
 	SceneLoader.add_persistent_node(partner)
 	Util.get_player().partners.append(partner)
+
+## Whether the character's partner cap allows one more Toon Partner
+static func can_add_partner(ignore: Node = null) -> bool:
+	var player := Util.get_player()
+	if not is_instance_valid(player) or not player.stats or not player.stats.character:
+		return true
+	var character := player.stats.character
+	if character.ignore_partner_cap:
+		return true
+	return count_partners(ignore) < character.max_toon_partners
+
+## Live Toon Partners (ignores ones being cleared by a stats reset)
+static func count_partners(ignore: Node = null) -> int:
+	var count := 0
+	for node in Util.get_player().get_node('Items').get_children():
+		if node != ignore and node is ToonPartnerItemScript and not node.is_queued_for_deletion() and is_instance_valid(node.partner):
+			count += 1
+	return count
+
+static func is_partner_item(item: Item) -> bool:
+	return item.item_script and item.item_script.resource_path == "res://objects/items/custom/toon_partner/toon_partner_script.gd"
+
+## Whether another live Toon Partner already exists (ignores ones being cleared by a stats reset)
+func has_other_partner() -> bool:
+	for node in get_parent().get_children():
+		if node != self and node.get_script() == get_script() and not node.is_queued_for_deletion() and is_instance_valid(node.partner):
+			return true
+	return false
 
 func on_item_removed() -> void:
 	remove_partner()

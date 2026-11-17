@@ -398,6 +398,8 @@ func flag_check(item: Item) -> bool:
 			return false
 	if item.unique and (player_owns_item(item) or is_unique_item_in_play(item)):
 		return false
+	if ToonPartnerItemScript.is_partner_item(item) and not ToonPartnerItemScript.can_add_partner():
+		return false
 	return true
 
 ## Whether a copy of this item is already sitting in the world/shop

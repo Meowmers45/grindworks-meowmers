@@ -4,6 +4,15 @@ class_name ToonPartnerAction
 const BUFF_CHANCE := 0.075
 const ALLOWED_TRACKS: Array[String] = ["Throw", "Squirt", "Sound", "Drop", "Lure", "Trap"]
 const BUFF_STATS: Array[String] = ['damage', 'defense', 'evasiveness', 'luck']
+const MISS_ANIMS: Array[String] = ['shrug', 'cringe']
+const MISS_LINES: Array[String] = [
+	"Aw, nuts!",
+	"My aim's a little Toon-y today.",
+	"I meant to do that!",
+	"That Cog is slipperier than a banana peel!",
+	"Ugh, I'll blame the lighting.",
+	"Note to self: aim AT the Cog.",
+]
 const STAT_BOOST_REFERENCE := preload("res://objects/battle/battle_resources/status_effects/resources/status_effect_stat_boost.tres")
 
 
@@ -71,9 +80,28 @@ func use_gag(base_gag: ToonAttack) -> void:
 	manager.battle_stats[user] = manager.battle_stats[player]
 	var prev_action := manager.current_action
 	manager.current_action = gag
+	var missed := [false]
+	var on_text := func(target_node: Node3D, text: String):
+		if target_node is Cog and "MISS" in text.to_upper():
+			missed[0] = true
+	manager.s_battle_text_shown.connect(on_text)
 	await gag.action()
+	manager.s_battle_text_shown.disconnect(on_text)
 	manager.current_action = prev_action
+	if missed[0] and is_instance_valid(user):
+		await react_to_miss()
 	manager.battle_stats.erase(user)
+
+## Groan or shrug it off with a funny line
+func react_to_miss() -> void:
+	user.toon.show()
+	manager.s_focus_char.emit(user)
+	user.face_position(manager.battle_node.global_position)
+	user.set_animation(MISS_ANIMS.pick_random())
+	user.toon.set_emotion(Toon.Emotion.SAD)
+	user.speak(MISS_LINES.pick_random())
+	await manager.sleep(1.75)
+	user.toon.set_emotion(Toon.Emotion.NEUTRAL)
 
 func buff_player() -> void:
 	var player := Util.get_player()

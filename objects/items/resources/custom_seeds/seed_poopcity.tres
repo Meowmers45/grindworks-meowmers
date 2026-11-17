@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Item" format=3]
+
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_item"]
+[ext_resource type="Script" path="res://objects/items/custom/seed_logic/seed_poopcity.gd" id="2_seed"]
+
+[resource]
+script = ExtResource("1_item")
+item_script = ExtResource("2_seed")
+metadata/_custom_type_script = "uid://combwqypom1ru"
