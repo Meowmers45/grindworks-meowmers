@@ -55,6 +55,21 @@ const RETURN_QUIPS: Array[String] = [
 	"Finally! The Cogs were starting to feel sorry for me.",
 ]
 
+## Idle games between partners (tag / pie toss)
+const GAME_COOLDOWN := Vector2(8.0, 16.0)
+const TAG_DURATION := 14.0
+const TAG_RUN_SPEED := 3.6
+const TAG_CHASE_SPEED := 4.0
+const TAG_CATCH_DISTANCE := 0.7
+const TAG_START_LINES: Array[String] = ["Can't catch me!", "Bet you can't tag me!", "Wanna play tag?"]
+const TAG_LINES: Array[String] = ["Tag! You're it!", "Gotcha! You're it!", "Tag!"]
+const PIE_TOSSES := 4
+const PIE_TOSS_DISTANCE := 3.0
+const PIE_GAG := preload("res://objects/battle/battle_resources/gag_loadouts/gags/throw/cream_pie_slice.tres")
+const SPLAT_SCENE := "res://objects/battle/effects/splat/splat.tscn"
+const PIE_START_LINES: Array[String] = ["Think fast!", "Pie fight!", "Heads up!"]
+const PIE_HIT_LINES: Array[String] = ["Hey!", "Mmm, cream!", "Right in the kisser!", "You'll pay for that!", "Ha ha ha!"]
+
 ## Floor clear team dance
 const DANCE_ANIM := 'happy-dance'
 const DANCE_START_DELAY := 1.6
@@ -123,6 +138,8 @@ var roam_pause := 0.0
 var bored_timer := 0.0
 var away := false
 var teleporting := false
+var in_game := false
+var game_cooldown := 10.0
 
 var player: Player:
 	get: return Util.get_player()
@@ -142,6 +159,12 @@ var is_lead_partner: bool:
 ## Follow distance comes from the settings slider
 var follow_spacing: float:
 	get: return SaveFileService.settings_file.partner_follow_distance
+## Partner's own accuracy multiplier on top of the player's (character setting)
+var accuracy_mult: float:
+	get:
+		if is_instance_valid(player) and player.stats and player.stats.character:
+			return player.stats.character.partner_accuracy
+		return 1.0
 ## Partner uses the player's stats & gag modifiers so gags behave like the player's own
 var stats: PlayerStats:
 	get: return player.stats if is_instance_valid(player) else null
@@ -198,7 +221,10 @@ func _physics_process(delta: float) -> void:
 		return
 	visible = player.visible
 	if still_time >= ROAM_START_TIME:
+		if in_game:
+			return
 		_roam(delta)
+		_maybe_start_game(delta)
 	else:
 		_follow_trail()
 		_check_idle_emote(delta)
@@ -437,6 +463,188 @@ func _return_to_line() -> void:
 		await Task.delay(1.2 if not was_away else 2.0)
 		if active and not departed and state == PartnerState.FOLLOW:
 			speak(RETURN_QUIPS.pick_random())
+
+#endregion
+
+#region Idle games
+
+## Partners pair up in line order: 1st & 2nd, 3rd & 4th...
+func _get_game_buddy() -> ToonPartner:
+	var line: Array[ToonPartner] = []
+	for p in player.partners:
+		if p is ToonPartner and is_instance_valid(p) and not p.is_queued_for_deletion() and not p.departed:
+			line.append(p)
+	var idx := line.find(self)
+	if idx < 0 or idx % 2 == 1 or idx + 1 >= line.size():
+		return null
+	return line[idx + 1]
+
+func _can_play() -> bool:
+	return is_inside_tree() and active and not departed and not away and not entering \
+		and state == PartnerState.FOLLOW and still_time >= ROAM_START_TIME
+
+func _game_ok(buddy: ToonPartner) -> bool:
+	return is_instance_valid(buddy) and _can_play() and buddy._can_play()
+
+func _maybe_start_game(delta: float) -> void:
+	if in_game or cheering:
+		return
+	game_cooldown -= delta
+	if game_cooldown > 0.0:
+		return
+	var rng := RNG.channel(RNG.ChannelTrueRandom)
+	game_cooldown = rng.randf_range(GAME_COOLDOWN.x, GAME_COOLDOWN.y)
+	var buddy := _get_game_buddy()
+	if not buddy or buddy.in_game or buddy.cheering or not _game_ok(buddy):
+		return
+	in_game = true
+	buddy.in_game = true
+	if rng.randf() < 0.5:
+		await _play_tag(buddy)
+	else:
+		await _play_pie_toss(buddy)
+	for p: ToonPartner in [self, buddy]:
+		if is_instance_valid(p):
+			p.in_game = false
+			p.has_roam_target = false
+			if p.state == PartnerState.FOLLOW and not p.cheering:
+				p.set_animation('neutral')
+
+## Moves toward a point on the ground near the player; returns false if blocked
+func _step_toward(target: Vector3, speed: float, delta: float, anim := 'run') -> bool:
+	var to := target - global_position
+	to.y = 0.0
+	if to.length() < 0.05:
+		return true
+	var next := global_position + to.normalized() * minf(speed * delta, to.length())
+	if next.distance_to(player.global_position) > ROAM_RADIUS + 1.5:
+		return false
+	if not _raycast(global_position + Vector3.UP * 0.5, next + Vector3.UP * 0.5).is_empty():
+		return false
+	var ground := _raycast(next + Vector3.UP * 1.0, next + Vector3.DOWN * 2.0)
+	if ground.is_empty():
+		return false
+	next.y = ground.position.y
+	face_position(target)
+	global_position = next
+	set_animation(anim)
+	return true
+
+## A reachable roam point as far from `threat` as possible
+func _pick_point_away_from(threat: Vector3) -> Vector3:
+	var best := global_position
+	var best_dist := -1.0
+	for i in 6:
+		if _pick_roam_point() and roam_target.distance_to(threat) > best_dist:
+			best = roam_target
+			best_dist = roam_target.distance_to(threat)
+	has_roam_target = false
+	return best
+
+func _play_tag(buddy: ToonPartner) -> void:
+	var chaser: ToonPartner = self
+	var runner: ToonPartner = buddy
+	runner.speak(TAG_START_LINES.pick_random())
+	var flee_target := runner._pick_point_away_from(chaser.global_position)
+	var elapsed := 0.0
+	var wait := 0.8
+	while elapsed < TAG_DURATION and _game_ok(buddy):
+		await get_tree().physics_frame
+		var delta := get_physics_process_delta_time()
+		elapsed += delta
+		if runner.global_position.distance_to(flee_target) < 0.4 or not runner._step_toward(flee_target, TAG_RUN_SPEED, delta):
+			flee_target = runner._pick_point_away_from(chaser.global_position)
+		if wait > 0.0:
+			# The new "it" counts to one before chasing
+			wait -= delta
+			chaser.face_position(runner.global_position)
+			chaser.set_animation('neutral')
+			continue
+		chaser._step_toward(runner.global_position, TAG_CHASE_SPEED, delta)
+		if chaser.global_position.distance_to(runner.global_position) < TAG_CATCH_DISTANCE:
+			chaser.speak(TAG_LINES.pick_random())
+			var tagged := runner
+			runner = chaser
+			chaser = tagged
+			wait = 1.2
+			flee_target = runner._pick_point_away_from(chaser.global_position)
+
+func _play_pie_toss(buddy: ToonPartner) -> void:
+	# Find a clear spot across from us for the buddy to stand
+	var spot := Vector3.ZERO
+	var found := false
+	var rng := RNG.channel(RNG.ChannelTrueRandom)
+	for i in 8:
+		var angle := rng.randf() * TAU
+		var candidate := global_position + Vector3(cos(angle), 0.0, sin(angle)) * PIE_TOSS_DISTANCE
+		if candidate.distance_to(player.global_position) > ROAM_RADIUS:
+			continue
+		if not _raycast(global_position + Vector3.UP * 0.8, candidate + Vector3.UP * 0.8).is_empty():
+			continue
+		var hit := _raycast(candidate + Vector3.UP * 1.5, candidate + Vector3.DOWN * 3.0)
+		if hit.is_empty():
+			continue
+		spot = hit.position
+		found = true
+		break
+	if not found:
+		return
+	set_animation('neutral')
+	var walk_time := 0.0
+	while buddy.global_position.distance_to(spot) > 0.15 and walk_time < 6.0 and _game_ok(buddy):
+		await get_tree().physics_frame
+		walk_time += get_physics_process_delta_time()
+		if not buddy._step_toward(spot, ROAM_SPEED * 1.5, get_physics_process_delta_time(), 'walk'):
+			break
+	if not _game_ok(buddy):
+		return
+	speak(PIE_START_LINES.pick_random())
+	var thrower: ToonPartner = self
+	var catcher: ToonPartner = buddy
+	for i in PIE_TOSSES:
+		if not _game_ok(buddy):
+			return
+		await _toss_pie(thrower, catcher, buddy)
+		var swap := thrower
+		thrower = catcher
+		catcher = swap
+		await Task.delay(0.6)
+
+func _toss_pie(thrower: ToonPartner, catcher: ToonPartner, buddy: ToonPartner) -> void:
+	thrower.face_position(catcher.global_position)
+	catcher.face_position(thrower.global_position)
+	catcher.set_animation('neutral')
+	var pie: Node3D = PIE_GAG.model.instantiate()
+	thrower.toon.right_hand_bone.add_child(pie)
+	pie.scale *= PIE_GAG.scale
+	pie.rotation_degrees.y += 180.0
+	thrower.set_animation('pie-throw')
+	await Task.delay(2.545)
+	if not _game_ok(buddy) or not is_instance_valid(pie):
+		if is_instance_valid(pie):
+			pie.queue_free()
+		return
+	AudioManager.play_sound(PIE_GAG.throw_sfx if PIE_GAG.throw_sfx else GagThrow.FALLBACK_THROW_SFX)
+	await Task.delay(0.1)
+	var head: Node3D = catcher.toon.head_bone if catcher.toon.head_bone else catcher.head_node
+	pie.top_level = true
+	var tween := pie.create_tween()
+	tween.tween_property(pie, 'global_position', head.global_position, 0.3)
+	await tween.finished
+	pie.queue_free()
+	if not is_instance_valid(catcher):
+		return
+	var splat: Node3D = load(SPLAT_SCENE).instantiate()
+	splat.modulate = PIE_GAG.splat_color
+	catcher.head_node.add_child(splat)
+	if PIE_GAG.splat_sfx:
+		AudioManager.play_sound(PIE_GAG.splat_sfx)
+	catcher.set_animation('cringe')
+	catcher.toon.set_emotion(Toon.Emotion.LAUGH)
+	catcher.speak(PIE_HIT_LINES.pick_random())
+	await Task.delay(1.5)
+	if is_instance_valid(catcher):
+		catcher.toon.set_emotion(Toon.Emotion.NEUTRAL)
 
 #endregion
 

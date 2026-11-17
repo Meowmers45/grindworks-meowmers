@@ -511,6 +511,8 @@ func roll_for_accuracy(action: BattleAction) -> bool:
 	if not 'accuracy' in action: acc_base = 100
 	else: acc_base = action.accuracy
 	var acc_boost: float = battle_stats[action.user].get_stat('accuracy')
+	if action.user is ToonPartner:
+		acc_boost *= action.user.accuracy_mult
 	
 	# Find average evasiveness
 	var evasiveness := 0.0

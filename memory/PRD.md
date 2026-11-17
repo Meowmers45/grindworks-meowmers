@@ -46,5 +46,9 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Long idle: 60s roam within 6u, 180s bored anim + lines, 300s teleport away; sarcastic quip on return
 - Floor clear team dance: Globals.s_elevator_entered(elevator); partners line up beside player in elevator, synced happy-dance
 - Miss reactions: BattleManager.s_battle_text_shown; partner shrug/cringe + line on MISSED
+## Iteration 15 (2026-06)
+- poopcity shader: hue-mapped browns (HSV), not just luminance
+- Idle games (roam phase, partners paired 1+2, 3+4): tag (chase/flee, swap on catch) and pie toss (cream pie model, splat, cringe); abort when player moves/battle
+- PlayerCharacter.partner_accuracy multiplier applied in BattleManager.roll_for_accuracy for ToonPartner users
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
