@@ -364,7 +364,7 @@ func add_hand_off_row(list: VBoxContainer, partners: Array, partner: ToonPartner
 		if not item in player.stats.items:
 			return
 		item.remove_item(player)
-		partner.add_carried_item(item)
+		partner.add_carried_item(item, true)
 		AudioManager.play_sound(SFX_STAT_CHANGE)
 		fill_partner_list(list, partners)
 	)

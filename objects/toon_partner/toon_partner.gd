@@ -112,6 +112,7 @@ const QUALITOON_COLORS: Array[Color] = [
 	Color(1.0, 0.82, 0.3, 0.85),
 ]
 const PICKUP_DISTANCE := 1.1
+const GIFT_LINES: Array[String] = ["Thanks, %s!", "For me? Thanks, %s!", "Wow, thank you %s!", "%s, you're the best!"]
 const PICKUP_LINES: Array[String] = ["Ooh, mine!", "Finders keepers!", "I'll hold onto this!", "Shiny!"]
 
 signal s_gag_started(gag: ToonAttack)
@@ -165,6 +166,8 @@ var carried_items: Array[Item] = []
 ## Gag turns each round (fixed for the run)
 var turns := 1
 var pickup_timer := 0.0
+## Item script nodes created for each carried/configured item
+var item_script_nodes: Dictionary = {}
 var item_nodes: Node
 var game_cooldown := 10.0
 
@@ -219,6 +222,8 @@ func _ready() -> void:
 	for item in carried_items:
 		if item is ItemAccessory:
 			item.place_accessory(toon)
+		elif item is ItemShoe:
+			item.place_shoes(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
 	Globals.s_elevator_entered.connect(_on_elevator_entered)
@@ -351,7 +356,21 @@ func _run_item_script(item: Item) -> void:
 		return
 	node.partner_owner = self
 	item_nodes.add_child(node)
+	item_script_nodes[item] = node
 	node.on_collect(item.duplicate(true), null)
+
+## Drops a carried item (its effects stop and it's removed from the save)
+func remove_carried_item(item: Item) -> void:
+	carried_items.erase(item)
+	if source_item and not item.resource_path.is_empty():
+		var paths: Array = source_item.arbitrary_data.get('carried', [])
+		paths.erase(item.resource_path)
+		source_item.arbitrary_data['carried'] = paths
+	var node: Node = item_script_nodes.get(item)
+	if is_instance_valid(node):
+		node.on_item_removed()
+		node.queue_free()
+	item_script_nodes.erase(item)
 
 func refresh_sparkle() -> void:
 	var items := get_items()
@@ -370,15 +389,20 @@ func refresh_sparkle() -> void:
 
 ## Whether this partner may grab a world item for itself
 static func can_carry(item: Item) -> bool:
-	if not item or item is ItemActive or item is ItemShoe or item.evergreen or ToonPartnerItemScript.is_partner_item(item):
+	if not item or item is ItemActive or item.evergreen or ToonPartnerItemScript.is_partner_item(item):
 		return false
-	# Hats, glasses and backpacks get worn by the partner
-	if item is ItemAccessory:
+	# Hats, glasses, backpacks and shoes get worn by the partner
+	if item is ItemAccessory or item is ItemShoe:
 		return true
 	return item.slot == Item.ItemSlot.PASSIVE
 
 ## Picks up a passive item: it keeps the effects (stats only), saved for the rest of the run
-func add_carried_item(item: Item) -> void:
+func add_carried_item(item: Item, gifted := false) -> void:
+	# Only one pair of shoes: the old pair gets swapped out
+	if item is ItemShoe:
+		for old in carried_items.duplicate():
+			if old is ItemShoe:
+				remove_carried_item(old)
 	carried_items.append(item)
 	if source_item and not item.resource_path.is_empty():
 		var paths: Array = source_item.arbitrary_data.get('carried', [])
@@ -387,9 +411,25 @@ func add_carried_item(item: Item) -> void:
 	_run_item_script(item)
 	if item is ItemAccessory:
 		item.place_accessory(toon)
+	elif item is ItemShoe:
+		item.place_shoes(toon)
 	refresh_sparkle()
-	speak(PICKUP_LINES.pick_random())
 	show_pickup_bubble(item)
+	if gifted:
+		react_to_gift()
+	else:
+		speak(PICKUP_LINES.pick_random())
+
+## Happy dance + a thank you by name when the player hands over an item
+func react_to_gift() -> void:
+	var player_name := "pal"
+	if is_instance_valid(player) and player.stats and player.stats.character:
+		player_name = player.stats.character.character_name
+	speak(GIFT_LINES.pick_random() % player_name)
+	if state == PartnerState.FOLLOW:
+		cheering = false
+		face_position(player.global_position)
+		play_emote('happy-dance', 3.0, Toon.Emotion.DELIGHTED)
 
 ## Small icon (or mini model) that pops up over the partner's head for a few seconds
 func show_pickup_bubble(item: Item) -> void:

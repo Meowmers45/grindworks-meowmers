@@ -71,5 +71,8 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Pickup bubble over partner (item icon Sprite3D or spinning mini model, ~3s)
 - Pause Partners page: "Give" row (OptionButton of your passive items -> Item.remove_item + partner.add_carried_item)
 - Partners wear picked-up / given hats, glasses, backpacks (ItemAccessory.place_accessory on partner toon; restored on reload)
+## Iteration 22 (2026-06)
+- Partners pick up / get given shoes (ItemShoe.place_shoes), old carried pair swapped out via remove_carried_item
+- Gift reaction: happy dance + "Thanks, <character name>!" when handed an item from pause menu
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
