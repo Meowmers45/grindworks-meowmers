@@ -103,6 +103,19 @@ const FLOOR_LINES: Array[String] = [
 	"Let's show these Cogs who's boss!",
 ]
 
+## Sparkle colour by the best item's Qualitoon rating (Q1 -> Q5)
+const QUALITOON_COLORS: Array[Color] = [
+	Color(0.85, 0.85, 0.85, 0.8),
+	Color(0.45, 1.0, 0.45, 0.8),
+	Color(0.35, 0.65, 1.0, 0.8),
+	Color(0.8, 0.45, 1.0, 0.8),
+	Color(1.0, 0.82, 0.3, 0.85),
+]
+const PICKUP_DISTANCE := 1.1
+const PICKUP_LINES: Array[String] = ["Ooh, mine!", "Finders keepers!", "I'll hold onto this!", "Shiny!"]
+
+signal s_gag_started(gag: ToonAttack)
+
 enum PartnerState { FOLLOW, BATTLE, CUTSCENE }
 var state := PartnerState.FOLLOW
 
@@ -145,6 +158,13 @@ var stat_offsets: Dictionary = {}
 ## Flat gag damage added by item scripts (keyed by the script node)
 var flat_damage_bonuses: Dictionary = {}
 var sparkle: CPUParticles3D
+## The Toon Partner item this partner came from (stores run-persistent data)
+var source_item: Item
+## Items this partner picked up itself during the run
+var carried_items: Array[Item] = []
+## Gag turns each round (fixed for the run)
+var turns := 1
+var pickup_timer := 0.0
 var item_nodes: Node
 var game_cooldown := 10.0
 
@@ -235,6 +255,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		_follow_trail()
 		_check_idle_emote(delta)
+		_check_item_pickup(delta)
 
 func get_flat_damage_bonus() -> int:
 	var total := 0
@@ -289,33 +310,99 @@ func add_stat_offset(stat: String, amount: float) -> void:
 ## This partner's items from the character's per-partner list
 func get_items() -> Array[Item]:
 	var result: Array[Item] = []
+	var config := get_config()
+	if config:
+		for item in config.items:
+			if item:
+				result.append(item)
+	result.append_array(carried_items)
+	return result
+
+## This partner's entry in the character's per-partner settings (or null)
+func get_config() -> PartnerItemList:
 	var character: PlayerCharacter = player.stats.character if is_instance_valid(player) and player.stats else null
 	var idx := get_line_index()
-	if not character or idx < 0 or idx >= character.partner_items.size() or not character.partner_items[idx]:
-		return result
-	for item in character.partner_items[idx].items:
-		if item:
-			result.append(item)
-	return result
+	if not character or idx < 0 or idx >= character.partner_items.size():
+		return null
+	return character.partner_items[idx]
+
+## Set turns: the character setting wins, otherwise a 1-3 roll that's kept for the whole run
+func init_turns() -> void:
+	var config := get_config()
+	if config and config.turns > 0:
+		turns = config.turns
+	elif source_item and source_item.arbitrary_data.has('turns'):
+		turns = int(source_item.arbitrary_data['turns'])
+	else:
+		turns = RNG.channel(RNG.ChannelTrueRandom).randi_range(1, 3)
+	if source_item:
+		source_item.arbitrary_data['turns'] = turns
+
+func _run_item_script(item: Item) -> void:
+	if not item.item_script:
+		return
+	var node := Node.new()
+	node.set_script(item.item_script)
+	if not node is ItemScript or not node.supports_partner_owner():
+		node.free()
+		return
+	node.partner_owner = self
+	item_nodes.add_child(node)
+	node.on_collect(item.duplicate(true), null)
+
+func refresh_sparkle() -> void:
+	var items := get_items()
+	if items.is_empty():
+		if sparkle:
+			sparkle.hide()
+		return
+	if not sparkle:
+		setup_sparkle()
+	sparkle.show()
+	var best := 0
+	for item in items:
+		best = maxi(best, int(item.qualitoon))
+	var mat: StandardMaterial3D = sparkle.mesh.material
+	mat.albedo_color = QUALITOON_COLORS[clampi(best, 0, QUALITOON_COLORS.size() - 1)]
+
+## Whether this partner may grab a world item for itself
+func can_carry(item: Item) -> bool:
+	return item and not item is ItemActive and item.slot == Item.ItemSlot.PASSIVE and not item.evergreen \
+		and not ToonPartnerItemScript.is_partner_item(item)
+
+## Picks up a passive item: it keeps the effects (stats only), saved for the rest of the run
+func add_carried_item(item: Item) -> void:
+	carried_items.append(item)
+	if source_item and not item.resource_path.is_empty():
+		var paths: Array = source_item.arbitrary_data.get('carried', [])
+		paths.append(item.resource_path)
+		source_item.arbitrary_data['carried'] = paths
+	_run_item_script(item)
+	refresh_sparkle()
+	speak(PICKUP_LINES.pick_random())
+
+func _check_item_pickup(delta: float) -> void:
+	if not SaveFileService.settings_file.partner_item_pickup or not visible:
+		return
+	pickup_timer -= delta
+	if pickup_timer > 0.0:
+		return
+	pickup_timer = 0.2
+	for world_item in get_tree().get_nodes_in_group(&"world_items"):
+		if world_item is WorldItem and world_item.monitoring and world_item.model and can_carry(world_item.item) \
+				and not world_item.model.has_method('custom_collect') \
+				and world_item.global_position.distance_to(global_position) < PICKUP_DISTANCE:
+			world_item.collect_for_partner(self)
+			return
 
 ## Runs the stat side of item scripts that support partners (call once the partner is in line)
 func setup_items() -> void:
 	item_nodes = Node.new()
 	item_nodes.name = "PartnerItems"
 	add_child(item_nodes)
-	if not get_items().is_empty():
-		setup_sparkle()
 	for item in get_items():
-		if not item.item_script:
-			continue
-		var node := Node.new()
-		node.set_script(item.item_script)
-		if not node is ItemScript or not node.supports_partner_owner():
-			node.free()
-			continue
-		node.partner_owner = self
-		item_nodes.add_child(node)
-		node.on_collect(item.duplicate(true), null)
+		_run_item_script(item)
+	refresh_sparkle()
 
 ## Position among Toon Partners in the line (0 = front)
 func get_line_index() -> int:

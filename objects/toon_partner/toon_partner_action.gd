@@ -19,8 +19,12 @@ const STAT_BOOST_REFERENCE := preload("res://objects/battle/battle_resources/sta
 
 
 func action():
-	if manager.cogs.is_empty():
-		return
+	for i in maxi(user.turns, 1):
+		if manager.cogs.is_empty() or not is_instance_valid(user):
+			break
+		await take_turn()
+
+func take_turn() -> void:
 	var gags := get_available_gags()
 	if gags.is_empty() or RNG.channel(RNG.ChannelTrueRandom).randf() < BUFF_CHANCE:
 		await buff_player()
@@ -84,6 +88,7 @@ func use_gag(base_gag: ToonAttack) -> void:
 	var prev_action := manager.current_action
 	manager.current_action = gag
 	var missed := [false]
+	user.s_gag_started.emit(gag)
 	var on_text := func(target_node: Node3D, text: String):
 		if target_node is Cog and "MISS" in text.to_upper():
 			missed[0] = true

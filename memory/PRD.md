@@ -61,5 +61,11 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Golden CPUParticles3D sparkle on partners with items
 - Partner gag track boosts: ToonPartner.get_track_effectiveness() (items gag_boost:Track + script offsets) applied in BattleManager.get_damage for ToonPartner users
 - Converted Moe Zart Thorns (partner: flat dmg boost only via flat_damage_bonuses) and Clara trap boost; Philosophers Stone skipped (no stat effect)
+## Iteration 20 (2026-06)
+- Setting "Partner Item Pickup" (settings.partner_item_pickup, default off): partners grab nearby passive non-evergreen WorldItems (group world_items, WorldItem.collect_for_partner); carried items saved in source item arbitrary_data.carried
+- Turns per round: PartnerItemList.turns (0=random 1-3 rolled once, stored in arbitrary_data.turns); action loops take_turn()
+- Witch Hat / Bubbles squirt boost partner-capable via ToonPartner.s_gag_started
+- Pause menu Partners page (name, turns, items coloured by qualitoon w/ hover)
+- Sparkle colour by best item qualitoon (QUALITOON_COLORS)
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

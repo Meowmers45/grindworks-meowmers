@@ -68,6 +68,8 @@ var cog_tts = want_tts
 ## Toon Partner speech bubbles (cheers, tips, greetings, emotes)
 @export var partner_dialogue := true
 ## How far behind the player the Toon Partner follows
+## Lets Toon Partners grab passive items they walk over (they keep the item's effects for themselves)
+@export var partner_item_pickup := false
 @export var partner_follow_distance := 3.0:
 	set(x):
 		partner_follow_distance = clampf(x, 1.0, 6.0)
