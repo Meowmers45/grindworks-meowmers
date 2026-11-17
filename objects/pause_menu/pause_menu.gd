@@ -72,6 +72,7 @@ func _ready() -> void:
 	else:
 		%FloorMainContainer.hide()
 
+	add_partner_page()
 	apply_stat_labels()
 	apply_stat_changes()
 	sync_reward()
@@ -260,6 +261,115 @@ func do_page_transition(old_page : Control, new_page : Control, side := 0) -> vo
 			old_page.hide()
 			page_transition.kill()
 	)
+
+#region Partner Page
+
+## Extra page listing each Toon Partner, its turns and the items it carries
+func add_partner_page() -> void:
+	if not is_instance_valid(Util.get_player()):
+		return
+	var partners: Array = Util.get_player().partners.filter(
+		func(p): return p is ToonPartner and is_instance_valid(p) and not p.departed)
+	if partners.is_empty():
+		return
+	var page := Control.new()
+	page.name = "PartnerPage"
+	page.visible = false
+	page.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	menu_pages.add_child(page)
+	
+	var title: Label = menu_pages.get_node("GagPage/GagTitle").duplicate()
+	title.text = "Partners"
+	page.add_child(title)
+	
+	var scroll := ScrollContainer.new()
+	scroll.set_anchors_preset(Control.PRESET_CENTER)
+	scroll.offset_left = -300.0
+	scroll.offset_right = 300.0
+	scroll.offset_top = -140.0
+	scroll.offset_bottom = 200.0
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	page.add_child(scroll)
+	var list := VBoxContainer.new()
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	list.add_theme_constant_override(&"separation", 14)
+	scroll.add_child(list)
+	fill_partner_list(list, partners)
+
+func fill_partner_list(list: VBoxContainer, partners: Array) -> void:
+	for child in list.get_children():
+		child.queue_free()
+	var name_settings: LabelSettings = %Damage.label_settings.duplicate()
+	var item_settings: LabelSettings = %Damage.label_settings.duplicate()
+	item_settings.font_size = maxi(item_settings.font_size - 6, 12)
+	for partner: ToonPartner in partners:
+		var name_label := Label.new()
+		name_label.label_settings = name_settings
+		name_label.text = "%s  -  Turns: %d" % [partner.partner_name, partner.turns]
+		list.add_child(name_label)
+		var flow := HFlowContainer.new()
+		flow.add_theme_constant_override(&"h_separation", 12)
+		list.add_child(flow)
+		var items := partner.get_items()
+		if items.is_empty():
+			var none := Label.new()
+			none.label_settings = item_settings
+			none.text = "No items"
+			flow.add_child(none)
+		for item in items:
+			var item_label := Label.new()
+			item_label.label_settings = item_settings.duplicate()
+			var item_color: Color = ToonPartner.QUALITOON_COLORS[clampi(int(item.qualitoon), 0, 4)].lightened(0.2)
+			item_color.a = 1.0
+			item_label.label_settings.font_color = item_color
+			item_label.text = item.item_name
+			item_label.mouse_filter = Control.MOUSE_FILTER_STOP
+			item_label.mouse_entered.connect(Util.do_item_hover.bind(item))
+			item_label.mouse_exited.connect(HoverManager.stop_hover)
+			flow.add_child(item_label)
+		add_hand_off_row(list, partners, partner, item_settings)
+
+## Your passive items that can be handed to a partner
+func get_giftable_items() -> Array[Item]:
+	var result: Array[Item] = []
+	for item: Item in Util.get_player().stats.items:
+		if item and not item.item_name.is_empty() and (item.model or item.icon) \
+				and not "setup" in item.resource_path and ToonPartner.can_carry(item):
+			result.append(item)
+	return result
+
+func add_hand_off_row(list: VBoxContainer, partners: Array, partner: ToonPartner, settings: LabelSettings) -> void:
+	var giftable := get_giftable_items()
+	if giftable.is_empty():
+		return
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override(&"separation", 10)
+	list.add_child(row)
+	var label := Label.new()
+	label.label_settings = settings
+	label.text = "Give:"
+	row.add_child(label)
+	var picker := OptionButton.new()
+	picker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for item in giftable:
+		picker.add_item(item.item_name)
+	row.add_child(picker)
+	var give := Button.new()
+	give.text = "Give"
+	row.add_child(give)
+	give.pressed.connect(func():
+		var item: Item = giftable[picker.selected]
+		var player := Util.get_player()
+		if not item in player.stats.items:
+			return
+		item.remove_item(player)
+		partner.add_carried_item(item, true)
+		AudioManager.play_sound(SFX_STAT_CHANGE)
+		fill_partner_list(list, partners)
+	)
+
+#endregion
 
 #region Reward Display
 func sync_reward() -> void:

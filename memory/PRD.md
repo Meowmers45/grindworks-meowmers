@@ -50,5 +50,31 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - poopcity shader: hue-mapped browns (HSV), not just luminance
 - Idle games (roam phase, partners paired 1+2, 3+4): tag (chase/flee, swap on catch) and pie toss (cream pie model, splat, cringe); abort when player moves/battle
 - PlayerCharacter.partner_accuracy multiplier applied in BattleManager.roll_for_accuracy for ToonPartner users
+## Iteration 16 (2026-06)
+- PlayerCharacter.partner_items (Array[Item]): stats_add/stats_multiply layered onto a copy of player battle stats for partner gags only (no item scripts, no visuals, money/hp ignored)
+## Iteration 17 (2026-06)
+- Per-partner items: PlayerCharacter.partner_items is now Array[PartnerItemList] (objects/toon_partner/partner_item_list.gd), indexed by ToonPartner.get_line_index()
+## Iteration 18 (2026-06)
+- ItemScript: partner_owner, supports_partner_owner(), get_owner_multipliers(), add_owner_stat(); converted bee/dragon/dragonfly/butterfly wings, motorcycle boots, narrow glasses, cowboy hat, silly gauge
+- ToonPartner.setup_items() runs supported item scripts with partner_owner; stat_multipliers + stat_offsets merged into partner battle stats
+## Iteration 19 (2026-06)
+- Golden CPUParticles3D sparkle on partners with items
+- Partner gag track boosts: ToonPartner.get_track_effectiveness() (items gag_boost:Track + script offsets) applied in BattleManager.get_damage for ToonPartner users
+- Converted Moe Zart Thorns (partner: flat dmg boost only via flat_damage_bonuses) and Clara trap boost; Philosophers Stone skipped (no stat effect)
+## Iteration 20 (2026-06)
+- Setting "Partner Item Pickup" (settings.partner_item_pickup, default off): partners grab nearby passive non-evergreen WorldItems (group world_items, WorldItem.collect_for_partner); carried items saved in source item arbitrary_data.carried
+- Turns per round: PartnerItemList.turns (0=random 1-3 rolled once, stored in arbitrary_data.turns); action loops take_turn()
+- Witch Hat / Bubbles squirt boost partner-capable via ToonPartner.s_gag_started
+- Pause menu Partners page (name, turns, items coloured by qualitoon w/ hover)
+- Sparkle colour by best item qualitoon (QUALITOON_COLORS)
+## Iteration 21 (2026-06)
+- Pickup bubble over partner (item icon Sprite3D or spinning mini model, ~3s)
+- Pause Partners page: "Give" row (OptionButton of your passive items -> Item.remove_item + partner.add_carried_item)
+- Partners wear picked-up / given hats, glasses, backpacks (ItemAccessory.place_accessory on partner toon; restored on reload)
+## Iteration 22 (2026-06)
+- Partners pick up / get given shoes (ItemShoe.place_shoes), old carried pair swapped out via remove_carried_item
+- Gift reaction: happy dance + "Thanks, <character name>!" when handed an item from pause menu
+## Iteration 23 (2026-06)
+- Gift memory: last gifted item name saved (arbitrary_data.last_gift); 30% of idle emotes mention it
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

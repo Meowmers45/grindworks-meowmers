@@ -26,6 +26,7 @@ signal s_destroyed
 
 
 func _ready() -> void:
+	add_to_group(&"world_items")
 	if not item:
 		roll_for_item()
 	spawn_item()
@@ -228,6 +229,22 @@ func collect(player: Player) -> void:
 			tween.tween_property(model, 'scale', Vector3.ZERO, 1.0)
 		await tween.finished
 		tween.kill()
+	queue_free()
+
+## A Toon Partner grabs this item for itself
+func collect_for_partner(partner: ToonPartner) -> void:
+	s_collected.emit()
+	set_monitoring_deferred(false)
+	$ReactionArea.set_deferred('monitoring', false)
+	item.play_collection_sound()
+	partner.add_carried_item(item)
+	if rotation_tween: rotation_tween.kill()
+	if bob_tween: bob_tween.kill()
+	var tween := create_tween().set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(model, 'global_position', partner.global_position + Vector3.UP, 0.5)
+	tween.parallel().tween_property(model, 'scale', Vector3.ZERO, 0.5)
+	await tween.finished
+	tween.kill()
 	queue_free()
 
 var swap_tween: Tween

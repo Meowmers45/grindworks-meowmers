@@ -103,6 +103,28 @@ const FLOOR_LINES: Array[String] = [
 	"Let's show these Cogs who's boss!",
 ]
 
+## Sparkle colour by the best item's Qualitoon rating (Q1 -> Q5)
+const QUALITOON_COLORS: Array[Color] = [
+	Color(0.85, 0.85, 0.85, 0.8),
+	Color(0.45, 1.0, 0.45, 0.8),
+	Color(0.35, 0.65, 1.0, 0.8),
+	Color(0.8, 0.45, 1.0, 0.8),
+	Color(1.0, 0.82, 0.3, 0.85),
+]
+const PICKUP_DISTANCE := 1.1
+const GIFT_MEMORY_CHANCE := 0.3
+const GIFT_MEMORY_LINES: Array[String] = [
+	"I still love the %s you gave me!",
+	"Have I mentioned how much I like my %s?",
+	"Best. Gift. Ever. Thanks again for the %s!",
+	"I'm taking extra good care of that %s, promise!",
+	"Still can't believe you gave me the %s!",
+]
+const GIFT_LINES: Array[String] = ["Thanks, %s!", "For me? Thanks, %s!", "Wow, thank you %s!", "%s, you're the best!"]
+const PICKUP_LINES: Array[String] = ["Ooh, mine!", "Finders keepers!", "I'll hold onto this!", "Shiny!"]
+
+signal s_gag_started(gag: ToonAttack)
+
 enum PartnerState { FOLLOW, BATTLE, CUTSCENE }
 var state := PartnerState.FOLLOW
 
@@ -139,6 +161,24 @@ var bored_timer := 0.0
 var away := false
 var teleporting := false
 var in_game := false
+## Stat effects from this partner's item scripts (only used for its own gags)
+var stat_multipliers: Array[StatMultiplier] = []
+var stat_offsets: Dictionary = {}
+## Flat gag damage added by item scripts (keyed by the script node)
+var flat_damage_bonuses: Dictionary = {}
+var sparkle: CPUParticles3D
+## The Toon Partner item this partner came from (stores run-persistent data)
+var source_item: Item
+## Items this partner picked up itself during the run
+var carried_items: Array[Item] = []
+## Gag turns each round (fixed for the run)
+var turns := 1
+var pickup_timer := 0.0
+## Name of the last item the player handed this partner (saved for the run)
+var last_gift_name := ""
+## Item script nodes created for each carried/configured item
+var item_script_nodes: Dictionary = {}
+var item_nodes: Node
 var game_cooldown := 10.0
 
 var player: Player:
@@ -189,6 +229,11 @@ func _ready() -> void:
 		accessory.place_accessory(toon)
 	if shoes:
 		shoes.place_shoes(toon)
+	for item in carried_items:
+		if item is ItemAccessory:
+			item.place_accessory(toon)
+		elif item is ItemShoe:
+			item.place_shoes(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
 	Globals.s_elevator_entered.connect(_on_elevator_entered)
@@ -228,6 +273,245 @@ func _physics_process(delta: float) -> void:
 	else:
 		_follow_trail()
 		_check_idle_emote(delta)
+		_check_item_pickup(delta)
+
+func get_flat_damage_bonus() -> int:
+	var total := 0
+	for key in flat_damage_bonuses:
+		if is_instance_valid(key):
+			total += flat_damage_bonuses[key]
+	return total
+
+## Partner's own gag track boost (1.0 = none), from item "gag_boost:Track" stats and item scripts
+func get_track_effectiveness(track_name: String) -> float:
+	var key := "gag_boost:%s" % track_name
+	var total := 1.0 + float(stat_offsets.get(key, 0.0))
+	for item in get_items():
+		if key in item.stats_add:
+			total += item.stats_add[key]
+	return maxf(total, 0.0)
+
+## Subtle golden sparkle on partners carrying items
+func setup_sparkle() -> void:
+	sparkle = CPUParticles3D.new()
+	sparkle.amount = 8
+	sparkle.lifetime = 1.4
+	sparkle.local_coords = false
+	sparkle.position = Vector3(0, 1.0, 0)
+	sparkle.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+	sparkle.emission_sphere_radius = 0.6
+	sparkle.direction = Vector3.UP
+	sparkle.spread = 30.0
+	sparkle.gravity = Vector3(0, 0.25, 0)
+	sparkle.initial_velocity_min = 0.05
+	sparkle.initial_velocity_max = 0.2
+	var curve := Curve.new()
+	curve.add_point(Vector2(0.0, 0.0))
+	curve.add_point(Vector2(0.3, 1.0))
+	curve.add_point(Vector2(1.0, 0.0))
+	sparkle.scale_amount_curve = curve
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.07, 0.07)
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	mat.albedo_color = Color(1.0, 0.85, 0.35, 0.8)
+	mesh.material = mat
+	sparkle.mesh = mesh
+	add_child(sparkle)
+
+func add_stat_offset(stat: String, amount: float) -> void:
+	stat_offsets[stat] = stat_offsets.get(stat, 0.0) + amount
+
+## This partner's items from the character's per-partner list
+func get_items() -> Array[Item]:
+	var result: Array[Item] = []
+	var config := get_config()
+	if config:
+		for item in config.items:
+			if item:
+				result.append(item)
+	result.append_array(carried_items)
+	return result
+
+## This partner's entry in the character's per-partner settings (or null)
+func get_config() -> PartnerItemList:
+	var character: PlayerCharacter = player.stats.character if is_instance_valid(player) and player.stats else null
+	var idx := get_line_index()
+	if not character or idx < 0 or idx >= character.partner_items.size():
+		return null
+	return character.partner_items[idx]
+
+## Set turns: the character setting wins, otherwise a 1-3 roll that's kept for the whole run
+func init_turns() -> void:
+	if source_item:
+		last_gift_name = str(source_item.arbitrary_data.get('last_gift', ""))
+	var config := get_config()
+	if config and config.turns > 0:
+		turns = config.turns
+	elif source_item and source_item.arbitrary_data.has('turns'):
+		turns = int(source_item.arbitrary_data['turns'])
+	else:
+		turns = RNG.channel(RNG.ChannelTrueRandom).randi_range(1, 3)
+	if source_item:
+		source_item.arbitrary_data['turns'] = turns
+
+func _run_item_script(item: Item) -> void:
+	if not item.item_script:
+		return
+	var node := Node.new()
+	node.set_script(item.item_script)
+	if not node is ItemScript or not node.supports_partner_owner():
+		node.free()
+		return
+	node.partner_owner = self
+	item_nodes.add_child(node)
+	item_script_nodes[item] = node
+	node.on_collect(item.duplicate(true), null)
+
+## Drops a carried item (its effects stop and it's removed from the save)
+func remove_carried_item(item: Item) -> void:
+	carried_items.erase(item)
+	if source_item and not item.resource_path.is_empty():
+		var paths: Array = source_item.arbitrary_data.get('carried', [])
+		paths.erase(item.resource_path)
+		source_item.arbitrary_data['carried'] = paths
+	var node: Node = item_script_nodes.get(item)
+	if is_instance_valid(node):
+		node.on_item_removed()
+		node.queue_free()
+	item_script_nodes.erase(item)
+
+func refresh_sparkle() -> void:
+	var items := get_items()
+	if items.is_empty():
+		if sparkle:
+			sparkle.hide()
+		return
+	if not sparkle:
+		setup_sparkle()
+	sparkle.show()
+	var best := 0
+	for item in items:
+		best = maxi(best, int(item.qualitoon))
+	var mat: StandardMaterial3D = sparkle.mesh.material
+	mat.albedo_color = QUALITOON_COLORS[clampi(best, 0, QUALITOON_COLORS.size() - 1)]
+
+## Whether this partner may grab a world item for itself
+static func can_carry(item: Item) -> bool:
+	if not item or item is ItemActive or item.evergreen or ToonPartnerItemScript.is_partner_item(item):
+		return false
+	# Hats, glasses, backpacks and shoes get worn by the partner
+	if item is ItemAccessory or item is ItemShoe:
+		return true
+	return item.slot == Item.ItemSlot.PASSIVE
+
+## Picks up a passive item: it keeps the effects (stats only), saved for the rest of the run
+func add_carried_item(item: Item, gifted := false) -> void:
+	# Only one pair of shoes: the old pair gets swapped out
+	if item is ItemShoe:
+		for old in carried_items.duplicate():
+			if old is ItemShoe:
+				remove_carried_item(old)
+	carried_items.append(item)
+	if source_item and not item.resource_path.is_empty():
+		var paths: Array = source_item.arbitrary_data.get('carried', [])
+		paths.append(item.resource_path)
+		source_item.arbitrary_data['carried'] = paths
+	_run_item_script(item)
+	if item is ItemAccessory:
+		item.place_accessory(toon)
+	elif item is ItemShoe:
+		item.place_shoes(toon)
+	refresh_sparkle()
+	show_pickup_bubble(item)
+	if gifted:
+		react_to_gift(item)
+	else:
+		speak(PICKUP_LINES.pick_random())
+
+## Happy dance + a thank you by name when the player hands over an item
+func react_to_gift(item: Item = null) -> void:
+	if item:
+		last_gift_name = item.item_name
+		if source_item:
+			source_item.arbitrary_data['last_gift'] = last_gift_name
+	var player_name := "pal"
+	if is_instance_valid(player) and player.stats and player.stats.character:
+		player_name = player.stats.character.character_name
+	speak(GIFT_LINES.pick_random() % player_name)
+	if state == PartnerState.FOLLOW:
+		cheering = false
+		face_position(player.global_position)
+		play_emote('happy-dance', 3.0, Toon.Emotion.DELIGHTED)
+
+## Small icon (or mini model) that pops up over the partner's head for a few seconds
+func show_pickup_bubble(item: Item) -> void:
+	var holder := Node3D.new()
+	add_child(holder)
+	var head_y := (toon.head_bone.global_position.y - global_position.y) if toon.head_bone else 1.5
+	holder.position = Vector3(0.0, head_y + NAMEPLATE_HEIGHT + 0.5, 0.0)
+	if item.icon:
+		var sprite := Sprite3D.new()
+		sprite.texture = item.icon
+		sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		sprite.no_depth_test = true
+		sprite.render_priority = 4
+		sprite.pixel_size = 0.45 / maxf(item.icon.get_width(), 1.0)
+		holder.add_child(sprite)
+	elif item.model:
+		var mini: Node3D = item.get_model().instantiate()
+		holder.add_child(mini)
+		if mini.has_method('setup'):
+			mini.setup(item)
+		holder.scale = Vector3.ONE * 0.35
+		var spin := holder.create_tween().set_loops()
+		spin.tween_property(mini, 'rotation_degrees:y', 360.0, 1.5).from(0.0)
+	else:
+		holder.queue_free()
+		return
+	var target_scale := holder.scale
+	holder.scale = Vector3.ONE * 0.01
+	var tween := holder.create_tween().set_trans(Tween.TRANS_BACK)
+	tween.tween_property(holder, 'scale', target_scale, 0.25).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(2.5)
+	tween.tween_property(holder, 'scale', Vector3.ONE * 0.01, 0.25).set_ease(Tween.EASE_IN)
+	tween.tween_callback(holder.queue_free)
+
+func _check_item_pickup(delta: float) -> void:
+	if not SaveFileService.settings_file.partner_item_pickup or not visible:
+		return
+	pickup_timer -= delta
+	if pickup_timer > 0.0:
+		return
+	pickup_timer = 0.2
+	for world_item in get_tree().get_nodes_in_group(&"world_items"):
+		if world_item is WorldItem and world_item.monitoring and world_item.model and can_carry(world_item.item) \
+				and not world_item.model.has_method('custom_collect') \
+				and world_item.global_position.distance_to(global_position) < PICKUP_DISTANCE:
+			world_item.collect_for_partner(self)
+			return
+
+## Runs the stat side of item scripts that support partners (call once the partner is in line)
+func setup_items() -> void:
+	item_nodes = Node.new()
+	item_nodes.name = "PartnerItems"
+	add_child(item_nodes)
+	for item in get_items():
+		_run_item_script(item)
+	refresh_sparkle()
+
+## Position among Toon Partners in the line (0 = front)
+func get_line_index() -> int:
+	var idx := 0
+	for p in player.partners:
+		if p == self:
+			return idx
+		if p is ToonPartner and is_instance_valid(p) and not p.is_queued_for_deletion():
+			idx += 1
+	return -1
 
 func player_has_control() -> bool:
 	return player.visible and player.controller.current_state.accepts_interaction()
@@ -788,7 +1072,9 @@ func _check_idle_emote(delta: float) -> void:
 	idle_time = -RNG.channel(RNG.ChannelTrueRandom).randf_range(IDLE_EMOTE_COOLDOWN.x, IDLE_EMOTE_COOLDOWN.y)
 	var emote: Dictionary = IDLE_EMOTES.pick_random()
 	face_position(player.global_position)
-	if not emote['phrase'].is_empty():
+	if not last_gift_name.is_empty() and RNG.channel(RNG.ChannelTrueRandom).randf() < GIFT_MEMORY_CHANCE:
+		speak(GIFT_MEMORY_LINES.pick_random() % last_gift_name)
+	elif not emote['phrase'].is_empty():
 		speak(emote['phrase'])
 	play_emote(emote['anim'], EMOTE_DURATION, emote['emotion'])
 

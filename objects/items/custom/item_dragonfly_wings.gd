@@ -28,7 +28,7 @@ func on_load(_item: Item) -> void:
 func on_item_removed() -> void:
 	if _tick_task:
 		_tick_task = _tick_task.cancel()
-	Util.get_player().stats.multipliers.erase(dmg_mult)
+	get_owner_multipliers().erase(dmg_mult)
 
 func setup(_item: Item) -> void:
 	item = _item
@@ -54,4 +54,8 @@ func create_multiplier() -> void:
 	dmg_mult.stat = "damage"
 	dmg_mult.amount = damage_remaining
 	dmg_mult.additive = true
-	Util.get_player().stats.multipliers.append(dmg_mult)
+	get_owner_multipliers().append(dmg_mult)
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

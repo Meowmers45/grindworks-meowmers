@@ -38,9 +38,9 @@ func on_participant_died(participant: Variant) -> void:
 		if not BattleService.cog_gives_credit(participant): return
 		if current_cogs.keys().has(participant):
 			if current_cogs[participant] == 1:
-				Util.get_player().stats.damage += DAMAGE_BOOST
-				BattleService.ongoing_battle.battle_stats[Util.get_player()].damage += DAMAGE_BOOST
-				Util.get_player().boost_queue.queue_text("Deadeye!", Color(0.937, 0.278, 0.278))
+				add_owner_stat('damage', DAMAGE_BOOST)
+				if not is_partner_owned():
+					Util.get_player().boost_queue.queue_text("Deadeye!", Color(0.937, 0.278, 0.278))
 
 func on_participant_joined(participant: Variant) -> void:
 	if participant is Cog:
@@ -50,3 +50,7 @@ func assess_lure_targets(targets: Array) -> void:
 	for cog: Cog in targets:
 		if is_instance_valid(cog.trap):
 			current_cogs[cog] += 1
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

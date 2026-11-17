@@ -4,7 +4,14 @@ const POISON_EFFECT := preload("res://objects/battle/battle_resources/status_eff
 const EFFECT_RATIO := 0.4
 
 func setup() -> void:
+	if is_partner_owned():
+		partner_owner.s_gag_started.connect(on_partner_gag)
+		return
 	BattleService.s_round_started.connect(on_round_started)
+
+func on_partner_gag(gag: ToonAttack) -> void:
+	if gag is GagSquirt:
+		gag.s_hit.connect(squirt_hit.bind(gag))
 
 func on_round_started(actions : Array[BattleAction]) -> void:
 	for action in actions:
@@ -33,3 +40,7 @@ func on_collect(_item : Item, _model : Node3D) -> void:
 
 func on_load(_item : Item) -> void:
 	setup()
+
+## Status effects also work when held by a Toon Partner (on that partner's own squirt gags)
+func supports_partner_owner() -> bool:
+	return true

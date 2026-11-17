@@ -4,9 +4,11 @@ class_name ToonPartnerItemScript
 const PARTNER_SCENE := "res://objects/toon_partner/toon_partner.tscn"
 
 var partner: ToonPartner
+var source_item: Item
 
 
 func on_collect(item: Item, _object: Node3D) -> void:
+	source_item = item
 	# Over the character's partner cap: this copy does nothing (now or on reload)
 	if not can_add_partner(self):
 		item.arbitrary_data['over_cap'] = true
@@ -40,6 +42,7 @@ func on_collect(item: Item, _object: Node3D) -> void:
 	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
 func on_load(item: Item) -> void:
+	source_item = item
 	if item.arbitrary_data.get('over_cap', false):
 		return
 	var dna = item.arbitrary_data.get('dna')
@@ -66,8 +69,16 @@ func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[St
 			partner.accessories.append(accessory)
 	if not shoes_path.is_empty():
 		partner.shoes = load(shoes_path) as ItemShoe
+	partner.source_item = source_item
+	var carried: Array = source_item.arbitrary_data.get('carried', []) if source_item else []
+	for path in carried:
+		var carried_item := load(path) as Item
+		if carried_item:
+			partner.carried_items.append(carried_item)
 	SceneLoader.add_persistent_node(partner)
 	Util.get_player().partners.append(partner)
+	partner.init_turns()
+	partner.setup_items()
 
 ## Whether the character's partner cap allows one more Toon Partner
 static func can_add_partner(ignore: Node = null) -> bool:

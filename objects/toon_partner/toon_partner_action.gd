@@ -13,12 +13,18 @@ const MISS_LINES: Array[String] = [
 	"Ugh, I'll blame the lighting.",
 	"Note to self: aim AT the Cog.",
 ]
+## Item stats that make no sense on a partner (they'd only matter for the player)
+const PARTNER_IGNORED_STATS: Array[String] = ['money', 'hp', 'max_hp', 'active_charge', 'items']
 const STAT_BOOST_REFERENCE := preload("res://objects/battle/battle_resources/status_effects/resources/status_effect_stat_boost.tres")
 
 
 func action():
-	if manager.cogs.is_empty():
-		return
+	for i in maxi(user.turns, 1):
+		if manager.cogs.is_empty() or not is_instance_valid(user):
+			break
+		await take_turn()
+
+func take_turn() -> void:
 	var gags := get_available_gags()
 	if gags.is_empty() or RNG.channel(RNG.ChannelTrueRandom).randf() < BUFF_CHANCE:
 		await buff_player()
@@ -58,6 +64,7 @@ func use_gag(base_gag: ToonAttack) -> void:
 	gag.user = user
 	gag.manager = manager
 	gag.battle_node = battle_node
+	gag.damage += user.get_flat_damage_bonus()
 	
 	# Pick a random Cog to hit
 	var cogs := manager.cogs
@@ -76,11 +83,12 @@ func use_gag(base_gag: ToonAttack) -> void:
 	
 	manager.show_action_name("%s!" % gag.action_name, "Partner Attack")
 	
-	# Partner borrows the player's battle stats while the gag runs
-	manager.battle_stats[user] = manager.battle_stats[player]
+	# Partner borrows the player's battle stats while the gag runs (plus its own items, if set)
+	manager.battle_stats[user] = get_partner_stats(manager.battle_stats[player], user)
 	var prev_action := manager.current_action
 	manager.current_action = gag
 	var missed := [false]
+	user.s_gag_started.emit(gag)
 	var on_text := func(target_node: Node3D, text: String):
 		if target_node is Cog and "MISS" in text.to_upper():
 			missed[0] = true
@@ -91,6 +99,32 @@ func use_gag(base_gag: ToonAttack) -> void:
 	if missed[0] and is_instance_valid(user):
 		await react_to_miss()
 	manager.battle_stats.erase(user)
+
+## Player's battle stats, with the character's partner items layered on top for the partner only
+func get_partner_stats(player_stats: BattleStats, partner: ToonPartner) -> BattleStats:
+	var items := partner.get_items()
+	if items.is_empty() and partner.stat_offsets.is_empty() and partner.stat_multipliers.is_empty():
+		return player_stats
+	var partner_stats: BattleStats = player_stats.duplicate(true)
+	# Keep live buffs/debuffs from status effects, plus the partner's own item multipliers
+	var multipliers: Array[StatMultiplier] = []
+	multipliers.append_array(player_stats.multipliers)
+	multipliers.append_array(partner.stat_multipliers)
+	partner_stats.multipliers = multipliers
+	# Stat changes made by the partner's item scripts
+	for stat in partner.stat_offsets:
+		if str(stat) in partner_stats and not str(stat) in PARTNER_IGNORED_STATS:
+			partner_stats.set(stat, partner_stats.get(stat) + partner.stat_offsets[stat])
+	for item: Item in items:
+		for stat in item.stats_add:
+			if str(stat) in PARTNER_IGNORED_STATS or not str(stat) in partner_stats:
+				continue
+			partner_stats.set(stat, partner_stats.get(stat) + item.stats_add[stat])
+		for stat in item.stats_multiply:
+			if str(stat) in PARTNER_IGNORED_STATS or not str(stat) in partner_stats:
+				continue
+			partner_stats.set(stat, partner_stats.get(stat) * item.stats_multiply[stat])
+	return partner_stats
 
 ## Groan or shrug it off with a funny line
 func react_to_miss() -> void:
