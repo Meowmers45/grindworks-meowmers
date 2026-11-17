@@ -184,6 +184,7 @@ func get_player_info() -> void:
 
 func resume() -> void:
 	get_tree().paused = false
+	HoverManager.stop_hover()
 	queue_free()
 
 func quit() -> void:
@@ -350,16 +351,34 @@ func add_hand_off_row(list: VBoxContainer, partners: Array, partner: ToonPartner
 	label.label_settings = settings
 	label.text = "Give:"
 	row.add_child(label)
-	var picker := OptionButton.new()
-	picker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	for item in giftable:
-		picker.add_item(item.item_name)
-	row.add_child(picker)
+	# Arrow selector instead of a dropdown: dropdown popups are separate windows that
+	# steal window focus and stop the mouse from being re-captured after unpausing
+	var selected := [0]
+	var prev := Button.new()
+	prev.text = "<"
+	prev.focus_mode = Control.FOCUS_NONE
+	row.add_child(prev)
+	var choice := Label.new()
+	choice.label_settings = settings
+	choice.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	choice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	choice.text = giftable[0].item_name
+	row.add_child(choice)
+	var next := Button.new()
+	next.text = ">"
+	next.focus_mode = Control.FOCUS_NONE
+	row.add_child(next)
+	var cycle := func(step: int):
+		selected[0] = wrapi(selected[0] + step, 0, giftable.size())
+		choice.text = giftable[selected[0]].item_name
+	prev.pressed.connect(cycle.bind(-1))
+	next.pressed.connect(cycle.bind(1))
 	var give := Button.new()
 	give.text = "Give"
+	give.focus_mode = Control.FOCUS_NONE
 	row.add_child(give)
 	give.pressed.connect(func():
-		var item: Item = giftable[picker.selected]
+		var item: Item = giftable[selected[0]]
 		var player := Util.get_player()
 		if not item in player.stats.items:
 			return

@@ -58,7 +58,7 @@ func _notification(what):
 	match what:
 		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
 			window_focused = false
-		NOTIFICATION_APPLICATION_FOCUS_IN:
+		NOTIFICATION_APPLICATION_FOCUS_IN, NOTIFICATION_WM_WINDOW_FOCUS_IN:
 			window_focused = true
 
 # Utilities to always run in the background
