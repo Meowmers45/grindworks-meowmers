@@ -55,6 +55,7 @@ signal s_action_finished(action: BattleAction)
 signal s_ui_initialized
 signal s_target_nullified_action(participant: Node3D, action: BattleAction)
 signal s_spawned_reward_chest(chest: TreasureChest)
+signal s_battle_text_shown(target: Node3D, text: String)
 
 func start_battle(cog_array: Array[Cog], battlenode: BattleNode):
 	cogs = cog_array
@@ -431,6 +432,7 @@ func battle_text(target, string, text_color: Color = Color('ff0000'), outline_co
 	txt.outline_modulate = outline_color
 	txt.raise_height = raise_height
 	target.head_node.add_child(txt)
+	s_battle_text_shown.emit(target, str(string))
 
 func get_damage(damage: float, action: BattleAction, target: Node3D) -> int:
 	# If the action is a heal, just return the base number

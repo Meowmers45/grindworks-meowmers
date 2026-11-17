@@ -38,5 +38,13 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Settings > Gameplay "Partner Distance" slider (1.0-6.0, default 3.0) -> SettingsFile.partner_follow_distance, read live by ToonPartner.follow_spacing
 ## Iteration 13 (2026-06)
 - Multiple partners: item no longer unique, spawn guard removed; each ToonPartner trails the previous one (leader getter); only the lead partner chats/cheers aloud; 2nd+ partners ignore character partner_dna/name/accessories/shoes (always random)
+## Iteration 14 (2026-06)
+- PlayerCharacter.max_toon_partners (3) + ignore_partner_cap; enforced in item script + ItemService.flag_check
+- Partners hidden in ElevatorScene (floor select)
+- Air anims: jump-zhang (airborne idle) / zhang (airborne moving) via ground raycast
+- Hidden seed "poopcity": fullscreen brown-tone shader (seed_poopcity.gd/.tres)
+- Long idle: 60s roam within 6u, 180s bored anim + lines, 300s teleport away; sarcastic quip on return
+- Floor clear team dance: Globals.s_elevator_entered(elevator); partners line up beside player in elevator, synced happy-dance
+- Miss reactions: BattleManager.s_battle_text_shown; partner shrug/cringe + line on MISSED
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

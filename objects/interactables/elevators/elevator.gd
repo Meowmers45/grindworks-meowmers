@@ -44,6 +44,7 @@ func player_entered(player : Player) -> void:
 	elevator_cam.make_current()
 	player.state = Player.PlayerState.STOPPED
 	s_elevator_entered.emit()
+	Globals.s_elevator_entered.emit(self)
 	
 	player.set_animation('run')
 	var move_tween := player.move_to(player_pos.global_position)

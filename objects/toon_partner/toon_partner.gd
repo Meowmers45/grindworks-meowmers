@@ -6,7 +6,9 @@ const RECORD_STEP := 0.1
 const MAX_HISTORY := 120
 const SNAP_DISTANCE := 15.0
 const RUN_SPEED := 8.0
-const TRAIL_ANIMS: Array[String] = ['walk', 'run', 'jump']
+const GROUND_ANIMS: Array[String] = ['walk', 'run']
+const AIR_IDLE_ANIM := 'jump-zhang'
+const AIR_MOVING_ANIM := 'zhang'
 
 ## Passive out-of-battle healing
 const HEAL_CHANCE := 0.075
@@ -32,6 +34,31 @@ const IDLE_EMOTES: Array[Dictionary] = [
 	{'anim': 'victory-dance', 'phrase': "", 'emotion': Toon.Emotion.DELIGHTED},
 ]
 const EMOTE_DURATION := 2.5
+
+## Long idle behaviour (seconds of the player standing still)
+const ROAM_START_TIME := 60.0
+const IMPATIENT_TIME := 180.0
+const AWAY_TIME := 300.0
+const ROAM_RADIUS := 6.0
+const ROAM_SPEED := 2.0
+const ROAM_PAUSE := Vector2(2.0, 5.0)
+const BORED_INTERVAL := Vector2(15.0, 25.0)
+const BORED_DURATION := 4.0
+const IMPATIENT_LINES: Array[String] = ["*sigh*", "Any day now...", "Helloooo?", "Are we there yet?"]
+const RETURN_QUIPS: Array[String] = [
+	"Oh, NOW you move?",
+	"Took you long enough!",
+	"I aged like three years back there.",
+	"Wow. Riveting adventure so far.",
+	"Did you fall asleep at the keyboard?",
+	"Great, I was just about to file a missing Toon report.",
+	"Finally! The Cogs were starting to feel sorry for me.",
+]
+
+## Floor clear team dance
+const DANCE_ANIM := 'happy-dance'
+const DANCE_START_DELAY := 1.6
+const DANCE_SPACING := 0.9
 
 ## Entrance
 const ENTRANCE_PHRASES: Array[String] = ["Hi, pal!", "I'm here!", "Let's go!", "Ready when you are!"]
@@ -61,7 +88,7 @@ const FLOOR_LINES: Array[String] = [
 	"Let's show these Cogs who's boss!",
 ]
 
-enum PartnerState { FOLLOW, BATTLE }
+enum PartnerState { FOLLOW, BATTLE, CUTSCENE }
 var state := PartnerState.FOLLOW
 
 @onready var toon: Toon = $Toon
@@ -78,7 +105,6 @@ var departed := false
 var accessories: Array[ItemAccessory] = []
 var shoes: ItemShoe
 var idle_time := 0.0
-var last_player_pos := Vector3.ZERO
 var animator: AnimationPlayer
 var trail_points: Array[Vector3] = []
 var trail_anims: Array[String] = []
@@ -86,6 +112,17 @@ var prev_hp := -1
 var prev_gag_total := -1
 var tracked_stats: PlayerStats
 var cheering := false
+
+## Long idle state
+var last_player_pos := Vector3.ZERO
+var player_moved := false
+var still_time := 0.0
+var roam_target := Vector3.ZERO
+var has_roam_target := false
+var roam_pause := 0.0
+var bored_timer := 0.0
+var away := false
+var teleporting := false
 
 var player: Player:
 	get: return Util.get_player()
@@ -131,6 +168,7 @@ func _ready() -> void:
 		shoes.place_shoes(toon)
 	BattleService.s_cog_died.connect(_on_cog_died)
 	Util.s_floor_started.connect(_on_floor_started)
+	Globals.s_elevator_entered.connect(_on_elevator_entered)
 	if is_instance_valid(player):
 		player.s_dying.connect(say_goodbye)
 
@@ -141,6 +179,9 @@ func _process(_delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(player) or not player.is_inside_tree() or departed:
 		return
+	if is_selecting_floor():
+		_floor_select_tick()
+		return
 	if not active:
 		_dormant_tick()
 		return
@@ -148,14 +189,34 @@ func _physics_process(delta: float) -> void:
 	_check_gag_unlocks()
 	if state != PartnerState.FOLLOW:
 		return
-	visible = player.visible
 	if entering:
 		return
-	_follow_trail()
-	_check_idle_emote(delta)
+	_update_idle(delta)
+	if away:
+		if not teleporting:
+			hide()
+		return
+	visible = player.visible
+	if still_time >= ROAM_START_TIME:
+		_roam(delta)
+	else:
+		_follow_trail()
+		_check_idle_emote(delta)
 
 func player_has_control() -> bool:
 	return player.visible and player.controller.current_state.accepts_interaction()
+
+func is_selecting_floor() -> bool:
+	return SceneLoader.current_scene is ElevatorScene
+
+## Hidden while picking a floor; rejoin the line fresh afterwards
+func _floor_select_tick() -> void:
+	hide()
+	state = PartnerState.FOLLOW
+	trail_points.clear()
+	trail_anims.clear()
+	_reset_idle()
+	away = false
 
 ## Keep baselines current without reacting, and wake up once the player can move
 func _dormant_tick() -> void:
@@ -219,19 +280,26 @@ func _follow_trail() -> void:
 	
 	var idx := _get_trail_index()
 	var target := trail_points[idx]
-	var step := global_position.distance_to(target)
-	if step < 0.02:
+	var flat_step := Vector2(target.x - global_position.x, target.z - global_position.z).length()
+	var grounded := is_on_ground()
+	if global_position.distance_to(target) < 0.02:
 		if not cheering:
-			set_animation('neutral')
+			set_animation('neutral' if grounded else AIR_IDLE_ANIM)
 		return
 	
-	face_position(target)
+	if flat_step > 0.02:
+		face_position(target)
 	global_position = global_position.lerp(target, 0.35)
-	var anim := trail_anims[idx]
-	if not anim in TRAIL_ANIMS:
-		anim = 'run' if step > 0.3 else 'walk'
-	if not cheering:
-		set_animation(anim)
+	if cheering:
+		return
+	var anim: String
+	if not grounded:
+		anim = AIR_MOVING_ANIM if flat_step > 0.02 else AIR_IDLE_ANIM
+	else:
+		anim = trail_anims[idx]
+		if not anim in GROUND_ANIMS:
+			anim = 'run' if flat_step > 0.3 else 'walk'
+	set_animation(anim)
 
 ## Walks back along the recorded path until we're follow_spacing behind the leader
 func _get_trail_index() -> int:
@@ -258,6 +326,158 @@ func snap_to_player() -> void:
 	face_position(ppos)
 	set_animation('neutral')
 
+func _raycast(from: Vector3, to: Vector3) -> Dictionary:
+	var query := PhysicsRayQueryParameters3D.create(from, to, player.collision_mask, [player.get_rid()])
+	return get_world_3d().direct_space_state.intersect_ray(query)
+
+func is_on_ground() -> bool:
+	return not _raycast(global_position + Vector3.UP * 0.2, global_position + Vector3.DOWN * 0.2).is_empty()
+
+#endregion
+
+#region Long idle (roam / impatient / away)
+
+func _update_idle(delta: float) -> void:
+	var ppos := player.global_position
+	player_moved = ppos.distance_to(last_player_pos) > 0.01
+	last_player_pos = ppos
+	if player_moved:
+		if still_time >= ROAM_START_TIME:
+			_return_to_line()
+		still_time = 0.0
+	elif player_has_control():
+		still_time += delta
+		if still_time >= AWAY_TIME and not away:
+			_go_away()
+
+func _reset_idle() -> void:
+	still_time = 0.0
+	has_roam_target = false
+	roam_pause = 0.0
+	bored_timer = 0.0
+
+func _roam(delta: float) -> void:
+	if cheering:
+		return
+	if still_time >= IMPATIENT_TIME:
+		bored_timer -= delta
+		if bored_timer <= 0.0:
+			bored_timer = RNG.channel(RNG.ChannelTrueRandom).randf_range(BORED_INTERVAL.x, BORED_INTERVAL.y)
+			if is_lead_partner:
+				speak(IMPATIENT_LINES.pick_random())
+			play_emote('bored', BORED_DURATION)
+			return
+	if roam_pause > 0.0:
+		roam_pause -= delta
+		set_animation('neutral')
+		return
+	if not has_roam_target:
+		has_roam_target = _pick_roam_point()
+		if not has_roam_target:
+			roam_pause = 1.0
+			return
+	var to := roam_target - global_position
+	to.y = 0.0
+	if to.length() < 0.1:
+		has_roam_target = false
+		roam_pause = RNG.channel(RNG.ChannelTrueRandom).randf_range(ROAM_PAUSE.x, ROAM_PAUSE.y)
+		set_animation('neutral')
+		return
+	face_position(roam_target)
+	var next := global_position + to.normalized() * minf(ROAM_SPEED * delta, to.length())
+	var ground := _raycast(next + Vector3.UP * 1.0, next + Vector3.DOWN * 2.0)
+	if ground.is_empty():
+		has_roam_target = false
+		return
+	next.y = ground.position.y
+	global_position = next
+	set_animation('walk')
+
+## Picks a reachable spot on the ground near the player
+func _pick_roam_point() -> bool:
+	var rng := RNG.channel(RNG.ChannelTrueRandom)
+	var center := player.global_position
+	for i in 8:
+		var angle := rng.randf() * TAU
+		var radius := rng.randf_range(1.5, ROAM_RADIUS)
+		var candidate := center + Vector3(cos(angle) * radius, 0.0, sin(angle) * radius)
+		if not _raycast(global_position + Vector3.UP * 0.5, candidate + Vector3.UP * 0.5).is_empty():
+			continue
+		var hit := _raycast(candidate + Vector3.UP * 1.5, candidate + Vector3.DOWN * 3.0)
+		if hit.is_empty() or absf(hit.position.y - center.y) > 1.0:
+			continue
+		roam_target = hit.position
+		return true
+	return false
+
+func _go_away() -> void:
+	away = true
+	teleporting = true
+	await toon.teleport_out()
+	teleporting = false
+	if away:
+		hide()
+	else:
+		_reappear()
+
+func _reappear() -> void:
+	snap_to_player()
+	show()
+	entering = true
+	await toon.teleport_in()
+	entering = false
+
+func _return_to_line() -> void:
+	var was_away := away
+	_reset_idle()
+	away = false
+	if was_away and not teleporting:
+		_reappear()
+	if is_lead_partner:
+		await Task.delay(1.2 if not was_away else 2.0)
+		if active and not departed and state == PartnerState.FOLLOW:
+			speak(RETURN_QUIPS.pick_random())
+
+#endregion
+
+#region Floor clear team dance
+
+func _on_elevator_entered(elevator: Elevator) -> void:
+	if not active or departed or away or state != PartnerState.FOLLOW or not is_instance_valid(elevator.player_pos):
+		return
+	state = PartnerState.CUTSCENE
+	var start_ms := Time.get_ticks_msec()
+	_reset_idle()
+	show()
+	var spot: Node3D = elevator.player_pos
+	var index := 0
+	for p in player.partners:
+		if p == self:
+			break
+		if p is ToonPartner:
+			index += 1
+	var side := -1.0 if index % 2 == 0 else 1.0
+	var offset := DANCE_SPACING * float(index / 2 + 1) * side
+	var pos := spot.to_global(Vector3(offset, 0.0, 0.0))
+	if global_position.distance_to(pos) > SNAP_DISTANCE:
+		global_position = pos
+		reset_physics_interpolation()
+	else:
+		var tween := move_to(pos, DANCE_START_DELAY - 0.2)
+		await tween.finished
+		tween.kill()
+	set_animation('neutral')
+	var toon_scale := toon.scale
+	toon.global_rotation.y = spot.global_rotation.y
+	toon.scale = toon_scale
+	# Everyone starts on the same beat, regardless of how far they ran
+	var elapsed := float(Time.get_ticks_msec() - start_ms) / 1000.0
+	await Task.delay(maxf(DANCE_START_DELAY - elapsed, 0.01))
+	if state == PartnerState.CUTSCENE:
+		cheering = false
+		set_animation(DANCE_ANIM)
+		toon.set_emotion(Toon.Emotion.DELIGHTED)
+
 #endregion
 
 #region Passive heal
@@ -273,7 +493,7 @@ func _check_passive_heal() -> void:
 	prev_hp = hp
 
 func heal_player() -> void:
-	if not is_instance_valid(player) or player.stats.hp <= 0:
+	if not is_instance_valid(player) or player.stats.hp <= 0 or away:
 		return
 	var amount := ceili(player.stats.max_hp * HEAL_PERCENT)
 	speak(HEAL_PHRASES.pick_random())
@@ -286,6 +506,8 @@ func heal_player() -> void:
 #region Floor chatter
 
 func _on_floor_started(_game_floor) -> void:
+	state = PartnerState.FOLLOW
+	toon.set_emotion(Toon.Emotion.NEUTRAL)
 	# Wait out any floor intro before chatting
 	await Task.delay(FLOOR_CHAT_DELAY)
 	var waited := 0.0
@@ -320,7 +542,7 @@ func _check_gag_unlocks() -> void:
 	prev_gag_total = total
 
 func cheer(phrase: String, with_sfx: bool) -> void:
-	if not is_inside_tree() or not visible or not active or departed:
+	if not is_inside_tree() or not visible or not active or departed or away:
 		return
 	if is_lead_partner:
 		speak(phrase)
@@ -328,6 +550,8 @@ func cheer(phrase: String, with_sfx: bool) -> void:
 			AudioManager.play_sound(CHEER_SFX)
 	# Don't interrupt the partner mid-gag in battle
 	if state == PartnerState.BATTLE and get_animation() != 'neutral':
+		return
+	if state == PartnerState.CUTSCENE:
 		return
 	play_emote(CHEER_ANIM, 2.0)
 
@@ -346,11 +570,8 @@ func play_emote(anim: String, duration: float, emotion := Toon.Emotion.NEUTRAL) 
 		set_animation('neutral')
 
 func _check_idle_emote(delta: float) -> void:
-	var ppos := player.global_position
-	var standing_still: bool = ppos.distance_to(last_player_pos) < 0.01 and player.controller.current_state.accepts_interaction()
-	last_player_pos = ppos
-	if not standing_still or cheering:
-		if not standing_still:
+	if player_moved or cheering or not player_has_control():
+		if player_moved or not player_has_control():
 			idle_time = 0.0
 		return
 	idle_time += delta
@@ -358,7 +579,7 @@ func _check_idle_emote(delta: float) -> void:
 		return
 	idle_time = -RNG.channel(RNG.ChannelTrueRandom).randf_range(IDLE_EMOTE_COOLDOWN.x, IDLE_EMOTE_COOLDOWN.y)
 	var emote: Dictionary = IDLE_EMOTES.pick_random()
-	face_position(ppos)
+	face_position(player.global_position)
 	if not emote['phrase'].is_empty():
 		speak(emote['phrase'])
 	play_emote(emote['anim'], EMOTE_DURATION, emote['emotion'])
@@ -369,7 +590,9 @@ func _check_idle_emote(delta: float) -> void:
 
 func battle_started(battle: BattleNode) -> void:
 	state = PartnerState.BATTLE
-	if not active:
+	_reset_idle()
+	if away or not active:
+		away = false
 		active = true
 		snap_to_player()
 	show()
@@ -403,8 +626,10 @@ func battle_ended() -> void:
 
 #region Actor helpers (mirrors Player so gag movies can use the partner)
 
-func move_to(pos: Vector3) -> Tween:
+func move_to(pos: Vector3, max_time := -1.0) -> Tween:
 	var time := maxf(global_position.distance_to(pos) / RUN_SPEED, 0.2)
+	if max_time > 0.0:
+		time = minf(time, max_time)
 	set_animation('run')
 	face_position(pos)
 	var tween := create_tween()

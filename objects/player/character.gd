@@ -26,6 +26,10 @@ enum Character {
 @export var partner_accessories: Array[ItemAccessory] = []
 ## Shoes worn by the Toon Partner
 @export var partner_shoes: ItemShoe
+## Most Toon Partners that can be in the line at once
+@export var max_toon_partners := 3
+## Ignore max_toon_partners and allow any number of Toon Partners
+@export var ignore_partner_cap := false
 @export var gag_loadout: GagLoadout
 @export var starting_laff := 25
 @export var starting_items: Array[Item]
