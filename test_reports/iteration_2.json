@@ -1,0 +1,18 @@
+{
+  "summary": "Pause menu Partners page / mouse-capture bug: confirmed root cause in Godot 4.6 headless and verified all 3 fixes. Repro: an embedded PopupMenu (gui_embed_subwindows=true by default, project does not override) opened on root sends NOTIFICATION_WM_WINDOW_FOCUS_OUT to root children (Util -> window_focused=false); closing it sends NOTIFICATION_WM_WINDOW_FOCUS_IN, NOT APPLICATION_FOCUS_IN. A copy of the OLD util.gd logic stayed false after the popup closed (OLD open: false, OLD after close: false), so PlayerState3D.capture_mouse() never recaptured. NEW Util: false while popup open, true after close. Direct notification test: FOCUS_OUT->false, WM_FOCUS_IN->true, APPLICATION_FOCUS_IN->true. Compile: util.gd OK; pause_menu.gd OK via temp copy with SFX const preloads swapped for var = null. No OptionButton/PopupMenu/Window.new/tooltip left in pause_menu.gd. wrapi cycling checked (0-1 -> 2, 2+1 -> 0, size-1 list stays 0); Give uses giftable[selected[0]]; all new buttons are FOCUS_NONE. resume() calls HoverManager.stop_hover() (HoverManager is a CanvasLayer, not a Window, so it doesn't affect focus).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": ["/app/test_reports/godot_window_focus_test.gd.txt"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor: pressing Give calls fill_partner_list, which queue_frees the item labels. If one was hovered, mouse_exited may never fire, so the tooltip can stay until the next hover or resume (resume now clears it). You could call HoverManager.stop_hover() at the top of fill_partner_list.",
+    "Minor: the Give handler checks 'item in player.stats.items', so a stale giftable list cannot hand over an item twice. Good."
+  ],
+  "updated_files": ["/app/test_reports/godot_window_focus_test.gd.txt (test copy only, no source changes)"],
+  "success_rate": {"backend": "100%", "frontend": "N/A"},
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Headless SceneTree tests: put the work after await process_frame and use root.get_node('Util'). Run --import first. pause_menu.gd needs a temp copy with SFX const preloads replaced. Missing anomaly_icon png errors are pre-existing and harmless. Cleanup done: .godot, zz_test and the .import changes were reverted.",
+  "rca of the issue": "Util.window_focused was set false on WM_WINDOW_FOCUS_OUT but only reset on APPLICATION_FOCUS_IN. The Partners page OptionButton popup (an embedded Window) sent root WM_WINDOW_FOCUS_OUT on open and only WM_WINDOW_FOCUS_IN on close, so window_focused stayed false and capture_mouse() refused to capture. Reproduced in engine with the old logic and confirmed fixed."
+}

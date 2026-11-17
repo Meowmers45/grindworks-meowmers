@@ -1,0 +1,43 @@
+extends SceneTree
+func _initialize():
+	_run()
+func _run():
+	await process_frame
+	await process_frame
+	var util = root.get_node_or_null("Util")
+	var ok := true
+	if util == null:
+		print("FAIL: Util autoload missing"); quit(1); return
+	util.window_focused = true
+	util.notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_OUT)
+	print("after FOCUS_OUT: ", util.window_focused); ok = ok and util.window_focused == false
+	util.notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_IN)
+	print("after WM_FOCUS_IN: ", util.window_focused); ok = ok and util.window_focused == true
+	util.notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_OUT)
+	util.notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	print("after APP_FOCUS_IN: ", util.window_focused); ok = ok and util.window_focused == true
+	# Embedded popup scenario: real PopupMenu on root should propagate FOCUS_OUT/IN to Util
+	util.window_focused = true
+	print("embed_subwindows: ", root.gui_embed_subwindows)
+	var pm := PopupMenu.new()
+	pm.add_item("a")
+	root.add_child(pm)
+	pm.popup(Rect2i(10,10,100,50))
+	await process_frame
+	print("after embedded popup open: ", util.window_focused)
+	var opened_false = util.window_focused == false
+	pm.hide()
+	await process_frame
+	await process_frame
+	print("after embedded popup close: ", util.window_focused)
+	ok = ok and util.window_focused == true
+	print("popup open set false (repro): ", opened_false)
+	# wrapi cycling check
+	var g := ["A","B","C"]
+	var sel := [0]
+	var cyc := func(step): sel[0] = wrapi(sel[0]+step, 0, g.size())
+	cyc.call(-1); var a = sel[0]; cyc.call(1); var b = sel[0]; cyc.call(1); cyc.call(1); cyc.call(1); var c = sel[0]
+	print("wrapi: ", a, b, c); ok = ok and a == 2 and b == 0 and c == 0
+	var one := [0]; one[0] = wrapi(one[0]+1, 0, 1); ok = ok and one[0] == 0
+	print("RESULT: ", "PASS" if ok else "FAIL")
+	quit(0 if ok else 1)

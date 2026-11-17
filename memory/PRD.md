@@ -83,5 +83,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 26 (2026-06)
 - FIX: ItemAccessory.place_accessory null-node crash (guards node/model/placement); Player.update_accessories skips null nodes
 - Removed partner sparkle particles
+## Iteration 27 (2026-06)
+- FIX: mouse not re-capturing after pause on Partners page: Util now sets window_focused on WM_WINDOW_FOCUS_IN; hand-off OptionButton replaced by < > cycle buttons; resume() stops item hover
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
