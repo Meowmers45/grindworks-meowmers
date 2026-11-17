@@ -2,12 +2,7 @@
 
 [ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_tjnsi"]
 [ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="2_nsl05"]
-[ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="3_dsth0"]
-[ext_resource type="Texture2D" uid="uid://5tfs5ixlxxto" path="res://models/toon/textures/clothes/skirts/4thJulySkirt1.jpg" id="4_tjnsi"]
-[ext_resource type="Script" uid="uid://yg7gxug4rab" path="res://objects/toon/toon_dna.gd" id="5_k61wg"]
-[ext_resource type="Script" uid="uid://dfqwh4jmdy0iw" path="res://objects/toon/clothing/toon_shirt.gd" id="6_2erhc"]
-[ext_resource type="Texture2D" uid="uid://dhllol7bxd8qt" path="res://models/toon/textures/clothes/shirts/4thJulyShirt2.jpg" id="7_nsl05"]
-[ext_resource type="Texture2D" uid="uid://g7b1m4seqh7b" path="res://models/toon/textures/clothes/shirts/4thJulySleeve2.jpg" id="8_dsth0"]
+[ext_resource type="Resource" uid="uid://bah0ngfo4oh3d" path="res://Bubbles DNA.tres" id="3_vy1xy"]
 [ext_resource type="Resource" uid="uid://bmcon3qwk21kv" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/bubbles_loadout.tres" id="9_tjnsi"]
 [ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="10_3kqxc"]
 [ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="10_yj7wl"]
@@ -35,28 +30,6 @@ speed = 1.15
 max_turns = 5
 turns = 3
 
-[sub_resource type="Resource" id="Resource_ugrs1"]
-script = ExtResource("3_dsth0")
-texture = ExtResource("4_tjnsi")
-
-[sub_resource type="Resource" id="Resource_2lryd"]
-script = ExtResource("6_2erhc")
-shirt_texture = ExtResource("7_nsl05")
-sleeve_texture = ExtResource("8_dsth0")
-
-[sub_resource type="Resource" id="Resource_ax4gq"]
-script = ExtResource("5_k61wg")
-body_type = 1
-leg_type = 1
-species = 0
-head_index = 2
-skirt = true
-head_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
-torso_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
-leg_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
-shirt = SubResource("Resource_2lryd")
-bottoms = SubResource("Resource_ugrs1")
-
 [resource]
 script = ExtResource("10_yj7wl")
 character_name = "Bubbles"
@@ -65,7 +38,7 @@ Lure and Sound will hit all Cogs
 Squirt now burns cogs
 Aaron (From TTO) travels with you"
 character_blurb = "Aaron's reliable sister, She REALLY knows her way around- YEOWCH!!! Be careful with that boiling pot of water!"
-dna = SubResource("Resource_ax4gq")
+dna = ExtResource("3_vy1xy")
 partner_dna = ExtResource("14_qrfge")
 partner_name = "Aaron"
 partner_accessories = Array[ExtResource("10_3kqxc")]([ExtResource("11_k61wg"), ExtResource("20_tjnsi"), ExtResource("13_2erhc")])

@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="PlayerCharacter" format=3 uid="uid://c6o16080ji62h"]
+
+[ext_resource type="Script" uid="uid://combwqypom1ru" path="res://objects/items/classes/item.gd" id="1_dtun7"]
+[ext_resource type="Script" uid="uid://o2fe7ud1faj6" path="res://objects/battle/battle_resources/stats.gd" id="2_ldp10"]
+[ext_resource type="Resource" uid="uid://c7umtna5hxxd3" path="res://Aaron DNA (TTR).tres" id="3_dtun7"]
+[ext_resource type="Resource" uid="uid://ddcq7jilb3isd" path="res://objects/battle/battle_resources/gag_loadouts/loadouts/aaron_loadout.tres" id="4_6bkbc"]
+[ext_resource type="Script" uid="uid://dvu24b3o8i3sj" path="res://objects/items/classes/item_accessory.gd" id="5_hnhwo"]
+[ext_resource type="Resource" uid="uid://b5ncaw2q6vlk8" path="res://objects/items/resources/accessories/hats/baseball_cap.tres" id="6_dtbqi"]
+[ext_resource type="Resource" uid="uid://t466jr8j087t" path="res://objects/items/resources/accessories/glasses/dorky_glasses.tres" id="7_4s5rn"]
+[ext_resource type="Resource" uid="uid://dv5u2vhslq87m" path="res://objects/items/resources/accessories/backpacks/cog_pack.tres" id="8_jur5m"]
+[ext_resource type="Resource" uid="uid://bah0ngfo4oh3d" path="res://Bubbles DNA.tres" id="9_dtun7"]
+[ext_resource type="Resource" uid="uid://be378ge1j8ibs" path="res://objects/items/resources/accessories/shoes/black_athletic_shoes.tres" id="10_jr550"]
+[ext_resource type="Script" uid="uid://ts8xpgftpmty" path="res://objects/player/character.gd" id="11_0mvld"]
+[ext_resource type="Resource" uid="uid://dy3g7t8wu48ke" path="res://objects/items/resources/passive/aaron_setup.tres" id="12_1pvdw"]
+[ext_resource type="Resource" uid="uid://cs5os3uam5mpx" path="res://objects/items/resources/passive/meowmers_boost_sound_damage.tres" id="13_rmcbd"]
+[ext_resource type="Resource" uid="uid://crkswlws27tuq" path="res://objects/items/resources/passive/meowmers_boost.tres" id="14_51jih"]
+[ext_resource type="Resource" uid="uid://dd2sc8vd5o40q" path="res://objects/items/resources/passive/meowmers_nerf_accuracy.tres" id="15_he2ix"]
+[ext_resource type="Resource" uid="uid://cjn8tya2r3xfn" path="res://objects/items/resources/passive/red_tape.tres" id="16_hk0i4"]
+[ext_resource type="Resource" uid="uid://tnnppqjvfyvh" path="res://objects/items/resources/accessories/backpacks/spider_legs.tres" id="17_licyu"]
+[ext_resource type="Resource" uid="uid://t87i11mxrocf" path="res://objects/items/resources/accessories/hats/fedora.tres" id="18_563ki"]
+[ext_resource type="Resource" uid="uid://bvs3yf5vb63ta" path="res://objects/items/resources/accessories/backpacks/plush_bear_pack.tres" id="19_dtun7"]
+[ext_resource type="Resource" uid="uid://c8wjy8fdkxarx" path="res://objects/items/resources/active/gag_button.tres" id="20_a0mdh"]
+[ext_resource type="Resource" uid="uid://dlcwf5tqlwbk2" path="res://objects/items/resources/passive/toon_partner.tres" id="21_huguk"]
+
+[sub_resource type="Resource" id="Resource_jj61k"]
+script = ExtResource("2_ldp10")
+accuracy = 1.75
+speed = 1.25
+max_turns = 4
+turns = 2
+
+[resource]
+script = ExtResource("11_0mvld")
+character_name = "Aaron"
+character_summary = "Starts with 2 turns (Max of 4)
+Lure and Sound will hit all Cogs
+A 0 damage Storm Cloud will hit all Cogs every round
+Bubbles travels with you"
+character_blurb = "Meowmers' Best friend, Not much else that sticks out. (TTR Variant)"
+dna = ExtResource("3_dtun7")
+partner_dna = ExtResource("9_dtun7")
+partner_name = "Meowmers"
+partner_accessories = Array[ExtResource("5_hnhwo")]([ExtResource("6_dtbqi"), ExtResource("7_4s5rn"), ExtResource("8_jur5m")])
+partner_shoes = ExtResource("10_jr550")
+gag_loadout = ExtResource("4_6bkbc")
+starting_laff = 30
+starting_items = Array[ExtResource("1_dtun7")]([ExtResource("12_1pvdw"), ExtResource("13_rmcbd"), ExtResource("14_51jih"), ExtResource("15_he2ix"), ExtResource("16_hk0i4"), ExtResource("17_licyu"), ExtResource("8_jur5m"), ExtResource("18_563ki"), ExtResource("7_4s5rn"), ExtResource("19_dtun7"), ExtResource("10_jr550"), ExtResource("20_a0mdh"), ExtResource("21_huguk")])
+base_stats = SubResource("Resource_jj61k")
+starting_gags = Dictionary[String, int]({
+"Drop": 3,
+"Sound": 2,
+"Squirt": 3
+})
+additional_stats = Dictionary[String, Variant]({
+"luck": 0.15
+})

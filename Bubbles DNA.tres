@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ToonDNA" format=3 uid="uid://bah0ngfo4oh3d"]
+
+[ext_resource type="Script" uid="uid://c8kas2j4io1jh" path="res://objects/toon/clothing/toon_bottoms.gd" id="1_d10so"]
+[ext_resource type="Texture2D" uid="uid://5tfs5ixlxxto" path="res://models/toon/textures/clothes/skirts/4thJulySkirt1.jpg" id="2_x24fi"]
+[ext_resource type="Script" uid="uid://yg7gxug4rab" path="res://objects/toon/toon_dna.gd" id="3_yfrqn"]
+[ext_resource type="Script" uid="uid://dfqwh4jmdy0iw" path="res://objects/toon/clothing/toon_shirt.gd" id="4_5wkhy"]
+[ext_resource type="Texture2D" uid="uid://dhllol7bxd8qt" path="res://models/toon/textures/clothes/shirts/4thJulyShirt2.jpg" id="5_bv8ye"]
+[ext_resource type="Texture2D" uid="uid://g7b1m4seqh7b" path="res://models/toon/textures/clothes/shirts/4thJulySleeve2.jpg" id="6_gyru0"]
+
+[sub_resource type="Resource" id="Resource_ugrs1"]
+script = ExtResource("1_d10so")
+texture = ExtResource("2_x24fi")
+
+[sub_resource type="Resource" id="Resource_2lryd"]
+script = ExtResource("4_5wkhy")
+shirt_texture = ExtResource("5_bv8ye")
+sleeve_texture = ExtResource("6_gyru0")
+
+[resource]
+script = ExtResource("3_yfrqn")
+body_type = 1
+leg_type = 1
+species = 0
+head_index = 2
+skirt = true
+head_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
+torso_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
+leg_color = Color(0.43137255, 0.90588236, 0.8352941, 1)
+shirt = SubResource("Resource_2lryd")
+bottoms = SubResource("Resource_ugrs1")
