@@ -74,5 +74,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 22 (2026-06)
 - Partners pick up / get given shoes (ItemShoe.place_shoes), old carried pair swapped out via remove_carried_item
 - Gift reaction: happy dance + "Thanks, <character name>!" when handed an item from pause menu
+## Iteration 23 (2026-06)
+- Gift memory: last gifted item name saved (arbitrary_data.last_gift); 30% of idle emotes mention it
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

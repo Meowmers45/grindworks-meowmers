@@ -112,6 +112,14 @@ const QUALITOON_COLORS: Array[Color] = [
 	Color(1.0, 0.82, 0.3, 0.85),
 ]
 const PICKUP_DISTANCE := 1.1
+const GIFT_MEMORY_CHANCE := 0.3
+const GIFT_MEMORY_LINES: Array[String] = [
+	"I still love the %s you gave me!",
+	"Have I mentioned how much I like my %s?",
+	"Best. Gift. Ever. Thanks again for the %s!",
+	"I'm taking extra good care of that %s, promise!",
+	"Still can't believe you gave me the %s!",
+]
 const GIFT_LINES: Array[String] = ["Thanks, %s!", "For me? Thanks, %s!", "Wow, thank you %s!", "%s, you're the best!"]
 const PICKUP_LINES: Array[String] = ["Ooh, mine!", "Finders keepers!", "I'll hold onto this!", "Shiny!"]
 
@@ -166,6 +174,8 @@ var carried_items: Array[Item] = []
 ## Gag turns each round (fixed for the run)
 var turns := 1
 var pickup_timer := 0.0
+## Name of the last item the player handed this partner (saved for the run)
+var last_gift_name := ""
 ## Item script nodes created for each carried/configured item
 var item_script_nodes: Dictionary = {}
 var item_nodes: Node
@@ -336,6 +346,8 @@ func get_config() -> PartnerItemList:
 
 ## Set turns: the character setting wins, otherwise a 1-3 roll that's kept for the whole run
 func init_turns() -> void:
+	if source_item:
+		last_gift_name = str(source_item.arbitrary_data.get('last_gift', ""))
 	var config := get_config()
 	if config and config.turns > 0:
 		turns = config.turns
@@ -416,12 +428,16 @@ func add_carried_item(item: Item, gifted := false) -> void:
 	refresh_sparkle()
 	show_pickup_bubble(item)
 	if gifted:
-		react_to_gift()
+		react_to_gift(item)
 	else:
 		speak(PICKUP_LINES.pick_random())
 
 ## Happy dance + a thank you by name when the player hands over an item
-func react_to_gift() -> void:
+func react_to_gift(item: Item = null) -> void:
+	if item:
+		last_gift_name = item.item_name
+		if source_item:
+			source_item.arbitrary_data['last_gift'] = last_gift_name
 	var player_name := "pal"
 	if is_instance_valid(player) and player.stats and player.stats.character:
 		player_name = player.stats.character.character_name
@@ -1056,7 +1072,9 @@ func _check_idle_emote(delta: float) -> void:
 	idle_time = -RNG.channel(RNG.ChannelTrueRandom).randf_range(IDLE_EMOTE_COOLDOWN.x, IDLE_EMOTE_COOLDOWN.y)
 	var emote: Dictionary = IDLE_EMOTES.pick_random()
 	face_position(player.global_position)
-	if not emote['phrase'].is_empty():
+	if not last_gift_name.is_empty() and RNG.channel(RNG.ChannelTrueRandom).randf() < GIFT_MEMORY_CHANCE:
+		speak(GIFT_MEMORY_LINES.pick_random() % last_gift_name)
+	elif not emote['phrase'].is_empty():
 		speak(emote['phrase'])
 	play_emote(emote['anim'], EMOTE_DURATION, emote['emotion'])
 
