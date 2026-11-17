@@ -142,6 +142,9 @@ var in_game := false
 ## Stat effects from this partner's item scripts (only used for its own gags)
 var stat_multipliers: Array[StatMultiplier] = []
 var stat_offsets: Dictionary = {}
+## Flat gag damage added by item scripts (keyed by the script node)
+var flat_damage_bonuses: Dictionary = {}
+var sparkle: CPUParticles3D
 var item_nodes: Node
 var game_cooldown := 10.0
 
@@ -233,6 +236,53 @@ func _physics_process(delta: float) -> void:
 		_follow_trail()
 		_check_idle_emote(delta)
 
+func get_flat_damage_bonus() -> int:
+	var total := 0
+	for key in flat_damage_bonuses:
+		if is_instance_valid(key):
+			total += flat_damage_bonuses[key]
+	return total
+
+## Partner's own gag track boost (1.0 = none), from item "gag_boost:Track" stats and item scripts
+func get_track_effectiveness(track_name: String) -> float:
+	var key := "gag_boost:%s" % track_name
+	var total := 1.0 + float(stat_offsets.get(key, 0.0))
+	for item in get_items():
+		if key in item.stats_add:
+			total += item.stats_add[key]
+	return maxf(total, 0.0)
+
+## Subtle golden sparkle on partners carrying items
+func setup_sparkle() -> void:
+	sparkle = CPUParticles3D.new()
+	sparkle.amount = 8
+	sparkle.lifetime = 1.4
+	sparkle.local_coords = false
+	sparkle.position = Vector3(0, 1.0, 0)
+	sparkle.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+	sparkle.emission_sphere_radius = 0.6
+	sparkle.direction = Vector3.UP
+	sparkle.spread = 30.0
+	sparkle.gravity = Vector3(0, 0.25, 0)
+	sparkle.initial_velocity_min = 0.05
+	sparkle.initial_velocity_max = 0.2
+	var curve := Curve.new()
+	curve.add_point(Vector2(0.0, 0.0))
+	curve.add_point(Vector2(0.3, 1.0))
+	curve.add_point(Vector2(1.0, 0.0))
+	sparkle.scale_amount_curve = curve
+	var mesh := QuadMesh.new()
+	mesh.size = Vector2(0.07, 0.07)
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	mat.albedo_color = Color(1.0, 0.85, 0.35, 0.8)
+	mesh.material = mat
+	sparkle.mesh = mesh
+	add_child(sparkle)
+
 func add_stat_offset(stat: String, amount: float) -> void:
 	stat_offsets[stat] = stat_offsets.get(stat, 0.0) + amount
 
@@ -253,6 +303,8 @@ func setup_items() -> void:
 	item_nodes = Node.new()
 	item_nodes.name = "PartnerItems"
 	add_child(item_nodes)
+	if not get_items().is_empty():
+		setup_sparkle()
 	for item in get_items():
 		if not item.item_script:
 			continue

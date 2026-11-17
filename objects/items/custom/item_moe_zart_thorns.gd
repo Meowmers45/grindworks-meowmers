@@ -32,8 +32,12 @@ func setup() -> void:
 	hp_changed(player.stats.hp)
 
 func battle_started(battle: BattleManager) -> void:
-	battle.s_round_started.connect(round_started)
 	battle.s_round_ended.connect(round_ended)
+	# On a Toon Partner only the damage boost applies (no turn reordering or healing)
+	if is_partner_owned():
+		battle.s_round_started.connect(func(_actions): health_monitoring = true)
+		return
+	battle.s_round_started.connect(round_started)
 	battle.s_action_started.connect(action_started)
 	battle.s_participant_died.connect(participant_died)
 
@@ -60,6 +64,8 @@ func round_started(round_actions: Array[BattleAction]) -> void:
 func round_ended() -> void:
 	health_monitoring = false
 	boost = 0
+	if is_partner_owned():
+		partner_owner.flat_damage_bonuses[self] = boost
 
 func action_started(action: BattleAction) -> void:
 	if action is ToonAttack:
@@ -78,6 +84,8 @@ func hp_changed(hp: int) -> void:
 		else:
 			boost += ceili((abs(current_hp - previous_hp)) * DMG_BOOST)
 		print("Moe Zart: Boost set to %d" % boost)
+		if is_partner_owned():
+			partner_owner.flat_damage_bonuses[self] = boost
 
 func participant_died(participant: Node3D) -> void:
 	if participant is Cog:
@@ -100,3 +108,7 @@ func run_heal(amount: int) -> void:
 		can_queue_heal = true
 	else:
 		run_heal(heal_queue.pop_front())
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

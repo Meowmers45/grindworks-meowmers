@@ -60,6 +60,7 @@ func use_gag(base_gag: ToonAttack) -> void:
 	gag.user = user
 	gag.manager = manager
 	gag.battle_node = battle_node
+	gag.damage += user.get_flat_damage_bonus()
 	
 	# Pick a random Cog to hit
 	var cogs := manager.cogs

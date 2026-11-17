@@ -29,18 +29,21 @@ func initialize_booster(stat: String) -> StatMultiplier:
 	var booster := StatMultiplier.new()
 	booster.stat = stat
 	booster.amount = 0.0
-	Util.get_player().stats.multipliers.append(booster)
+	get_owner_multipliers().append(booster)
 	boosters.append(booster)
 	return booster
 
 # Clear out boosters at end of floor
 func on_floor_end() -> void:
-	var player := Util.get_player()
-	for i in range(player.stats.multipliers.size() - 1, -1, -1):
-		if player.stats.multipliers[i] in boosters:
-			var booster: StatMultiplier = player.stats.multipliers[i]
-			player.stats.multipliers.remove_at(i)
-			player.stats.set(booster.stat, player.stats.get(booster.stat) + (booster.amount * BOOST_KEEP))
+	var multipliers := get_owner_multipliers()
+	for i in range(multipliers.size() - 1, -1, -1):
+		if multipliers[i] in boosters:
+			var booster: StatMultiplier = multipliers[i]
+			multipliers.remove_at(i)
+			if is_partner_owned():
+				partner_owner.add_stat_offset(booster.stat, booster.amount * BOOST_KEEP)
+			else:
+				Util.get_player().stats.set(booster.stat, Util.get_player().stats.get(booster.stat) + (booster.amount * BOOST_KEEP))
 	boosters.clear()
 
 
@@ -58,7 +61,7 @@ func on_action_start(action: BattleAction) -> void:
 
 func add_booster() -> void:
 	var boost_stats = BOOST_STATS.duplicate(true)
-	if Util.get_player().stats.hp == Util.get_player().stats.max_hp:
+	if Util.get_player().stats.hp == Util.get_player().stats.max_hp or is_partner_owned():
 		boost_stats.erase('hp')
 	var stat: String = boost_stats.pick_random()
 	if stat == 'hp':
@@ -72,7 +75,8 @@ func add_booster() -> void:
 			booster = initialize_booster(stat)
 		# Increase the booster amount
 		booster.amount += 0.05 * float(randi() % 2 + 1)
-		queue_text(stat.to_upper() + " UP!")
+		if not is_partner_owned():
+			queue_text(stat.to_upper() + " UP!")
 		print("%.2f %s boost applied" % [booster.amount, stat])
 
 func do_battle_text(text: String) -> void:
@@ -94,3 +98,7 @@ func run_text(text: String) -> void:
 		can_queue_text = true
 	else:
 		run_text(text_queue.pop_front())
+
+## Stat effects also work when held by a Toon Partner
+func supports_partner_owner() -> bool:
+	return true

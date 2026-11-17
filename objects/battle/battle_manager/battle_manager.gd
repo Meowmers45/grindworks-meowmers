@@ -480,6 +480,18 @@ func get_damage(damage: float, action: BattleAction, target: Node3D) -> int:
 			if not is_equal_approx(dept_boost, 1.0):
 				boosted_damage *= dept_boost
 
+	elif user is ToonPartner:
+		# Partner's own gag track boosts (from its items)
+		var track_name := ""
+		if action is GagLure:
+			track_name = 'Lure' if action.action_name == "KnockbackTest" else 'Trap'
+		else:
+			var track: Track = Util.get_player().stats.character.gag_loadout.get_action_track(action)
+			if track:
+				track_name = track.track_name
+		if not track_name.is_empty():
+			boosted_damage *= user.get_track_effectiveness(track_name)
+
 	elif user is Cog and target is Player:
 		var target_stats: PlayerStats = battle_stats[target]
 		# Department specific defense boost

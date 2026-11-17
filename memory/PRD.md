@@ -57,5 +57,9 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 ## Iteration 18 (2026-06)
 - ItemScript: partner_owner, supports_partner_owner(), get_owner_multipliers(), add_owner_stat(); converted bee/dragon/dragonfly/butterfly wings, motorcycle boots, narrow glasses, cowboy hat, silly gauge
 - ToonPartner.setup_items() runs supported item scripts with partner_owner; stat_multipliers + stat_offsets merged into partner battle stats
+## Iteration 19 (2026-06)
+- Golden CPUParticles3D sparkle on partners with items
+- Partner gag track boosts: ToonPartner.get_track_effectiveness() (items gag_boost:Track + script offsets) applied in BattleManager.get_damage for ToonPartner users
+- Converted Moe Zart Thorns (partner: flat dmg boost only via flat_damage_bonuses) and Clara trap boost; Philosophers Stone skipped (no stat effect)
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
