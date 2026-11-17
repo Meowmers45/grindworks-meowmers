@@ -15,16 +15,25 @@ func on_collect(item: Item, _object: Node3D) -> void:
 		return
 	var dna: ToonDNA
 	var character: PlayerCharacter = Util.get_player().stats.character
-	# Only the first partner uses the character's partner settings; extras are always random
+	# This partner's spot in line, for its per-partner settings
+	var line_index := count_partners(self)
+	var config: PartnerItemList = null
+	if character and line_index < character.partner_items.size():
+		config = character.partner_items[line_index]
+	# Only the first partner uses the character's partner name/look/outfit settings
 	if has_other_partner():
 		character = null
-	if character and character.partner_dna:
+	if config and config.dna:
+		dna = config.dna.duplicate(true)
+	elif character and character.partner_dna:
 		dna = character.partner_dna.duplicate(true)
 	else:
 		dna = ToonDNA.new()
 		dna.randomize_dna()
 	item.arbitrary_data['dna'] = dna
 	var partner_name: String = character.partner_name if character else ""
+	if config and not config.partner_name.strip_edges().is_empty():
+		partner_name = config.partner_name.strip_edges()
 	if partner_name.strip_edges().is_empty():
 		partner_name = Globals.get_random_toon_name().strip_edges()
 	item.arbitrary_data['name'] = partner_name
