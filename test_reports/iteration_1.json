@@ -1,0 +1,27 @@
+{
+  "summary": "Godot 4.6 project (no web UI). Static review plus Godot 4.6 headless compile/runtime checks of the place_accessory null-node fix and the partner sparkle removal. The fix is in: place_accessory now returns early with push_warning when the node or model is null, before instantiate()/get_children(). At runtime it returned without crashing for a null toon and for an unbuilt Toon (hat_node == null). With a valid node it still behaves the same: the old child is queue_free'd, the new model is added and the placement position (1,2,3) is applied. Sparkle code is fully removed: no setup_sparkle, refresh_sparkle, sparkle var or CPUParticles3D, and grep finds no 'sparkle' in objects/ or scenes/ *.gd. QUALITOON_COLORS is kept (5 entries) and is still used by pause_menu.gd:323. All six requested scripts compile. pause_menu.gd only fails on its SFX .ogg preloads, which don't import in this environment; with those consts swapped for vars it compiles (can_instantiate=true).",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "objects/items/classes/item_accessory.gd place_accessory()", "issue": "get_placement() can return null when the accessory has no AccessoryPlacement for the toon's species/head_index (or body_type for backpacks). The next line, mod.position = placement.position, then crashes with 'Invalid access ... on null'. This bug was already there. Partners use random DNA, so they are more likely to hit it than the player. item_service.gd:235-238 already handles this case with a null check, push_warning and model.queue_free(). place_accessory should do the same: check placement and free mod before adding it."},
+      {"endpoint": "objects/player/player.gd update_accessories() ~line 446", "issue": "Loops over [toon.hat_node, toon.glasses_node, toon.backpack_node] and calls node.get_children() with no null check. If ItemAccessory/ItemShoe.remove_item runs before player.toon.construct_toon, this crashes the same way (in Player.update_accessories, not in place_accessory). Low likelihood."}
+    ]
+  },
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [],
+  "action_items": [
+    "Optional hardening: in ItemAccessory.place_accessory, if get_placement() returns null, push_warning, mod.queue_free() and return (same pattern as item_service.gd).",
+    "Optional hardening: skip null nodes in Player.update_accessories' cleanup loop."
+  ],
+  "critical_code_review_comments": [
+    "Callers checked. ToonPartner._ready runs toon.construct_toon(dna) before the accessories loop (null entries skipped), shoes and the carried_items loop. add_carried_item is only reached from world_item.collect_for_partner and the pause-menu hand-off, both on partners already in the tree and ready. spawn_partner adds the partner to the in-tree persistent node, so _ready runs at once before setup_items. Even if add_carried_item ran before _ready, toon would be null, the new guard returns safely, and _ready would place the item later from carried_items.",
+    "Other paths checked. Starting items: character.gd character_setup -> apply_item awaits player.ready, and Player._ready constructs the toon first, so OK. falling_scene.gd:70 and seed_mouse.gd:23 (construct_toon first), OK. toon_shop.gd:33 (construct_toon then apply_random_accessories), OK. Toon._ready calls apply_random_accessories when randomize_dna is set even if auto_build is false (both default false), which would hit a null hat_node. Every scene with randomize_dna=true also sets auto_build=true (minigame_hide, molten_shop x3, gag_shop), so this is safe today and now guarded anyway.",
+    "Warning text uses ItemSlot.keys()[slot]. This is fine for the HAT/GLASSES/BACKPACK slots."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (all requested checks passed)", "frontend": "N/A"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Headless approach: run --import once, then a SceneTree script. Do the work after process_frame (not in _init): autoload identifiers (Util, Globals, RNG) are not resolvable during _init, so everything fails to compile there. Many models/textures/ogg files are missing or fail to import in this environment, so real accessory .tres files don't load; build a test ItemAccessory in code instead (ItemAccessory.new() + PackedScene.pack(Node3D) + AccessoryPlacementHead from objects/items/classes/head_placement.gd). Cleanup done: .godot removed, zz_* files removed, git status clean."
+}

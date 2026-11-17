@@ -103,7 +103,7 @@ const FLOOR_LINES: Array[String] = [
 	"Let's show these Cogs who's boss!",
 ]
 
-## Sparkle colour by the best item's Qualitoon rating (Q1 -> Q5)
+## Item name colours on the pause menu Partners page, by Qualitoon rating (Q1 -> Q5)
 const QUALITOON_COLORS: Array[Color] = [
 	Color(0.85, 0.85, 0.85, 0.8),
 	Color(0.45, 1.0, 0.45, 0.8),
@@ -166,7 +166,6 @@ var stat_multipliers: Array[StatMultiplier] = []
 var stat_offsets: Dictionary = {}
 ## Flat gag damage added by item scripts (keyed by the script node)
 var flat_damage_bonuses: Dictionary = {}
-var sparkle: CPUParticles3D
 ## The Toon Partner item this partner came from (stores run-persistent data)
 var source_item: Item
 ## Items this partner picked up itself during the run
@@ -226,7 +225,8 @@ func _ready() -> void:
 	nameplate.text = partner_name
 	nameplate.visible = not partner_name.is_empty()
 	for accessory in accessories:
-		accessory.place_accessory(toon)
+		if accessory:
+			accessory.place_accessory(toon)
 	if shoes:
 		shoes.place_shoes(toon)
 	for item in carried_items:
@@ -291,37 +291,6 @@ func get_track_effectiveness(track_name: String) -> float:
 			total += item.stats_add[key]
 	return maxf(total, 0.0)
 
-## Subtle golden sparkle on partners carrying items
-func setup_sparkle() -> void:
-	sparkle = CPUParticles3D.new()
-	sparkle.amount = 8
-	sparkle.lifetime = 1.4
-	sparkle.local_coords = false
-	sparkle.position = Vector3(0, 1.0, 0)
-	sparkle.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
-	sparkle.emission_sphere_radius = 0.6
-	sparkle.direction = Vector3.UP
-	sparkle.spread = 30.0
-	sparkle.gravity = Vector3(0, 0.25, 0)
-	sparkle.initial_velocity_min = 0.05
-	sparkle.initial_velocity_max = 0.2
-	var curve := Curve.new()
-	curve.add_point(Vector2(0.0, 0.0))
-	curve.add_point(Vector2(0.3, 1.0))
-	curve.add_point(Vector2(1.0, 0.0))
-	sparkle.scale_amount_curve = curve
-	var mesh := QuadMesh.new()
-	mesh.size = Vector2(0.07, 0.07)
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
-	mat.albedo_color = Color(1.0, 0.85, 0.35, 0.8)
-	mesh.material = mat
-	sparkle.mesh = mesh
-	add_child(sparkle)
-
 func add_stat_offset(stat: String, amount: float) -> void:
 	stat_offsets[stat] = stat_offsets.get(stat, 0.0) + amount
 
@@ -384,21 +353,6 @@ func remove_carried_item(item: Item) -> void:
 		node.queue_free()
 	item_script_nodes.erase(item)
 
-func refresh_sparkle() -> void:
-	var items := get_items()
-	if items.is_empty():
-		if sparkle:
-			sparkle.hide()
-		return
-	if not sparkle:
-		setup_sparkle()
-	sparkle.show()
-	var best := 0
-	for item in items:
-		best = maxi(best, int(item.qualitoon))
-	var mat: StandardMaterial3D = sparkle.mesh.material
-	mat.albedo_color = QUALITOON_COLORS[clampi(best, 0, QUALITOON_COLORS.size() - 1)]
-
 ## Whether this partner may grab a world item for itself
 static func can_carry(item: Item) -> bool:
 	if not item or item is ItemActive or item.evergreen or ToonPartnerItemScript.is_partner_item(item):
@@ -425,7 +379,6 @@ func add_carried_item(item: Item, gifted := false) -> void:
 		item.place_accessory(toon)
 	elif item is ItemShoe:
 		item.place_shoes(toon)
-	refresh_sparkle()
 	show_pickup_bubble(item)
 	if gifted:
 		react_to_gift(item)
@@ -501,7 +454,6 @@ func setup_items() -> void:
 	add_child(item_nodes)
 	for item in get_items():
 		_run_item_script(item)
-	refresh_sparkle()
 
 ## Position among Toon Partners in the line (0 = front)
 func get_line_index() -> int:

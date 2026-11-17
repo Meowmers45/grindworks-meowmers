@@ -43,12 +43,19 @@ func apply_item(player: Player, apply_visuals := true, _object : Node3D = null) 
 		place_accessory(player.toon)
 
 func place_accessory(toon: Toon) -> void:
-	var mod := model.instantiate()
 	var node := ItemAccessory.get_accessory_node(self, toon)
+	# Toon isn't built yet (or has no spot for this slot): nothing to attach to
+	if not is_instance_valid(node) or not model:
+		push_warning("Could not place accessory %s: toon has no %s node yet." % [item_name, ItemSlot.keys()[slot]])
+		return
+	var placement := ItemAccessory.get_placement(self, toon.toon_dna)
+	if not placement:
+		push_warning("No placement for accessory %s on this toon's species/head." % item_name)
+		return
+	var mod := model.instantiate()
 	for accessory in node.get_children():
 		accessory.queue_free()
 	node.add_child(mod)
-	var placement := ItemAccessory.get_placement(self, toon.toon_dna)
 	mod.position = placement.position
 	mod.rotation_degrees = placement.rotation
 	mod.scale = placement.scale

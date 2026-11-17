@@ -444,6 +444,8 @@ func update_accessories() -> void:
 	# Remove all current accessories
 	# Using free() even though it's scary
 	for node in [toon.hat_node, toon.glasses_node, toon.backpack_node]:
+		if not is_instance_valid(node):
+			continue
 		for child in node.get_children(): child.free()
 	toon.legs.set_shoes(ToonLegs.ShoeType.NONE)
 	
