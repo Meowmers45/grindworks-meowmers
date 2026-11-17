@@ -50,5 +50,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - poopcity shader: hue-mapped browns (HSV), not just luminance
 - Idle games (roam phase, partners paired 1+2, 3+4): tag (chase/flee, swap on catch) and pie toss (cream pie model, splat, cringe); abort when player moves/battle
 - PlayerCharacter.partner_accuracy multiplier applied in BattleManager.roll_for_accuracy for ToonPartner users
+## Iteration 16 (2026-06)
+- PlayerCharacter.partner_items (Array[Item]): stats_add/stats_multiply layered onto a copy of player battle stats for partner gags only (no item scripts, no visuals, money/hp ignored)
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest

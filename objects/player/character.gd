@@ -32,6 +32,8 @@ enum Character {
 @export var ignore_partner_cap := false
 ## Toon Partner accuracy compared to yours (1.0 = same, 0.5 = half, 1.5 = 50% better). Only used when use_accuracy is on
 @export var partner_accuracy := 1.0
+## Passive items every Toon Partner holds. Their stat changes only affect the partners, not you (item scripts don't run)
+@export var partner_items: Array[Item] = []
 @export var gag_loadout: GagLoadout
 @export var starting_laff := 25
 @export var starting_items: Array[Item]
