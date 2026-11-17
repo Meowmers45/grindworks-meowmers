@@ -8,6 +8,9 @@ var partner: ToonPartner
 func on_collect(item: Item, _object: Node3D) -> void:
 	var dna: ToonDNA
 	var character: PlayerCharacter = Util.get_player().stats.character
+	# Only the first partner uses the character's partner settings; extras are always random
+	if has_other_partner():
+		character = null
 	if character and character.partner_dna:
 		dna = character.partner_dna.duplicate(true)
 	else:
@@ -47,10 +50,6 @@ func on_load(item: Item) -> void:
 	spawn_partner(dna, partner_name, accessory_paths, shoes_path)
 
 func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[String], shoes_path := "") -> void:
-	# Only ever one Toon Partner at a time (ignore scripts being cleared by a stats reset)
-	for node in get_parent().get_children():
-		if node != self and node.get_script() == get_script() and not node.is_queued_for_deletion() and is_instance_valid(node.partner):
-			return
 	partner = load(PARTNER_SCENE).instantiate()
 	partner.dna = dna
 	partner.partner_name = partner_name
@@ -62,6 +61,13 @@ func spawn_partner(dna: ToonDNA, partner_name: String, accessory_paths: Array[St
 		partner.shoes = load(shoes_path) as ItemShoe
 	SceneLoader.add_persistent_node(partner)
 	Util.get_player().partners.append(partner)
+
+## Whether another live Toon Partner already exists (ignores ones being cleared by a stats reset)
+func has_other_partner() -> bool:
+	for node in get_parent().get_children():
+		if node != self and node.get_script() == get_script() and not node.is_queued_for_deletion() and is_instance_valid(node.partner):
+			return true
+	return false
 
 func on_item_removed() -> void:
 	remove_partner()

@@ -89,6 +89,19 @@ var cheering := false
 
 var player: Player:
 	get: return Util.get_player()
+## Who this partner trails: the player, or the Toon Partner directly ahead in line
+var leader: Node3D:
+	get:
+		var prev: Node3D = player
+		for p in player.partners:
+			if p == self:
+				break
+			if p is ToonPartner and is_instance_valid(p) and not p.is_queued_for_deletion() and not p.departed:
+				prev = p
+		return prev
+## Only the front partner does chatter, so several partners don't talk over each other
+var is_lead_partner: bool:
+	get: return leader == player
 ## Follow distance comes from the settings slider
 var follow_spacing: float:
 	get: return SaveFileService.settings_file.partner_follow_distance
@@ -190,15 +203,16 @@ func say_goodbye() -> void:
 #region Following
 
 func _follow_trail() -> void:
-	var ppos := player.global_position
+	var lead := leader
+	var ppos := lead.global_position
 	if trail_points.is_empty() or global_position.distance_to(ppos) > SNAP_DISTANCE:
 		snap_to_player()
 		return
 	
-	# Record the player's path, along with what they were doing
+	# Record the leader's path, along with what they were doing
 	if trail_points.back().distance_to(ppos) >= RECORD_STEP:
 		trail_points.append(ppos)
-		trail_anims.append(player.get_animation())
+		trail_anims.append(lead.get_animation())
 		if trail_points.size() > MAX_HISTORY:
 			trail_points.pop_front()
 			trail_anims.pop_front()
@@ -219,10 +233,10 @@ func _follow_trail() -> void:
 	if not cheering:
 		set_animation(anim)
 
-## Walks back along the recorded path until we're follow_spacing behind the player
+## Walks back along the recorded path until we're follow_spacing behind the leader
 func _get_trail_index() -> int:
 	var dist := 0.0
-	var last := player.global_position
+	var last := leader.global_position
 	for i in range(trail_points.size() - 1, -1, -1):
 		dist += last.distance_to(trail_points[i])
 		last = trail_points[i]
@@ -230,9 +244,12 @@ func _get_trail_index() -> int:
 			return i
 	return 0
 
+## Snaps in line behind the leader (player or the partner ahead)
 func snap_to_player() -> void:
-	var ppos := player.global_position
-	var behind := ppos - player.toon.global_basis.z.normalized() * follow_spacing
+	var lead := leader
+	var ppos := lead.global_position
+	var lead_toon: Node3D = lead.toon
+	var behind: Vector3 = ppos - lead_toon.global_basis.z.normalized() * follow_spacing
 	behind.y = ppos.y
 	trail_points = [behind, ppos]
 	trail_anims = ['neutral', 'neutral']
@@ -276,7 +293,7 @@ func _on_floor_started(_game_floor) -> void:
 		await Task.delay(0.25)
 		waited += 0.25
 	await Task.delay(1.0)
-	if is_inside_tree() and visible and active and not departed and state == PartnerState.FOLLOW:
+	if is_inside_tree() and visible and active and not departed and is_lead_partner and state == PartnerState.FOLLOW:
 		speak(RNG.channel(RNG.ChannelTrueRandom).pick_random(FLOOR_LINES))
 
 #endregion
@@ -305,9 +322,10 @@ func _check_gag_unlocks() -> void:
 func cheer(phrase: String, with_sfx: bool) -> void:
 	if not is_inside_tree() or not visible or not active or departed:
 		return
-	speak(phrase)
-	if with_sfx:
-		AudioManager.play_sound(CHEER_SFX)
+	if is_lead_partner:
+		speak(phrase)
+		if with_sfx:
+			AudioManager.play_sound(CHEER_SFX)
 	# Don't interrupt the partner mid-gag in battle
 	if state == PartnerState.BATTLE and get_animation() != 'neutral':
 		return

@@ -36,5 +36,7 @@ Only via starting character setting; random existing stat buff; heal = % of max 
 - Removed win goodbye from penthouse_boss.gd (file restored to original); goodbye now only on loss
 ## Iteration 12 (2026-06)
 - Settings > Gameplay "Partner Distance" slider (1.0-6.0, default 3.0) -> SettingsFile.partner_follow_distance, read live by ToonPartner.follow_spacing
+## Iteration 13 (2026-06)
+- Multiple partners: item no longer unique, spawn guard removed; each ToonPartner trails the previous one (leader getter); only the lead partner chats/cheers aloud; 2nd+ partners ignore character partner_dna/name/accessories/shoes (always random)
 ## Backlog
 - Partner name/nameplate, Lure/Trap/Toon-Up support, editor playtest
