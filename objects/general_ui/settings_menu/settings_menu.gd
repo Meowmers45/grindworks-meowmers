@@ -169,6 +169,7 @@ func toggle_ambient_sfx() -> void:
 @onready var partner_dialogue_button: GeneralButton = %PartnerDialogueButton
 @onready var partner_distance_slider: HSlider = %PartnerDistanceSlider
 @onready var partner_pickup_button: GeneralButton = %PartnerPickupButton
+@onready var multiplayer_item_sync_button: GeneralButton = %MultiplayerItemSyncButton
 
 func _sync_gameplay_settings() -> void:
 	speed_button.text = get_speed_string(SaveFileService.settings_file.SpeedOptions[get_setting("battle_speed_idx")])
@@ -187,6 +188,7 @@ func _sync_gameplay_settings() -> void:
 	partner_dialogue_button.text = get_toggle_text(get_setting('partner_dialogue'))
 	partner_distance_slider.value = get_setting('partner_follow_distance')
 	partner_pickup_button.text = get_toggle_text(get_setting('partner_item_pickup'))
+	multiplayer_item_sync_button.text = get_toggle_text(get_setting('multiplayer_item_sync'))
 	_update_partner_distance_label()
 	
 	if not is_instance_valid(Util.floor_manager) or Util.stuck_lock:
@@ -240,6 +242,10 @@ func toggle_partner_dialogue() -> void:
 func toggle_partner_pickup() -> void:
 	toggle_setting('partner_item_pickup')
 	partner_pickup_button.text = get_toggle_text(get_setting('partner_item_pickup'))
+
+func toggle_multiplayer_item_sync() -> void:
+	toggle_setting('multiplayer_item_sync')
+	multiplayer_item_sync_button.text = get_toggle_text(get_setting('multiplayer_item_sync'))
 
 func set_partner_distance(value: float) -> void:
 	update_setting('partner_follow_distance', value)

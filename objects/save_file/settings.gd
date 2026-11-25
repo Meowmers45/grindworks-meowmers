@@ -70,6 +70,8 @@ var cog_tts = want_tts
 ## How far behind the player the Toon Partner follows
 ## Lets Toon Partners grab passive items they walk over (they keep the item's effects for themselves)
 @export var partner_item_pickup := false
+## Share collected multiplayer items with peers who have item sharing enabled.
+@export var multiplayer_item_sync := false
 @export var partner_follow_distance := 3.0:
 	set(x):
 		partner_follow_distance = clampf(x, 1.0, 6.0)

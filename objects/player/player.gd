@@ -150,6 +150,7 @@ func _ready() -> void:
 	
 	# Make player globally accessible
 	Util.player = self
+	MultiplayerService.register_local_player(self)
 	
 	# Construct the toon from the character DNA
 	toon.construct_toon(character.dna)

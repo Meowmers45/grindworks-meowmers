@@ -40,6 +40,8 @@ enum MenuState {
 @onready var clipboard := %CharacterClipboard
 @onready var character_select_fsm: FiniteStateMachine3D = %CharacterDisplay
 @onready var selected_toon: Toon = %CharacterDisplay/Toon
+@onready var multiplayer_status: Label = %MultiplayerControls/Status
+@onready var multiplayer_address: LineEdit = %MultiplayerControls/Address
 
 var selected_character: PlayerCharacter:
 	get: return clipboard.character
@@ -72,6 +74,13 @@ func _init():
 	GameLoader.load_all()
 
 func _ready() -> void:
+	MultiplayerService.register_title_screen(self)
+	if not MultiplayerService.s_status_changed.is_connected(_set_multiplayer_status):
+		MultiplayerService.s_status_changed.connect(_set_multiplayer_status)
+	%MultiplayerControls/Buttons/Host.pressed.connect(host_multiplayer)
+	%MultiplayerControls/Buttons/Join.pressed.connect(join_multiplayer)
+	%MultiplayerControls/Buttons/Disconnect.pressed.connect(MultiplayerService.disconnect_session)
+	_set_multiplayer_status("Hosting (%d/%d)." % [MultiplayerService.player_count, MultiplayerService.MAX_PLAYERS] if MultiplayerService.is_host else "Connected (%d/%d)." % [MultiplayerService.player_count, MultiplayerService.MAX_PLAYERS] if MultiplayerService.is_connected_to_session else "Offline")
 	Engine.time_scale = 1.0
 	
 	Util.stuck_lock = false
@@ -205,7 +214,9 @@ func make_toon_look(toon: Toon, where: Vector3) -> void:
 	toon.look_at(where)
 	toon.rotation_degrees = Vector3(0, toon.rotation_degrees.y - 180.0 , 0)
 
-func begin_game(character: PlayerCharacter, falling_scene := false) -> void:
+func begin_game(character: PlayerCharacter, falling_scene := false, shared_seed := -1, shared_seed_text := "", shared_custom_seed := false) -> void:
+	if MultiplayerService.is_host:
+		MultiplayerService.set_linked_run_active()
 	if has_existing_run and SaveFileService.progress_file.win_streak > 0:
 		SaveFileService.progress_file.win_streak = 0
 
@@ -225,6 +236,12 @@ func begin_game(character: PlayerCharacter, falling_scene := false) -> void:
 		RNG._str_seed = clipboard.custom_seed
 		RNG.set_seed(RNG.get_numerical_seed_from_string(clipboard.custom_seed))
 		RNG.is_custom_seed = true
+	if shared_seed >= 0:
+		RNG.set_seed(shared_seed)
+		RNG._str_seed = shared_seed_text
+		RNG.is_custom_seed = shared_custom_seed
+	elif MultiplayerService.is_host:
+		MultiplayerService.broadcast_run_seed(RNG.base_seed, RNG._str_seed, RNG.is_custom_seed)
 	
 	Util.floor_number = -1
 	await GameLoader.wait_for_phase(GameLoader.Phase.PLAYER)
@@ -243,6 +260,26 @@ func begin_game(character: PlayerCharacter, falling_scene := false) -> void:
 		SceneLoader.load_into_scene("res://scenes/falling_scene/falling_scene.tscn", GameLoader.Phase.FALLING_SEQ)
 	else:
 		SceneLoader.load_into_scene("res://scenes/cog_building/cog_building_floor.tscn", GameLoader.Phase.COG_BLDG_FLOOR)
+
+func host_multiplayer() -> void:
+	var result := MultiplayerService.host_game()
+	if result != OK:
+		_set_multiplayer_status("Could not host (error %d)." % result)
+
+func join_multiplayer() -> void:
+	var result := MultiplayerService.join_game(multiplayer_address.text)
+	if result != OK:
+		_set_multiplayer_status("Could not connect (error %d)." % result)
+
+func _set_multiplayer_status(message: String) -> void:
+	if is_instance_valid(multiplayer_status):
+		multiplayer_status.text = message
+
+func start_linked_run(seed: int, seed_text: String, custom_seed: bool) -> void:
+	if not is_inside_tree() or is_instance_valid(Util.get_player()):
+		return
+	%FullBlock.show()
+	begin_game(selected_character, true, seed, seed_text, custom_seed)
 
 func show_secret_seed(secret: String) -> void:
 	%SecretSeedLabel.set_text("Secret Seed: %s" % secret)

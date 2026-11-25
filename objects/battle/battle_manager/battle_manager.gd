@@ -92,8 +92,30 @@ func append_action(action: BattleAction):
 	s_action_added.emit(action)
 
 func gags_selected(gags: Array[ToonAttack]):
-	for gag in gags:
-		append_action(gag)
+	if MultiplayerService.is_connected_to_session:
+		var submissions: Dictionary = await MultiplayerService.coordinate_battle_turn(self, gags)
+		var player_ids: Array = submissions.keys()
+		player_ids.sort()
+		for player_id in player_ids:
+			var player_actions: Array[ToonAttack] = MultiplayerService.rebuild_battle_actions(self, submissions[player_id])
+			var action_user: Player = Util.get_player()
+			if player_id != multiplayer.get_unique_id():
+				action_user = MultiplayerService.get_or_create_battle_player(int(player_id), self)
+				if not battle_stats.has(action_user):
+					battle_stats[action_user] = action_user.stats.duplicate(true)
+					battle_stats[action_user].multipliers = action_user.stats.multipliers
+					s_participant_joined.emit(action_user)
+			for action: ToonAttack in player_actions:
+				action.user = action_user
+				if action.targets.is_empty() and action.target_type == BattleAction.ActionTarget.SELF:
+					action.targets = [action_user]
+				if action is ToonAttackFire and action_user == Util.get_player():
+					Util.get_player().stats.pink_slips = maxi(0, Util.get_player().stats.pink_slips - 1)
+				append_action(action)
+		MultiplayerService._cleanup_battle_turn("%s:%d" % [MultiplayerService.get_battle_key(self), current_round + 1])
+	else:
+		for gag in gags:
+			append_action(gag)
 	begin_turn()
 
 func apply_battle_speed() -> void:
