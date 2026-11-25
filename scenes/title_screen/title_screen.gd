@@ -79,7 +79,7 @@ func _ready() -> void:
 		MultiplayerService.s_status_changed.connect(_set_multiplayer_status)
 	%MultiplayerControls/Buttons/Host.pressed.connect(host_multiplayer)
 	%MultiplayerControls/Buttons/Join.pressed.connect(join_multiplayer)
-	%MultiplayerControls/Buttons/Disconnect.pressed.connect(MultiplayerService.disconnect_session)
+	%MultiplayerControls/Buttons/Disconnect.pressed.connect(disconnect_multiplayer)
 	_set_multiplayer_status("Hosting (%d/%d)." % [MultiplayerService.player_count, MultiplayerService.MAX_PLAYERS] if MultiplayerService.is_host else "Connected (%d/%d)." % [MultiplayerService.player_count, MultiplayerService.MAX_PLAYERS] if MultiplayerService.is_connected_to_session else "Offline")
 	Engine.time_scale = 1.0
 	
@@ -270,6 +270,10 @@ func join_multiplayer() -> void:
 	var result := MultiplayerService.join_game(multiplayer_address.text)
 	if result != OK:
 		_set_multiplayer_status("Could not connect (error %d)." % result)
+
+func disconnect_multiplayer() -> void:
+	MultiplayerService.disconnect_session()
+	_set_multiplayer_status("Offline")
 
 func _set_multiplayer_status(message: String) -> void:
 	if is_instance_valid(multiplayer_status):

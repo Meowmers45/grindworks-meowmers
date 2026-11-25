@@ -257,6 +257,7 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="MultiplayerControls" type="VBoxContainer" parent="GUI" unique_id=1900000001]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

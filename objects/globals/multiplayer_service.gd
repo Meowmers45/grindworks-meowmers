@@ -45,11 +45,11 @@ func _ready() -> void:
 func host_game(port: int = DEFAULT_PORT) -> Error:
 	if multiplayer.multiplayer_peer:
 		disconnect_session()
-	peer = ENetMultiplayerPeer.new()
-	var result := peer.create_server(port, MAX_PLAYERS - 1)
+	var new_peer := ENetMultiplayerPeer.new()
+	var result := new_peer.create_server(port, MAX_PLAYERS - 1)
 	if result != OK:
-		peer = null
 		return result
+	peer = new_peer
 	multiplayer.multiplayer_peer = peer
 	peer_states[1] = _make_local_state()
 	s_status_changed.emit("Hosting on port %d (share this address with friends)." % port)
@@ -62,11 +62,11 @@ func join_game(address: String, port: int = DEFAULT_PORT) -> Error:
 	var clean_address := address.strip_edges()
 	if clean_address.is_empty():
 		return ERR_INVALID_PARAMETER
-	peer = ENetMultiplayerPeer.new()
-	var result := peer.create_client(clean_address, port)
+	var new_peer := ENetMultiplayerPeer.new()
+	var result := new_peer.create_client(clean_address, port)
 	if result != OK:
-		peer = null
 		return result
+	peer = new_peer
 	multiplayer.multiplayer_peer = peer
 	s_status_changed.emit("Connecting to %s:%d…" % [clean_address, port])
 	return OK
