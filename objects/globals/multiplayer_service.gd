@@ -3,6 +3,7 @@ extends Node
 const DEFAULT_PORT := 8910
 const MAX_PLAYERS := 4
 const STATE_INTERVAL := 0.1
+const JOIN_TIMEOUT_SECONDS := 15.0
 const TOON_SCENE := "res://objects/toon/toon.tscn"
 
 signal s_status_changed(message: String)
@@ -24,6 +25,8 @@ var _syncing_received_item := false
 var _local_share_paths: Array[String] = []
 var _started_linked_run := false
 var _pending_linked_run := false
+var _join_timeout_remaining := 0.0
+var _session_handshake_pending := false
 
 var is_connected_to_session: bool:
 	get: return multiplayer.multiplayer_peer != null and multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED
@@ -68,6 +71,8 @@ func join_game(address: String, port: int = DEFAULT_PORT) -> Error:
 		return result
 	peer = new_peer
 	multiplayer.multiplayer_peer = peer
+	_join_timeout_remaining = JOIN_TIMEOUT_SECONDS
+	_session_handshake_pending = true
 	s_status_changed.emit("Connecting to %s:%d…" % [clean_address, port])
 	return OK
 
@@ -76,6 +81,8 @@ func disconnect_session() -> void:
 		multiplayer.multiplayer_peer.close()
 		multiplayer.multiplayer_peer = null
 	peer = null
+	_join_timeout_remaining = 0.0
+	_session_handshake_pending = false
 	peer_states.clear()
 	pending_battle_turns.clear()
 	completed_battle_turns.clear()
@@ -140,6 +147,17 @@ func _make_local_state() -> Dictionary:
 	return state
 
 func _process(delta: float) -> void:
+	if _session_handshake_pending:
+		_join_timeout_remaining -= delta
+		if _join_timeout_remaining <= 0.0:
+			var timed_out_peer := multiplayer.multiplayer_peer
+			var connection_status := timed_out_peer.get_connection_status() if timed_out_peer else MultiplayerPeer.CONNECTION_DISCONNECTED
+			disconnect_session()
+			if connection_status == MultiplayerPeer.CONNECTION_CONNECTED:
+				s_status_changed.emit("Host did not respond. Check that the host is running the same game version.")
+			else:
+				s_status_changed.emit("Connection timed out. Check the host address, port, firewall, and network.")
+			return
 	if not is_connected_to_session:
 		return
 	_state_timer += delta
@@ -495,12 +513,23 @@ func _rpc_request_session() -> void:
 	if not is_host:
 		return
 	var sender_id := multiplayer.get_remote_sender_id()
+	if not multiplayer.get_peers().has(sender_id):
+		return
 	for player_id in peer_states:
 		_send_state(sender_id, player_id, peer_states[player_id])
 	if is_instance_valid(_local_player):
 		_send_state(sender_id, 1, _make_local_state())
 	if network_run_seed >= 0:
 		rpc_id(sender_id, "_rpc_start_run", network_run_seed, RNG._str_seed, RNG.is_custom_seed)
+	rpc_id(sender_id, "_rpc_session_ready")
+
+@rpc("authority", "call_remote", "reliable")
+func _rpc_session_ready() -> void:
+	if multiplayer.is_server():
+		return
+	_session_handshake_pending = false
+	_join_timeout_remaining = 0.0
+	s_status_changed.emit("Connected to host (%d/%d)." % [player_count, MAX_PLAYERS])
 
 @rpc("authority", "call_remote", "reliable")
 func _rpc_start_run(seed: int, seed_text: String, custom_seed: bool) -> void:
@@ -701,7 +730,6 @@ func _on_peer_connected(peer_id: int) -> void:
 	for existing_id in peer_states:
 		if existing_id != 1 and existing_id != peer_id:
 			_send_state(peer_id, existing_id, peer_states[existing_id])
-	rpc_id(peer_id, "_rpc_request_session")
 	s_status_changed.emit("Player connected (%d/%d)." % [player_count, MAX_PLAYERS])
 
 func _on_peer_disconnected(peer_id: int) -> void:
@@ -716,7 +744,7 @@ func _on_peer_disconnected(peer_id: int) -> void:
 	s_status_changed.emit("Player disconnected (%d/%d)." % [player_count, MAX_PLAYERS])
 
 func _on_connected_to_server() -> void:
-	s_status_changed.emit("Connected. Waiting for the host…")
+	s_status_changed.emit("Connected. Syncing session…")
 	s_session_changed.emit(true)
 	rpc_id(1, "_rpc_request_session")
 	if is_instance_valid(_local_player):

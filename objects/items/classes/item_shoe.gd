@@ -27,11 +27,18 @@ func get_correct_texture(dna: ToonDNA) -> Texture2D:
 
 func apply_item(player: Player, apply_visuals := true, object: Node3D = null) -> void:
 	super(player, apply_visuals, object)
-	
-	if apply_visuals:
+	if not apply_visuals or not is_instance_valid(player):
+		return
+	# Starting items can be applied before the player is in the scene tree and
+	# before Toon.construct_toon() creates its legs. Wait until _ready finishes.
+	if not player.is_node_ready():
+		await player.ready
+	if is_instance_valid(player.toon):
 		place_shoes(player.toon)
 
 func place_shoes(toon: Toon) -> void:
+	if not is_instance_valid(toon) or not is_instance_valid(toon.legs):
+		return
 	toon.legs.set_shoes(shoe_type as ToonLegs.ShoeType, get_correct_texture(toon.toon_dna))
 
 ## Needs to update Player look when discarded
